@@ -1,6 +1,6 @@
 package restaurant.entity;
 
-public class Waiter extends Staff {
+public class Waiter extends Staff implements Seater {
 
     @Override
     public String getRole() {
@@ -12,6 +12,7 @@ public class Waiter extends Staff {
         return "one task per turn - seat a queued customer, take an order, or serve a READY dish";
     }
 
+    @Override
     public void seat(Customer customer, Table table) {
         completeTask();
         table.seat(customer);

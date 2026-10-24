@@ -1,0 +1,658 @@
+==========================================================================
+RESTAURANT RUSH - you are the manager
+==========================================================================
+Staff:
+  Host: seats at most one queued customer per turn, in addition to the Waiter's task
+  Waiter: one task per turn - seat a queued customer, take an order, or serve a READY dish
+  Chef: one preparation unit of one order per turn
+  Cashier: automatic - charges at most one READY_TO_PAY customer per turn, oldest first
+Menu:
+  Salad - $9.00, 1 preparation unit
+  Burger - $15.00, 1 preparation unit
+  Pasta - $18.00, 2 preparation units
+  Salad + Burger Combo - $21.60, 2 preparation units
+  Salad + Pasta Combo - $24.30, 3 preparation units
+  Burger + Pasta Combo - $29.70, 3 preparation units
+A customer arrives at the start of turns 1, 4, 7, 10, 13, 16 and chooses their own food.
+Customers waiting for a table or for food lose satisfaction every turn and leave at 0.
+Goal after 18 turns: at least 4 paid customers, revenue of at least $45.00 and average satisfaction of paid customers of at least 60.
+Answer each question with a number. Customers are numbered in order of arrival (#1, #2, ...).
+
+==========================================================================
+TURN 1 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+* #1 Alice (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #1 Alice (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: free
+Staff tasks available:
+  Host   : seat [#1 Alice]
+  Waiter : seat [#1 Alice]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST - seat one customer from the waiting queue   [#1 Alice]
+Customer number to seat (0 = wait): 1
+>> Host seats Alice at Table 1.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#1 Alice]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 1
+>> Alice orders Salad (1 preparation unit). Bill: $9.00.
+
+CHEF - prepare one unit of an order   [#1 Alice: Salad 0/1]
+Customer number whose order to prepare (0 = wait): 1
+>> Chef prepares Alice's Salad: unit 1 of 1 done. It is READY and can be served from next turn.
+
+--- End of turn 1 ---
+* Still waiting, so satisfaction drops: Alice 92.
+Served 0 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 1/18
+
+==========================================================================
+TURN 2 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 92 - WAITING_FOR_FOOD - Salad $9.00 READY
+  Table 2: free
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [#1 Alice]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#1 Alice]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 1
+>> Waiter serves Alice's Salad: SERVED. Alice starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 2 ---
+Served 1 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 2/18
+
+==========================================================================
+TURN 3 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 92 - EATING - Salad $9.00 SERVED
+  Table 2: free
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 3 ---
+* Alice has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+Served 1 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 3/18
+
+==========================================================================
+TURN 4 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+* #2 Victor (VIP) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #2 Victor (VIP) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 92 - READY_TO_PAY - Salad $9.00 SERVED
+  Table 2: free
+Staff tasks available:
+  Host   : seat [#2 Victor]
+  Waiter : seat [#2 Victor]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: charges Alice automatically at the end of this turn
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST - seat one customer from the waiting queue   [#2 Victor]
+Customer number to seat (0 = wait): 2
+>> Host seats Victor at Table 2.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#2 Victor]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 2
+>> Victor orders Burger (1 preparation unit). Bill: $13.50 (menu price $15.00).
+
+CHEF - prepare one unit of an order   [#2 Victor: Burger 0/1]
+Customer number whose order to prepare (0 = wait): 2
+>> Chef prepares Victor's Burger: unit 1 of 1 done. It is READY and can be served from next turn.
+
+--- End of turn 4 ---
+* Cashier collects $9.00 from Alice: PAID with satisfaction 92 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Victor 95.
+Served 1 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 92.0 | Turns used 4/18
+
+==========================================================================
+TURN 5 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 92.0
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: free
+  Table 2: #2 Victor (VIP) - satisfaction 95 - WAITING_FOR_FOOD - Burger $13.50 READY
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [#2 Victor]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#2 Victor]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 2
+>> Waiter serves Victor's Burger: SERVED. Victor starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 5 ---
+Served 2 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 92.0 | Turns used 5/18
+
+==========================================================================
+TURN 6 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 92.0
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: free
+  Table 2: #2 Victor (VIP) - satisfaction 95 - EATING - Burger $13.50 SERVED
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 6 ---
+* Victor has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+Served 2 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 92.0 | Turns used 6/18
+
+==========================================================================
+TURN 7 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 92.0
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+* #3 Chloe (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #3 Chloe (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: #2 Victor (VIP) - satisfaction 95 - READY_TO_PAY - Burger $13.50 SERVED
+Staff tasks available:
+  Host   : seat [#3 Chloe]
+  Waiter : seat [#3 Chloe]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: charges Victor automatically at the end of this turn
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST - seat one customer from the waiting queue   [#3 Chloe]
+Customer number to seat (0 = wait): 3
+>> Host seats Chloe at Table 1.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#3 Chloe]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 3
+>> Chloe orders Pasta (2 preparation units). Bill: $18.00.
+
+CHEF - prepare one unit of an order   [#3 Chloe: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 3
+>> Chef prepares Chloe's Pasta: unit 1 of 2 done.
+
+--- End of turn 7 ---
+* Cashier collects $13.50 from Victor: PAID with satisfaction 95 recorded. Table 2 is free again.
+* Still waiting, so satisfaction drops: Chloe 92.
+Served 2 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 93.5 | Turns used 7/18
+
+==========================================================================
+TURN 8 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 93.5
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 92 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 1/2
+  Table 2: free
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#3 Chloe: Pasta 1/2]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#3 Chloe: Pasta 1/2]
+Customer number whose order to prepare (0 = wait): 3
+>> Chef prepares Chloe's Pasta: unit 2 of 2 done. It is READY and can be served from next turn.
+
+--- End of turn 8 ---
+* Still waiting, so satisfaction drops: Chloe 84.
+Served 2 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 93.5 | Turns used 8/18
+
+==========================================================================
+TURN 9 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 93.5
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Pasta $18.00 READY
+  Table 2: free
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [#3 Chloe]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#3 Chloe]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 3
+>> Waiter serves Chloe's Pasta: SERVED. Chloe starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 9 ---
+Served 3 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 93.5 | Turns used 9/18
+
+==========================================================================
+TURN 10 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 93.5
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+* #4 Carmen (Critic) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #4 Carmen (Critic) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 84 - EATING - Pasta $18.00 SERVED
+  Table 2: free
+Staff tasks available:
+  Host   : seat [#4 Carmen]
+  Waiter : seat [#4 Carmen]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST - seat one customer from the waiting queue   [#4 Carmen]
+Customer number to seat (0 = wait): 4
+>> Host seats Carmen at Table 2.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#4 Carmen]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 4
+>> Carmen orders Burger + Pasta Combo (3 preparation units). Bill: $29.70.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Burger + Pasta Combo 0/3]
+Customer number whose order to prepare (0 = wait): 4
+>> Chef prepares Carmen's Burger + Pasta Combo: unit 1 of 3 done.
+
+--- End of turn 10 ---
+* Chloe has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Carmen 88.
+Served 3 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 93.5 | Turns used 10/18
+
+==========================================================================
+TURN 11 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 93.5
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 84 - READY_TO_PAY - Pasta $18.00 SERVED
+  Table 2: #4 Carmen (Critic) - satisfaction 88 - WAITING_FOR_FOOD - Burger + Pasta Combo $29.70 PREPARING 1/3
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Burger + Pasta Combo 1/3]
+  Cashier: charges Chloe automatically at the end of this turn
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Burger + Pasta Combo 1/3]
+Customer number whose order to prepare (0 = wait): 4
+>> Chef prepares Carmen's Burger + Pasta Combo: unit 2 of 3 done.
+
+--- End of turn 11 ---
+* Cashier collects $18.00 from Chloe: PAID with satisfaction 84 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Carmen 76.
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 90.3 | Turns used 11/18
+
+==========================================================================
+TURN 12 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 90.3
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: free
+  Table 2: #4 Carmen (Critic) - satisfaction 76 - WAITING_FOR_FOOD - Burger + Pasta Combo $29.70 PREPARING 2/3
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Burger + Pasta Combo 2/3]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 0
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Burger + Pasta Combo 2/3]
+Customer number whose order to prepare (0 = wait): 4
+>> Chef prepares Carmen's Burger + Pasta Combo: unit 3 of 3 done. It is READY and can be served from next turn.
+
+--- End of turn 12 ---
+* Still waiting, so satisfaction drops: Carmen 64.
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 90.3 | Turns used 12/18
+
+==========================================================================
+TURN 13 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 90.3
+Happy Hour: available (once per game, switched on at the start of a turn)
+==========================================================================
+* #5 Ethan (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #5 Ethan (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: #4 Carmen (Critic) - satisfaction 64 - WAITING_FOR_FOOD - Burger + Pasta Combo $29.70 READY
+Staff tasks available:
+  Host   : seat [#5 Ethan]
+  Waiter : seat [#5 Ethan]  take order [none]  serve [#4 Carmen]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get
+20% off, and customers waiting for a table or for food recover 15 satisfaction each turn.
+Switch Happy Hour on now? (1 = yes, 0 = no): 1
+>> Happy Hour is ON for this turn and the next: orders taken get 20% off. Customers waiting for a table or for food recover 15 satisfaction (max 100): Carmen 79, Ethan 100.
+
+HOST - seat one customer from the waiting queue   [#5 Ethan]
+Customer number to seat (0 = wait): 5
+>> Host seats Ethan at Table 1.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#5 Ethan]
+  3. Serve a READY dish                       [#4 Carmen]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 5
+>> Ethan orders Salad + Pasta Combo (3 preparation units). Bill: $19.44 (menu price $24.30, Happy Hour 20% off included).
+
+CHEF - prepare one unit of an order   [#5 Ethan: Salad + Pasta Combo 0/3]
+Customer number whose order to prepare (0 = wait): 5
+>> Chef prepares Ethan's Salad + Pasta Combo: unit 1 of 3 done.
+
+--- End of turn 13 ---
+* Still waiting, so satisfaction drops: Carmen 67, Ethan 92.
+* Happy Hour continues next turn (1 turn left).
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 90.3 | Turns used 13/18
+
+==========================================================================
+TURN 14 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 90.3
+Happy Hour: ON - 1 turn left (this one)
+==========================================================================
+* Second turn of Happy Hour. Customers waiting for a table or for food recover 15 satisfaction (max 100): Carmen 82, Ethan 100.
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 100 - WAITING_FOR_FOOD - Salad + Pasta Combo $19.44 PREPARING 1/3
+  Table 2: #4 Carmen (Critic) - satisfaction 82 - WAITING_FOR_FOOD - Burger + Pasta Combo $29.70 READY
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [#4 Carmen]
+  Chef   : prepare [#5 Ethan: Salad + Pasta Combo 1/3]
+  Cashier: nobody is ready to pay
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#4 Carmen]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 4
+>> Waiter serves Carmen's Burger + Pasta Combo: SERVED. Carmen starts eating.
+
+CHEF - prepare one unit of an order   [#5 Ethan: Salad + Pasta Combo 1/3]
+Customer number whose order to prepare (0 = wait): 5
+>> Chef prepares Ethan's Salad + Pasta Combo: unit 2 of 3 done.
+
+--- End of turn 14 ---
+* Still waiting, so satisfaction drops: Ethan 92.
+* Happy Hour is over.
+Served 4 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 90.3 | Turns used 14/18
+
+==========================================================================
+TURN 15 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 90.3
+Happy Hour: used
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 92 - WAITING_FOR_FOOD - Salad + Pasta Combo $19.44 PREPARING 2/3
+  Table 2: #4 Carmen (Critic) - satisfaction 82 - EATING - Burger + Pasta Combo $29.70 SERVED
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#5 Ethan: Salad + Pasta Combo 2/3]
+  Cashier: nobody is ready to pay
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#5 Ethan: Salad + Pasta Combo 2/3]
+Customer number whose order to prepare (0 = wait): 5
+>> Chef prepares Ethan's Salad + Pasta Combo: unit 3 of 3 done. It is READY and can be served from next turn.
+
+--- End of turn 15 ---
+* Carmen has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Ethan 84.
+Served 4 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 90.3 | Turns used 15/18
+
+==========================================================================
+TURN 16 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 90.3
+Happy Hour: used
+==========================================================================
+* #6 Fiona (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #6 Fiona (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Salad + Pasta Combo $19.44 READY
+  Table 2: #4 Carmen (Critic) - satisfaction 82 - READY_TO_PAY - Burger + Pasta Combo $29.70 SERVED
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [#5 Ethan]
+  Chef   : prepare [none]
+  Cashier: charges Carmen automatically at the end of this turn
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#5 Ethan]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 5
+>> Waiter serves Ethan's Salad + Pasta Combo: SERVED. Ethan starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 16 ---
+* Cashier collects $29.70 from Carmen: PAID with satisfaction 82 recorded. Table 2 is free again.
+* Still waiting, so satisfaction drops: Fiona 92.
+Served 5 | Paid 4 | Unhappy departures 0 | Revenue $70.20 | Average satisfaction 88.3 | Turns used 16/18
+
+==========================================================================
+TURN 17 of 18  |  Revenue $70.20  |  Average satisfaction of paid customers 88.3
+Happy Hour: used
+==========================================================================
+Waiting queue:
+  #6 Fiona (Regular) - satisfaction 92 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - EATING - Salad + Pasta Combo $19.44 SERVED
+  Table 2: free
+Staff tasks available:
+  Host   : seat [#6 Fiona]
+  Waiter : seat [#6 Fiona]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+HOST - seat one customer from the waiting queue   [#6 Fiona]
+Customer number to seat (0 = wait): 6
+>> Host seats Fiona at Table 2.
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#6 Fiona]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 6
+>> Fiona orders Burger + Pasta Combo (3 preparation units). Bill: $29.70.
+
+CHEF - prepare one unit of an order   [#6 Fiona: Burger + Pasta Combo 0/3]
+Customer number whose order to prepare (0 = wait): 6
+>> Chef prepares Fiona's Burger + Pasta Combo: unit 1 of 3 done.
+
+--- End of turn 17 ---
+* Ethan has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Fiona 84.
+Served 5 | Paid 4 | Unhappy departures 0 | Revenue $70.20 | Average satisfaction 88.3 | Turns used 17/18
+
+==========================================================================
+TURN 18 of 18  |  Revenue $70.20  |  Average satisfaction of paid customers 88.3
+Happy Hour: used
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - READY_TO_PAY - Salad + Pasta Combo $19.44 SERVED
+  Table 2: #6 Fiona (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Burger + Pasta Combo $29.70 PREPARING 1/3
+Staff tasks available:
+  Host   : seat [none]
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#6 Fiona: Burger + Pasta Combo 1/3]
+  Cashier: charges Ethan automatically at the end of this turn
+
+HOST: nobody can be seated this turn, so the Host waits.
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#6 Fiona: Burger + Pasta Combo 1/3]
+Customer number whose order to prepare (0 = wait): 6
+>> Chef prepares Fiona's Burger + Pasta Combo: unit 2 of 3 done.
+
+--- End of turn 18 ---
+* Cashier collects $19.44 from Ethan: PAID with satisfaction 84 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Fiona 76.
+Served 5 | Paid 5 | Unhappy departures 0 | Revenue $89.64 | Average satisfaction 87.4 | Turns used 18/18
+
+==========================================================================
+GAME OVER - all 18 turns played
+==========================================================================
+Paid customers       : 5  (target at least 4)  MET
+Revenue              : $89.64  (target at least $45.00)  MET
+Average satisfaction : 87.4  (target at least 60)  MET
+Served 5 | Unhappy departures 0
+RESULT: VICTORY - all three targets were met!

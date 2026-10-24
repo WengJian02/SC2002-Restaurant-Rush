@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1022" height="1127" viewBox="0 0 1022 1127" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<g transform="translate(34.0,84.0)">
+<polyline points="560.0,-19.0 560.0,100.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="180.0,140.0 400.0,140.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="218.0,230.0 400.0,230.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="227.0,310.0 400.0,310.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="227.0,332.0 400.0,332.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="652.0,160.0 800.0,160.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="652.0,420.0 800.0,420.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="400.0,565.0 180.0,565.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="526.0,636.0 526.0,680.0 228.0,680.0 228.0,720.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="526.0,636.0 526.0,680.0 506.5,680.0 506.5,720.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="526.0,636.0 526.0,680.0 786.0,680.0 786.0,720.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="506.5,857.0 506.5,930.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="288.0,452.0 400.0,452.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="832.0,900.0 832.0,833.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<rect x="400.0" y="100.0" width="252" height="520" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="526.0" y="115.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="526.0" y="133.0" font-size="14" font-weight="bold" text-anchor="middle">Customer</text>
+<text x="526.0" y="148.0" font-size="13" text-anchor="middle">{abstract}</text>
+<line x1="400.0" y1="156.0" x2="652.0" y2="156.0" stroke="black" stroke-width="1"/>
+<text x="407.0" y="172.0" font-size="13">+MAX_SATISFACTION: int = 100</text><line x1="407.0" y1="174.0" x2="572.1" y2="174.0" stroke="black" stroke-width="0.8"/>
+<text x="407.0" y="188.0" font-size="13">-number: int</text>
+<text x="407.0" y="204.0" font-size="13">-name: String</text>
+<text x="407.0" y="220.0" font-size="13">-satisfaction: int</text>
+<text x="407.0" y="236.0" font-size="13">-servedTurn: int</text>
+<text x="407.0" y="252.0" font-size="13">-readyToPayTurn: int</text>
+<line x1="400.0" y1="260.0" x2="652.0" y2="260.0" stroke="black" stroke-width="1"/>
+<text x="407.0" y="276.0" font-size="13">#Customer(number: int, name: String)</text>
+<text x="407.0" y="292.0" font-size="13">+getType(): String {abstract}</text>
+<text x="407.0" y="308.0" font-size="13">+getSatisfactionLoss(): int {abstract}</text>
+<text x="407.0" y="324.0" font-size="13">+calculateBill(menuPrice: int): int</text>
+<text x="407.0" y="340.0" font-size="13">+chooseMenuItem(menu: Menu): MenuItem</text>
+<text x="407.0" y="356.0" font-size="13">+sitDown(): void</text>
+<text x="407.0" y="372.0" font-size="13">+placeOrder(order: Order): void</text>
+<text x="407.0" y="388.0" font-size="13">+startEating(turn: int): void</text>
+<text x="407.0" y="404.0" font-size="13">+finishEating(turn: int): boolean</text>
+<text x="407.0" y="420.0" font-size="13">+canPay(turn: int): boolean</text>
+<text x="407.0" y="436.0" font-size="13">+pay(): void</text>
+<text x="407.0" y="452.0" font-size="13">+isWaiting(): boolean</text>
+<text x="407.0" y="468.0" font-size="13">+loseSatisfaction(): void</text>
+<text x="407.0" y="484.0" font-size="13">+recoverSatisfaction(amount: int): void</text>
+<text x="407.0" y="500.0" font-size="13">+leave(): void</text>
+<text x="407.0" y="516.0" font-size="13">+getNumber(): int</text>
+<text x="407.0" y="532.0" font-size="13">+getName(): String</text>
+<text x="407.0" y="548.0" font-size="13">+getSatisfaction(): int</text>
+<text x="407.0" y="564.0" font-size="13">+getStatus(): CustomerStatus</text>
+<text x="407.0" y="580.0" font-size="13">+getOrder(): Order</text>
+<text x="407.0" y="596.0" font-size="13">+getReadyToPayTurn(): int</text>
+<text x="407.0" y="612.0" font-size="13">+toString(): String</text>
+<rect x="520.0" y="-60.0" width="80" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="560.0" y="-45.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="560.0" y="-27.0" font-size="14" font-weight="bold" text-anchor="middle">Cashier</text>
+<rect x="100.0" y="120.0" width="80" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="140.0" y="135.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="140.0" y="153.0" font-size="14" font-weight="bold" text-anchor="middle">Table</text>
+<rect x="100.0" y="210.0" width="98" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="149.0" y="225.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="149.0" y="243.0" font-size="14" font-weight="bold" text-anchor="middle">WaitingQueue</text>
+<rect x="100.0" y="300.0" width="107" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="153.5" y="315.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="153.5" y="333.0" font-size="14" font-weight="bold" text-anchor="middle">GameController</text>
+<rect x="800.0" y="140.0" width="80" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="840.0" y="155.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="840.0" y="173.0" font-size="14" font-weight="bold" text-anchor="middle">Order</text>
+<rect x="800.0" y="380.0" width="129" height="161" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="864.5" y="395.0" font-size="12" text-anchor="middle">&lt;&lt;enumeration&gt;&gt;</text>
+<text x="864.5" y="413.0" font-size="14" font-weight="bold" text-anchor="middle">CustomerStatus</text>
+<line x1="800.0" y1="421.0" x2="929.0" y2="421.0" stroke="black" stroke-width="1"/>
+<text x="807.0" y="437.0" font-size="13">WAITING_FOR_TABLE</text>
+<text x="807.0" y="453.0" font-size="13">SEATED</text>
+<text x="807.0" y="469.0" font-size="13">WAITING_FOR_FOOD</text>
+<text x="807.0" y="485.0" font-size="13">EATING</text>
+<text x="807.0" y="501.0" font-size="13">READY_TO_PAY</text>
+<text x="807.0" y="517.0" font-size="13">PAID</text>
+<text x="807.0" y="533.0" font-size="13">LEFT</text>
+<rect x="100.0" y="545.0" width="80" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="140.0" y="560.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="140.0" y="578.0" font-size="14" font-weight="bold" text-anchor="middle">Menu</text>
+<rect x="100.0" y="720.0" width="256" height="97" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="228.0" y="735.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="228.0" y="753.0" font-size="14" font-weight="bold" text-anchor="middle">RegularCustomer</text>
+<line x1="100.0" y1="761.0" x2="356.0" y2="761.0" stroke="black" stroke-width="1"/>
+<text x="107.0" y="777.0" font-size="13">+RegularCustomer(number: int, name: String)</text>
+<text x="107.0" y="793.0" font-size="13">+getType(): String</text>
+<text x="107.0" y="809.0" font-size="13">+getSatisfactionLoss(): int</text>
+<rect x="390.0" y="720.0" width="233" height="137" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="506.5" y="735.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="506.5" y="753.0" font-size="14" font-weight="bold" text-anchor="middle">VIPCustomer</text>
+<line x1="390.0" y1="761.0" x2="623.0" y2="761.0" stroke="black" stroke-width="1"/>
+<text x="397.0" y="777.0" font-size="13">-BILL_PERCENT: int = 90</text><line x1="397.0" y1="779.0" x2="521.9" y2="779.0" stroke="black" stroke-width="0.8"/>
+<line x1="390.0" y1="785.0" x2="623.0" y2="785.0" stroke="black" stroke-width="1"/>
+<text x="397.0" y="801.0" font-size="13">+VIPCustomer(number: int, name: String)</text>
+<text x="397.0" y="817.0" font-size="13">+getType(): String</text>
+<text x="397.0" y="833.0" font-size="13">+getSatisfactionLoss(): int</text>
+<text x="397.0" y="849.0" font-size="13">+calculateBill(menuPrice: int): int</text>
+<rect x="660.0" y="720.0" width="252" height="113" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="786.0" y="735.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="786.0" y="753.0" font-size="14" font-weight="bold" text-anchor="middle">CriticCustomer</text>
+<line x1="660.0" y1="761.0" x2="912.0" y2="761.0" stroke="black" stroke-width="1"/>
+<text x="667.0" y="777.0" font-size="13">+CriticCustomer(number: int, name: String)</text>
+<text x="667.0" y="793.0" font-size="13">+getType(): String</text>
+<text x="667.0" y="809.0" font-size="13">+getSatisfactionLoss(): int</text>
+<text x="667.0" y="825.0" font-size="13">+chooseMenuItem(menu: Menu): MenuItem</text>
+<rect x="466.5" y="930.0" width="80" height="36" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="506.5" y="948.0" font-size="14" font-weight="bold" text-anchor="middle">Money</text>
+<path d="M-10.0,400.0 H278.0 L288.0,410.0 V504.0 H-10.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M278.0,400.0 V410.0 H288.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="-2.0" y="419.0" font-size="12"><tspan font-weight="bold">Encapsulation</tspan></text>
+<text x="-2.0" y="434.0" font-size="12">Every attribute is private. A customer&#x27;s status only</text>
+<text x="-2.0" y="449.0" font-size="12">changes through its own methods, which refuse a step</text>
+<text x="-2.0" y="464.0" font-size="12">out of order: pay() before READY_TO_PAY, or leave()</text>
+<text x="-2.0" y="479.0" font-size="12">when not waiting. Order works the same way</text>
+<text x="-2.0" y="494.0" font-size="12">(markServed() needs READY, markPaid() needs SERVED).</text>
+<path d="M700.0,900.0 H954.0 L964.0,910.0 V1019.0 H700.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M954.0,900.0 V910.0 H964.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="708.0" y="919.0" font-size="12"><tspan font-weight="bold">Polymorphism</tspan> (stage 2)</text>
+<text x="708.0" y="934.0" font-size="12">GameController only calls Customer methods.</text>
+<text x="708.0" y="949.0" font-size="12">getSatisfactionLoss(): Regular 8, VIP 5, Critic 12</text>
+<text x="708.0" y="964.0" font-size="12">calculateBill(): VIP 10% off</text>
+<text x="708.0" y="979.0" font-size="12">chooseMenuItem(): the Critic picks the item with</text>
+<text x="708.0" y="994.0" font-size="12">the most preparation units</text>
+<text x="708.0" y="1009.0" font-size="12">No instanceof or type checks anywhere.</text>
+<polyline points="566.0,88.0 560.0,100.0 554.0,88.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="388.0,134.0 400.0,140.0 388.0,146.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polygon points="198.0,230.0 208.0,236.5 218.0,230.0 208.0,223.5" fill="white" stroke="black" stroke-width="1.2"/>
+<polygon points="207.0,310.0 217.0,316.5 227.0,310.0 217.0,303.5" fill="white" stroke="black" stroke-width="1.2"/>
+<polygon points="207.0,332.0 217.0,338.5 227.0,332.0 217.0,325.5" fill="white" stroke="black" stroke-width="1.2"/>
+<polyline points="788.0,414.0 800.0,420.0 788.0,426.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="192.0,571.0 180.0,565.0 192.0,559.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polygon points="526.0,620.0 517.0,636.0 535.0,636.0" fill="white" stroke="black" stroke-width="1.2"/>
+<polyline points="512.5,918.0 506.5,930.0 500.5,918.0" fill="none" stroke="black" stroke-width="1.2"/>
+<rect x="563.0" y="33.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="564.0" y="44.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="345.4" y="110.0" width="51.6" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="346.4" y="121.0" font-size="12">0..1</text>
+<text x="346.4" y="135.0" font-size="12">-customer</text>
+<rect x="339.8" y="200.0" width="57.2" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="340.8" y="211.0" font-size="12">{ordered} *</text>
+<text x="340.8" y="225.0" font-size="12">-customers</text>
+<rect x="356.0" y="280.0" width="41.0" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="357.0" y="291.0" font-size="12">*</text>
+<text x="357.0" y="305.0" font-size="12">-arrivals</text>
+<rect x="339.8" y="335.0" width="57.2" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="340.8" y="346.0" font-size="12">{ordered} *</text>
+<text x="340.8" y="360.0" font-size="12">-customers</text>
+<rect x="764.5" y="130.0" width="32.5" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="765.5" y="141.0" font-size="12">0..1</text>
+<text x="765.5" y="155.0" font-size="12">-order</text>
+<rect x="655.0" y="163.0" width="51.6" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="656.0" y="174.0" font-size="12">1</text>
+<text x="656.0" y="188.0" font-size="12">-customer</text>
+<rect x="762.2" y="390.0" width="34.8" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="763.2" y="401.0" font-size="12">1</text>
+<text x="763.2" y="415.0" font-size="12">-status</text>
+<rect x="268.5" y="550.0" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="269.5" y="561.0" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="509.5" y="886.5" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="510.5" y="897.5" font-size="12">&lt;&lt;call&gt;&gt;</text>
+</g></svg>

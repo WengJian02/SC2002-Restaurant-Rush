@@ -5,7 +5,7 @@ can be reproduced. Each run is a plain text file of answers, one per line, and a
 is a note. Replay a run with `--echo` to see each answer printed next to its prompt:
 
 ```
-./run.sh --echo < runs/stage-2/victory.txt        (Windows: run.bat --echo < runs\stage-2\victory.txt)
+./run.sh --echo < runs/stage-3/victory.txt        (Windows: run.bat --echo < runs\stage-3\victory.txt)
 ```
 
 The complete output of each run is saved next to it as `*-transcript.txt`. `./test.sh` replays
@@ -109,6 +109,8 @@ At tag `stage-1`, `./test.sh` runs 78 checks:
 
 ## Stage 2 (tag `stage-2`)
 
+Replay these runs after `git checkout stage-2`: they use the Stage 2 menu (no combos) and have no Host or Happy Hour questions.
+
 Arrivals: #1 Alice (Regular, turn 1), #2 Victor (VIP, turn 4), #3 Chloe (Regular, turn 7),
 #4 Carmen (Critic, turn 10), #5 Ethan (Regular, turn 13), #6 Fiona (Regular, turn 16).
 They order Salad, Burger ($13.50 for the VIP), Pasta, Pasta (the Critic's most demanding dish),
@@ -208,10 +210,10 @@ is added to revenue.
 
 ### Rule checks added in Stage 2
 
-`./test.sh` now runs 97 checks. The Stage 1 rule checks still pass, including the Section 3.3
-example, abandonment, one task per turn and the payment order. Because the arrivals changed, the
-Stage 1 replays and the "all customers are Regular" check became their Stage 2 versions. The new
-checks are:
+At tag `stage-2`, `./test.sh` runs 97 checks. The Stage 1 rule checks still pass, including the
+Section 3.3 example, abandonment, one task per turn and the payment order. Because the arrivals
+changed, the Stage 1 replays and the "all customers are Regular" check became their Stage 2
+versions. The new checks are:
 
 | Group | What is checked |
 | --- | --- |
@@ -221,3 +223,138 @@ checks are:
 | No type checks | `GameController.java` contains no `instanceof`, no `getType()` and no reference to `VIPCustomer` or `CriticCustomer` |
 | Arrivals | Still six arrivals, with the VIP on turn 4 and the Critic on turn 10 |
 | Replays | The three Stage 2 runs above give the expected results and match their transcripts |
+
+## Stage 3 (tag `stage-3`, final version)
+
+The arrivals are the same as in Stage 2. The menu now also lists three combos, so under the same
+food rule customers #5 and #6 order combos, and the Critic's most demanding item is now a combo:
+
+| Customer | Type | Orders | Bill | Units |
+| --- | --- | --- | --- | --- |
+| #1 Alice | Regular | Salad | $9.00 | 1 |
+| #2 Victor | VIP | Burger | $13.50 ($10.80 if ordered during Happy Hour) | 1 |
+| #3 Chloe | Regular | Pasta | $18.00 | 2 |
+| #4 Carmen | Critic | Burger + Pasta Combo (most units, then highest price) | $29.70 | 3 |
+| #5 Ethan | Regular | Salad + Pasta Combo | $24.30 | 3 |
+| #6 Fiona | Regular | Burger + Pasta Combo | $29.70 | 3 |
+
+Each turn the game asks about Happy Hour (only while it is unused), then about the Host, the Waiter
+and the Chef. A question is skipped when there is nothing to decide, for example the Host's question
+when nobody can be seated.
+
+### Victory run: `runs/stage-3/victory.txt`
+
+The Host seats every customer as they arrive, so the Waiter takes the order in the same turn and
+the Chef starts at once. Happy Hour is switched on at turn 4 when the VIP orders, so his Burger costs
+$15.00 x 0.9 x 0.8 = $10.80 (the brief's example), and on turn 5 he recovers to 100. Turn 13 is the
+hardest choice. Ethan's 3-unit combo must start on the turn he arrives or he cannot pay by turn 18,
+so the Waiter takes his order before serving Carmen's READY combo.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Host seats Alice (Table 1)<br>Waiter takes Alice's order: Salad, bill $9.00<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 92 |
+| 2 |  | Waiter serves Alice's Salad<br>Chef: nothing to do |  |
+| 3 |  | Waiter: nothing to do<br>Chef: nothing to do | Alice READY_TO_PAY |
+| 4 | #2 Victor (VIP) | Happy Hour ON (this turn and next); waiting customers +15: Victor 100<br>Host seats Victor (Table 2)<br>Waiter takes Victor's order: Burger, bill $10.80 (menu $15.00, Happy Hour 20% off)<br>Chef: Victor's Burger 1/1, READY | Alice pays $9.00 (satisfaction 92)<br>Waiting: Victor 95<br>Happy Hour: 1 turn left |
+| 5 |  | Happy Hour turn 2: waiting customers +15: Victor 100<br>Waiter serves Victor's Burger<br>Chef: nothing to do | Happy Hour over |
+| 6 |  | Waiter: nothing to do<br>Chef: nothing to do | Victor READY_TO_PAY |
+| 7 | #3 Chloe (Regular) | Host seats Chloe (Table 1)<br>Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef: Chloe's Pasta 1/2 | Victor pays $10.80 (satisfaction 100)<br>Waiting: Chloe 92 |
+| 8 |  | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 84 |
+| 9 |  | Waiter serves Chloe's Pasta<br>Chef: nothing to do |  |
+| 10 | #4 Carmen (Critic) | Host seats Carmen (Table 2)<br>Waiter takes Carmen's order: Burger + Pasta Combo, bill $29.70<br>Chef: Carmen's Burger + Pasta Combo 1/3 | Chloe READY_TO_PAY<br>Waiting: Carmen 88 |
+| 11 |  | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 2/3 | Chloe pays $18.00 (satisfaction 84)<br>Waiting: Carmen 76 |
+| 12 |  | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 3/3, READY | Waiting: Carmen 64 |
+| 13 | #5 Ethan (Regular) | Host seats Ethan (Table 1)<br>Waiter takes Ethan's order: Salad + Pasta Combo, bill $24.30<br>Chef: Ethan's Salad + Pasta Combo 1/3 | Waiting: Carmen 52, Ethan 92 |
+| 14 |  | Waiter serves Carmen's Burger + Pasta Combo<br>Chef: Ethan's Salad + Pasta Combo 2/3 | Waiting: Ethan 84 |
+| 15 |  | Waiter: nothing to do<br>Chef: Ethan's Salad + Pasta Combo 3/3, READY | Carmen READY_TO_PAY<br>Waiting: Ethan 76 |
+| 16 | #6 Fiona (Regular) | Waiter serves Ethan's Salad + Pasta Combo<br>Chef: nothing to do | Carmen pays $29.70 (satisfaction 52)<br>Waiting: Fiona 92 |
+| 17 |  | Host seats Fiona (Table 2)<br>Waiter takes Fiona's order: Burger + Pasta Combo, bill $29.70<br>Chef: Fiona's Burger + Pasta Combo 1/3 | Ethan READY_TO_PAY<br>Waiting: Fiona 84 |
+| 18 |  | Waiter: nothing to do<br>Chef: Fiona's Burger + Pasta Combo 2/3 | Ethan pays $24.30 (satisfaction 76)<br>Waiting: Fiona 76 |
+
+Result: VICTORY. 5 paid, revenue $91.80 (9 + 10.80 + 18 + 29.70 + 24.30), average satisfaction
+80.8 = (92 + 100 + 84 + 52 + 76) / 5.
+
+### Same game with Happy Hour used later: `runs/stage-3/happy-hour-late.txt`
+
+This is the victory run except that Happy Hour is saved for turn 13, when Carmen has been waiting
+for her combo and Ethan arrives. Both turns of recovery go to customers who are waiting, and Carmen is
+served on turn 14 with 82 instead of 52.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Host seats Alice (Table 1)<br>Waiter takes Alice's order: Salad, bill $9.00<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 92 |
+| 2 |  | Waiter serves Alice's Salad<br>Chef: nothing to do |  |
+| 3 |  | Waiter: nothing to do<br>Chef: nothing to do | Alice READY_TO_PAY |
+| 4 | #2 Victor (VIP) | Host seats Victor (Table 2)<br>Waiter takes Victor's order: Burger, bill $13.50 (menu $15.00)<br>Chef: Victor's Burger 1/1, READY | Alice pays $9.00 (satisfaction 92)<br>Waiting: Victor 95 |
+| 5 |  | Waiter serves Victor's Burger<br>Chef: nothing to do |  |
+| 6 |  | Waiter: nothing to do<br>Chef: nothing to do | Victor READY_TO_PAY |
+| 7 | #3 Chloe (Regular) | Host seats Chloe (Table 1)<br>Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef: Chloe's Pasta 1/2 | Victor pays $13.50 (satisfaction 95)<br>Waiting: Chloe 92 |
+| 8 |  | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 84 |
+| 9 |  | Waiter serves Chloe's Pasta<br>Chef: nothing to do |  |
+| 10 | #4 Carmen (Critic) | Host seats Carmen (Table 2)<br>Waiter takes Carmen's order: Burger + Pasta Combo, bill $29.70<br>Chef: Carmen's Burger + Pasta Combo 1/3 | Chloe READY_TO_PAY<br>Waiting: Carmen 88 |
+| 11 |  | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 2/3 | Chloe pays $18.00 (satisfaction 84)<br>Waiting: Carmen 76 |
+| 12 |  | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 3/3, READY | Waiting: Carmen 64 |
+| 13 | #5 Ethan (Regular) | Happy Hour ON (this turn and next); waiting customers +15: Carmen 79, Ethan 100<br>Host seats Ethan (Table 1)<br>Waiter takes Ethan's order: Salad + Pasta Combo, bill $19.44 (menu $24.30, Happy Hour 20% off)<br>Chef: Ethan's Salad + Pasta Combo 1/3 | Waiting: Carmen 67, Ethan 92<br>Happy Hour: 1 turn left |
+| 14 |  | Happy Hour turn 2: waiting customers +15: Carmen 82, Ethan 100<br>Waiter serves Carmen's Burger + Pasta Combo<br>Chef: Ethan's Salad + Pasta Combo 2/3 | Waiting: Ethan 92<br>Happy Hour over |
+| 15 |  | Waiter: nothing to do<br>Chef: Ethan's Salad + Pasta Combo 3/3, READY | Carmen READY_TO_PAY<br>Waiting: Ethan 84 |
+| 16 | #6 Fiona (Regular) | Waiter serves Ethan's Salad + Pasta Combo<br>Chef: nothing to do | Carmen pays $29.70 (satisfaction 82)<br>Waiting: Fiona 92 |
+| 17 |  | Host seats Fiona (Table 2)<br>Waiter takes Fiona's order: Burger + Pasta Combo, bill $29.70<br>Chef: Fiona's Burger + Pasta Combo 1/3 | Ethan READY_TO_PAY<br>Waiting: Fiona 84 |
+| 18 |  | Waiter: nothing to do<br>Chef: Fiona's Burger + Pasta Combo 2/3 | Ethan pays $19.44 (satisfaction 84)<br>Waiting: Fiona 76 |
+
+Result: VICTORY. 5 paid, revenue $89.64 (9 + 13.50 + 18 + 29.70 + 19.44), average satisfaction
+87.4 = (92 + 95 + 84 + 82 + 84) / 5. Compared with the victory run, moving Happy Hour to turn 13 costs
+$2.16 of revenue and gains 6.6 points of average satisfaction.
+
+### Defeat run: `runs/stage-3/defeat.txt`
+
+The mistakes: Happy Hour is switched on at turn 1, when nobody needs it, so it only discounts
+Alice's Salad. The new Host is never used. The Waiter seats new customers and takes orders before
+serving READY dishes, and the Chef is kept waiting on the turn each order is taken.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Happy Hour ON (this turn and next); waiting customers +15: Alice 100<br>Host waits<br>Waiter seats Alice (Table 1)<br>Chef: nothing to do | Waiting: Alice 92<br>Happy Hour: 1 turn left |
+| 2 |  | Happy Hour turn 2: waiting customers +15: Alice 100<br>Waiter takes Alice's order: Salad, bill $7.20 (menu $9.00, Happy Hour 20% off)<br>Chef waits | Waiting: Alice 92<br>Happy Hour over |
+| 3 |  | Waiter: nothing to do<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 84 |
+| 4 | #2 Victor (VIP) | Host waits<br>Waiter seats Victor (Table 2)<br>Chef: nothing to do | Waiting: Alice 76, Victor 95 |
+| 5 |  | Waiter takes Victor's order: Burger, bill $13.50 (menu $15.00)<br>Chef waits | Waiting: Alice 68, Victor 90 |
+| 6 |  | Waiter serves Alice's Salad<br>Chef: Victor's Burger 1/1, READY | Waiting: Victor 85 |
+| 7 | #3 Chloe (Regular) | Waiter serves Victor's Burger<br>Chef: nothing to do | Alice READY_TO_PAY<br>Waiting: Chloe 92 |
+| 8 |  | Waiter: nothing to do<br>Chef: nothing to do | Victor READY_TO_PAY<br>Alice pays $7.20 (satisfaction 68)<br>Waiting: Chloe 84 |
+| 9 |  | Host waits<br>Waiter seats Chloe (Table 1)<br>Chef: nothing to do | Victor pays $13.50 (satisfaction 85)<br>Waiting: Chloe 76 |
+| 10 | #4 Carmen (Critic) | Host waits<br>Waiter seats Carmen (Table 2)<br>Chef: nothing to do | Waiting: Chloe 68, Carmen 88 |
+| 11 |  | Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef waits | Waiting: Chloe 60, Carmen 76 |
+| 12 |  | Waiter takes Carmen's order: Burger + Pasta Combo, bill $29.70<br>Chef: Chloe's Pasta 1/2 | Waiting: Chloe 52, Carmen 64 |
+| 13 | #5 Ethan (Regular) | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 44, Carmen 52, Ethan 92 |
+| 14 |  | Waiter serves Chloe's Pasta<br>Chef: Carmen's Burger + Pasta Combo 1/3 | Waiting: Carmen 40, Ethan 84 |
+| 15 |  | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 2/3 | Chloe READY_TO_PAY<br>Waiting: Carmen 28, Ethan 76 |
+| 16 | #6 Fiona (Regular) | Waiter: nothing to do<br>Chef: Carmen's Burger + Pasta Combo 3/3, READY | Chloe pays $18.00 (satisfaction 44)<br>Waiting: Carmen 16, Ethan 68, Fiona 92 |
+| 17 |  | Host waits<br>Waiter seats Ethan (Table 1)<br>Chef: nothing to do | Waiting: Carmen 4, Ethan 60, Fiona 84 |
+| 18 |  | Waiter takes Ethan's order: Salad + Pasta Combo, bill $24.30<br>Chef waits | Waiting: Carmen 0, Ethan 52, Fiona 76<br>Carmen leaves (0), Burger + Pasta Combo CANCELLED |
+
+Result: DEFEAT. Only 3 customers paid (target 4) and revenue is $38.70 (target $45.00). The average
+of those who paid is 65.7 ((68 + 85 + 44) / 3 = 65.67). Carmen's 3-unit combo was READY on turn 16,
+but on turn 17 the Waiter seated Ethan instead of serving her. She reached 0 at the end of turn 18 and
+left without paying, so her combo was CANCELLED and she counts as an unhappy departure.
+
+### Rule checks added in Stage 3
+
+`./test.sh` now runs 131 checks. The Stage 1 and Stage 2 rule checks still pass on the Stage 3
+code, including the Section 3.3 example, abandonment, the payment order, the VIP and Critic behaviour
+and the check that the controller has no type checks. The five checks that describe the setting
+itself were updated (see below). The new checks are:
+
+| Group | What is checked |
+| --- | --- |
+| Base setting | Staff now include the Host; the menu lists the three dishes and the three combos with their prices and units |
+| ComboMeal | Salad + Pasta = $24.30 and 3 units (brief's example); Salad + Burger $21.60 / 2; Burger + Pasta $29.70 / 3; rounding to the nearest cent; the combo choice rule (customers 4-6 land on combos; a Critic picks Burger + Pasta); a combo is ordered, prepared one unit per turn, served and paid like any dish |
+| Host | Host and Waiter are both `Seater`s; the Host seats at most one customer per turn; the Waiter can seat another customer in the same turn; a customer seated by the Host can order in the same turn; the Host follows the same table rule |
+| Happy Hour pricing | Only at the start of a turn (refused once a staff member has acted); once per game; lasts two turns (2 turns left when switched on, 1 at the start of the next turn); 20% off orders taken while it is on; orders taken before keep their locked price; orders after pay full price; VIP first, then Happy Hour ($10.80) |
+| Happy Hour recovery | +15 for customers waiting for a table or food at activation and again at the start of the second turn; never above 100; served customers and customers who have left are not affected |
+| Replays | The three Stage 3 runs above give the expected results and match their transcripts |
+
+Five earlier checks were updated because the setting grew. The staff check now expects the Host,
+the base-menu check no longer expects exactly three items, the food-rule check and the check that a
+Critic picks Pasta build the brief's three-dish menu themselves, and the input-handling check answers
+the new Happy Hour and Host questions first. The rules they test did not change. The Stage 2 runs are
+replayed at `stage-2`, because the Stage 3 menu and the Host change those games.

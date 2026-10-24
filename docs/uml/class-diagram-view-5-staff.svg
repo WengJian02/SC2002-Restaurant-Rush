@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1615" height="1041" viewBox="0 0 1615 1041" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<g transform="translate(224.0,144.0)">
+<polyline points="-73.0,470.0 120.0,470.0 120.0,357.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="781.0,200.0 781.0,222.0 206.5,222.0 206.5,260.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-73.0,470.0 410.0,470.0 410.0,389.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="781.0,200.0 781.0,222.0 550.0,222.0 550.0,260.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-73.0,470.0 810.0,470.0 810.0,357.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="781.0,200.0 781.0,222.0 853.0,222.0 853.0,260.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-73.0,470.0 1015.0,470.0 1015.0,373.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="781.0,200.0 781.0,222.0 1171.0,222.0 1171.0,260.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-130.0,510.0 -130.0,620.0 130.0,620.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-170.0,510.0 -170.0,805.0 130.0,805.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="-150.0,449.0 -150.0,60.0 130.0,60.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="218.6,133.0 218.6,200.0 150.0,200.0 150.0,260.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="218.6,133.0 218.6,200.0 440.0,200.0 440.0,260.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="130.0,100.0 70.0,100.0 70.0,555.0 170.0,555.0 170.0,580.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="317.0,640.0 550.0,640.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="380.0,830.0 590.0,830.0 590.0,668.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="710.0,389.0 710.0,560.0 875.0,560.0 875.0,620.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="915.0,357.0 915.0,620.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="1305.0,373.0 1305.0,530.0 610.0,530.0 610.0,612.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="900.0,77.0 862.0,77.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="256.0,-46.0 256.0,20.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<rect x="130.0" y="20.0" width="253" height="97" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="256.5" y="35.0" font-size="12" text-anchor="middle">&lt;&lt;interface&gt;&gt;</text>
+<text x="256.5" y="53.0" font-size="14" font-weight="bold" text-anchor="middle">Seater</text>
+<line x1="130.0" y1="61.0" x2="383.0" y2="61.0" stroke="black" stroke-width="1"/>
+<text x="137.0" y="77.0" font-size="13">+getRole(): String</text>
+<text x="137.0" y="93.0" font-size="13">+hasActed(): boolean</text>
+<text x="137.0" y="109.0" font-size="13">+seat(customer: Customer, table: Table): void</text>
+<rect x="700.0" y="0.0" width="162" height="184" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="781.0" y="15.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="781.0" y="33.0" font-size="14" font-weight="bold" text-anchor="middle">Staff</text>
+<text x="781.0" y="48.0" font-size="13" text-anchor="middle">{abstract}</text>
+<line x1="700.0" y1="56.0" x2="862.0" y2="56.0" stroke="black" stroke-width="1"/>
+<text x="707.0" y="72.0" font-size="13">-actedThisTurn: boolean</text>
+<line x1="700.0" y1="80.0" x2="862.0" y2="80.0" stroke="black" stroke-width="1"/>
+<text x="707.0" y="96.0" font-size="13">+getRole(): String {abstract}</text>
+<text x="707.0" y="112.0" font-size="13">+getDuty(): String {abstract}</text>
+<text x="707.0" y="128.0" font-size="13">+startTurn(): void</text>
+<text x="707.0" y="144.0" font-size="13">+hasActed(): boolean</text>
+<text x="707.0" y="160.0" font-size="13">+waitThisTurn(): void</text>
+<text x="707.0" y="176.0" font-size="13">#completeTask(): void</text>
+<rect x="80.0" y="260.0" width="253" height="97" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="206.5" y="275.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="206.5" y="293.0" font-size="14" font-weight="bold" text-anchor="middle">Host</text>
+<line x1="80.0" y1="301.0" x2="333.0" y2="301.0" stroke="black" stroke-width="1"/>
+<text x="87.0" y="317.0" font-size="13">+getRole(): String</text>
+<text x="87.0" y="333.0" font-size="13">+getDuty(): String</text>
+<text x="87.0" y="349.0" font-size="13">+seat(customer: Customer, table: Table): void</text>
+<rect x="370.0" y="260.0" width="360" height="129" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="550.0" y="275.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="550.0" y="293.0" font-size="14" font-weight="bold" text-anchor="middle">Waiter</text>
+<line x1="370.0" y1="301.0" x2="730.0" y2="301.0" stroke="black" stroke-width="1"/>
+<text x="377.0" y="317.0" font-size="13">+getRole(): String</text>
+<text x="377.0" y="333.0" font-size="13">+getDuty(): String</text>
+<text x="377.0" y="349.0" font-size="13">+seat(customer: Customer, table: Table): void</text>
+<text x="377.0" y="365.0" font-size="13">+takeOrder(customer: Customer, item: MenuItem, bill: int): Order</text>
+<text x="377.0" y="381.0" font-size="13">+serve(order: Order, turn: int): void</text>
+<rect x="770.0" y="260.0" width="166" height="97" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="853.0" y="275.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="853.0" y="293.0" font-size="14" font-weight="bold" text-anchor="middle">Chef</text>
+<line x1="770.0" y1="301.0" x2="936.0" y2="301.0" stroke="black" stroke-width="1"/>
+<text x="777.0" y="317.0" font-size="13">+getRole(): String</text>
+<text x="777.0" y="333.0" font-size="13">+getDuty(): String</text>
+<text x="777.0" y="349.0" font-size="13">+prepare(order: Order): void</text>
+<rect x="975.0" y="260.0" width="392" height="113" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="1171.0" y="275.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="1171.0" y="293.0" font-size="14" font-weight="bold" text-anchor="middle">Cashier</text>
+<line x1="975.0" y1="301.0" x2="1367.0" y2="301.0" stroke="black" stroke-width="1"/>
+<text x="982.0" y="317.0" font-size="13">+getRole(): String</text>
+<text x="982.0" y="333.0" font-size="13">+getDuty(): String</text>
+<text x="982.0" y="349.0" font-size="13">+chooseNextCustomer(customers: List&lt;Customer&gt;, turn: int): Customer</text>
+<text x="982.0" y="365.0" font-size="13">+collectPayment(customer: Customer): int</text>
+<rect x="130.0" y="580.0" width="187" height="169" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="223.5" y="595.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="223.5" y="613.0" font-size="14" font-weight="bold" text-anchor="middle">Table</text>
+<line x1="130.0" y1="621.0" x2="317.0" y2="621.0" stroke="black" stroke-width="1"/>
+<text x="137.0" y="637.0" font-size="13">-number: int</text>
+<line x1="130.0" y1="645.0" x2="317.0" y2="645.0" stroke="black" stroke-width="1"/>
+<text x="137.0" y="661.0" font-size="13">+Table(number: int)</text>
+<text x="137.0" y="677.0" font-size="13">+isFree(): boolean</text>
+<text x="137.0" y="693.0" font-size="13">+seat(customer: Customer): void</text>
+<text x="137.0" y="709.0" font-size="13">+free(): void</text>
+<text x="137.0" y="725.0" font-size="13">+getNumber(): int</text>
+<text x="137.0" y="741.0" font-size="13">+getCustomer(): Customer</text>
+<rect x="130.0" y="760.0" width="230" height="113" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="245.0" y="775.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="245.0" y="793.0" font-size="14" font-weight="bold" text-anchor="middle">WaitingQueue</text>
+<line x1="130.0" y1="801.0" x2="360.0" y2="801.0" stroke="black" stroke-width="1"/>
+<text x="137.0" y="817.0" font-size="13">+add(customer: Customer): void</text>
+<text x="137.0" y="833.0" font-size="13">+remove(customer: Customer): void</text>
+<text x="137.0" y="849.0" font-size="13">+contains(customer: Customer): boolean</text>
+<text x="137.0" y="865.0" font-size="13">+getCustomers(): List&lt;Customer&gt;</text>
+<rect x="-200.0" y="449.0" width="107" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="-146.5" y="464.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="-146.5" y="482.0" font-size="14" font-weight="bold" text-anchor="middle">GameController</text>
+<rect x="550.0" y="612.0" width="80" height="56" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="590.0" y="627.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="590.0" y="645.0" font-size="14" font-weight="bold" text-anchor="middle">Customer</text>
+<text x="590.0" y="660.0" font-size="13" text-anchor="middle">{abstract}</text>
+<rect x="860.0" y="620.0" width="80" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="900.0" y="635.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="900.0" y="653.0" font-size="14" font-weight="bold" text-anchor="middle">Order</text>
+<path d="M900.0,40.0 H1131.0 L1141.0,50.0 V114.0 H900.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M1131.0,40.0 V50.0 H1141.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="908.0" y="59.0" font-size="12"><tspan font-weight="bold">Encapsulation</tspan></text>
+<text x="908.0" y="74.0" font-size="12">actedThisTurn is private and every task calls</text>
+<text x="908.0" y="89.0" font-size="12">completeTask() first, so no staff member can</text>
+<text x="908.0" y="104.0" font-size="12">do two tasks in one turn.</text>
+<path d="M130.0,-120.0 H372.0 L382.0,-110.0 V-46.0 H130.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M372.0,-120.0 V-110.0 H382.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="138.0" y="-101.0" font-size="12"><tspan font-weight="bold">Polymorphism</tspan> (stage 3)</text>
+<text x="138.0" y="-86.0" font-size="12">seatFromQueue(Seater, int) in GameController</text>
+<text x="138.0" y="-71.0" font-size="12">holds the seating rule once for the Waiter</text>
+<text x="138.0" y="-56.0" font-size="12">and the Host.</text>
+<polygon points="-93.0,470.0 -83.0,476.5 -73.0,470.0 -83.0,463.5" fill="black" stroke="black" stroke-width="1.2"/>
+<polygon points="781.0,184.0 772.0,200.0 790.0,200.0" fill="white" stroke="black" stroke-width="1.2"/>
+<polygon points="-130.0,490.0 -136.5,500.0 -130.0,510.0 -123.5,500.0" fill="black" stroke="black" stroke-width="1.2"/>
+<polygon points="-170.0,490.0 -176.5,500.0 -170.0,510.0 -163.5,500.0" fill="black" stroke="black" stroke-width="1.2"/>
+<polyline points="118.0,54.0 130.0,60.0 118.0,66.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polygon points="218.6,117.0 209.6,133.0 227.6,133.0" fill="white" stroke="black" stroke-width="1.2"/>
+<polyline points="176.0,568.0 170.0,580.0 164.0,568.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="538.0,634.0 550.0,640.0 538.0,646.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polygon points="360.0,830.0 370.0,836.5 380.0,830.0 370.0,823.5" fill="white" stroke="black" stroke-width="1.2"/>
+<polyline points="881.0,608.0 875.0,620.0 869.0,608.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="921.0,608.0 915.0,620.0 909.0,608.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="616.0,600.0 610.0,612.0 604.0,600.0" fill="none" stroke="black" stroke-width="1.2"/>
+<rect x="123.0" y="360.0" width="26.9" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="124.0" y="371.0" font-size="12">1</text>
+<text x="124.0" y="385.0" font-size="12">-host</text>
+<rect x="413.0" y="392.0" width="36.7" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="414.0" y="403.0" font-size="12">1</text>
+<text x="414.0" y="417.0" font-size="12">-waiter</text>
+<rect x="813.0" y="360.0" width="26.6" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="814.0" y="371.0" font-size="12">1</text>
+<text x="814.0" y="385.0" font-size="12">-chef</text>
+<rect x="1018.0" y="376.0" width="40.3" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="1019.0" y="387.0" font-size="12">1</text>
+<text x="1019.0" y="401.0" font-size="12">-cashier</text>
+<rect x="57.6" y="590.0" width="69.4" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="58.6" y="601.0" font-size="12">{ordered} 1..*</text>
+<text x="58.6" y="615.0" font-size="12">-tables</text>
+<rect x="90.5" y="775.0" width="36.5" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="91.5" y="786.0" font-size="12">1</text>
+<text x="91.5" y="800.0" font-size="12">-queue</text>
+<rect x="-147.0" y="247.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="-146.0" y="258.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="21.0" y="377.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="22.0" y="388.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="495.4" y="610.0" width="51.6" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="496.4" y="621.0" font-size="12">0..1</text>
+<text x="496.4" y="635.0" font-size="12">-customer</text>
+<rect x="593.0" y="671.0" width="57.2" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="594.0" y="682.0" font-size="12">{ordered} *</text>
+<text x="594.0" y="696.0" font-size="12">-customers</text>
+<rect x="756.5" y="544.0" width="77.6" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="757.5" y="555.0" font-size="12">&lt;&lt;instantiate&gt;&gt;</text>
+<rect x="918.0" y="428.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="919.0" y="439.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="1308.0" y="451.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="1309.0" y="462.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+</g></svg>

@@ -1,0 +1,384 @@
+@startuml
+' Sequence diagram for the Stage 3 victory run (runs/stage-3/victory.txt).
+' Turns 4 to 7 follow Victor (#2, VIP) after the manager switches Happy Hour on, then the result check.
+' The end-of-turn steps are drawn once, in sequence-diagram-endturn.puml (ref EndTurn).
+
+skinparam style strictuml
+skinparam guillemet false
+skinparam shadowing false
+skinparam roundCorner 0
+skinparam defaultFontName Carlito
+skinparam defaultFontSize 13
+skinparam sequenceMessageAlign center
+skinparam ArrowColor black
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ParticipantFontStyle bold
+skinparam ActorBackgroundColor white
+skinparam ActorBorderColor black
+skinparam ActorFontStyle bold
+skinparam BoundaryBackgroundColor white
+skinparam BoundaryBorderColor black
+skinparam BoundaryFontStyle bold
+skinparam ControlBackgroundColor white
+skinparam ControlBorderColor black
+skinparam ControlFontStyle bold
+skinparam EntityBackgroundColor white
+skinparam EntityBorderColor black
+skinparam EntityFontStyle bold
+skinparam LifeLineBorderColor black
+skinparam SequenceLifeLineBackgroundColor #8C9BEA
+skinparam SequenceGroupBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam SequenceGroupHeaderFontSize 13
+skinparam SequenceGroupFontStyle plain
+skinparam SequenceGroupFontSize 13
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ParticipantPadding 6
+hide footbox
+
+mainframe <b>sd VIPVisitDuringHappyHour</b>
+
+actor ":Manager" as M
+boundary "cli:RestaurantCLI" as cli
+control "game:GameController" as game
+entity "happyHour:HappyHour" as hh
+entity "queue:WaitingQueue" as queue
+entity "host:Host" as host
+entity "table2:Table" as table
+entity "victor:VIPCustomer" as victor
+entity "waiter:Waiter" as waiter
+entity "order:Order" as order
+entity "chef:Chef" as chef
+entity "cashier:Cashier" as cashier
+entity "scoreboard:Scoreboard" as score
+entity "objective:Objective" as goal
+
+note over M, hh
+  Stage 3 victory run (runs/stage-3/victory.txt), turns 4 to 7, then the result check after turn 18.
+  Only the calls for Victor (#2, VIP) are drawn. The other customers go through the same calls.
+  The manager's choice: Happy Hour on in turn 4. Victor then pays $10.80 instead of $13.50
+  and pays with satisfaction 100 instead of 95. runs/stage-3/happy-hour-late.txt is the same game
+  with Happy Hour saved for turn 13. When the controller refuses a choice, the CLI says why
+  and asks the same staff member again.
+end note
+
+[o-> cli ++ : play()
+
+loop not game.isGameOver()
+
+  note over cli, game : turn 4: Victor (#2, VIP) arrives
+  cli -> game ++ : events=startTurn()
+  game -> host ++ : startTurn()
+  deactivate host
+  game -> waiter ++ : startTurn()
+  deactivate waiter
+  game -> chef ++ : startTurn()
+  deactivate chef
+  game -> cashier ++ : startTurn()
+  deactivate cashier
+  note over host, cashier : each staff member can do one task again
+  opt a customer is due this turn
+    game -> queue ++ : add(victor)
+    deactivate queue
+  end
+  return events
+  cli ->> M : turn 4: queue, tables, staff tasks
+
+  cli -> game ++ : canActivateHappyHour()
+  return true
+  cli ->> M : "Switch Happy Hour on now?"
+  M ->> cli : 1
+  cli -> game ++ : activateHappyHour()
+  alt happyHour.isAvailable() and no staff member has acted this turn
+    game -> hh ++ : activate()
+    note right of hh : turnsLeft = 2
+    deactivate hh
+    game -> game ++ : recoverWaitingCustomers()
+    loop for each customer who isWaiting()
+      game -> victor ++ : recoverSatisfaction(15)
+      deactivate victor
+    end
+    note right of victor : stays at 100 (the maximum)
+    deactivate game
+    game -->> cli : success(message)
+  else else
+    game -->> cli : failure(reason)
+  end
+  deactivate game
+  cli ->> M : ">> Happy Hour is ON ... Victor 100."
+
+  cli -> game ++ : hostHasTask()
+  return true
+  cli ->> M : "Customer number to seat (0 = wait)"
+  M ->> cli : 2
+  cli -> game ++ : result=hostSeat(2)
+  game -> game ++ : seatFromQueue(host, 2)
+  alt the Host has not acted, victor is in the queue and a table is free
+    game -> host ++ : seat(victor, table2)
+    host -> host ++ : completeTask()
+    deactivate host
+    host -> table ++ : seat(victor)
+    deactivate table
+    host -> victor ++ : sitDown()
+    note right of victor : SEATED
+    deactivate victor
+    deactivate host
+    game -> queue ++ : remove(victor)
+    deactivate queue
+  else else
+    note right of game : failure(reason)
+  end
+  deactivate game
+  return result
+  cli ->> M : ">> Host seats Victor at Table 2."
+
+newpage
+
+  note over cli, game : turn 4 (continued): the Waiter and the Chef
+  cli -> game ++ : waiterHasTask()
+  return true
+  cli ->> M : "Waiter task (0-3)"
+  M ->> cli : 2
+  cli ->> M : "Customer number (0 = back)"
+  M ->> cli : 2
+  cli -> game ++ : result=waiterTakeOrder(2)
+  alt the Waiter has not acted and victor is SEATED
+    game -> victor ++ : item=chooseMenuItem(menu)
+    return Burger
+    game -> victor ++ : bill=calculateBill(1500)
+    note right of victor : VIPCustomer overrides calculateBill(): 10% off
+    return 1350
+    game -> hh ++ : bill=applyDiscount(1350)
+    note right of hh : Happy Hour is on: 20% off
+    return 1080
+    game -> waiter ++ : takeOrder(victor, item, 1080)
+    waiter -> waiter ++ : completeTask()
+    deactivate waiter
+    create order
+    waiter -->> order : new
+    note right of order : PREPARING, bill locked at $10.80
+    waiter -> victor ++ : placeOrder(order)
+    note right of victor : WAITING_FOR_FOOD
+    deactivate victor
+    return order
+    game -->> cli : success(message)
+  else else
+    game -->> cli : failure(reason)
+  end
+  deactivate game
+  cli ->> M : ">> Victor orders Burger ... $10.80 ..."
+
+  cli -> game ++ : chefHasTask()
+  return true
+  cli ->> M : "Customer number whose order to prepare"
+  M ->> cli : 2
+  cli -> game ++ : result=chefPrepare(2)
+  game -> victor ++ : getOrder()
+  return order
+  alt the Chef has not acted, the Waiter has acted and the order is PREPARING
+    game -> chef ++ : prepare(order)
+    chef -> chef ++ : completeTask()
+    deactivate chef
+    chef -> order ++ : prepareOneUnit()
+    note right of order : 1 of 1 unit done: READY
+    deactivate order
+    deactivate chef
+    game -->> cli : success(message)
+  else else
+    game -->> cli : failure(reason)
+  end
+  deactivate game
+  cli ->> M : ">> Chef prepares ... READY ..."
+
+  cli -> game ++ : endTurn()
+  ref over game, score : EndTurn
+  note over hh, victor
+    Alice (#1) pays $9.00. Victor is still waiting for his food,
+    so he loses 5 (VIP): 100 -> 95. Happy Hour has 1 turn left.
+  end note
+  return events
+  cli ->> M : end of turn 4 events
+
+newpage
+
+  note over cli, game : turn 5: the second turn of Happy Hour
+  cli -> game ++ : events=startTurn()
+  opt happyHour.isActive()
+    game -> game ++ : recoverWaitingCustomers()
+    loop for each customer who isWaiting()
+      game -> victor ++ : recoverSatisfaction(15)
+      deactivate victor
+    end
+    note right of victor : 95 -> 100
+    deactivate game
+  end
+  return events
+  cli ->> M : turn 5: queue, tables, staff tasks
+
+  cli -> game ++ : hostHasTask()
+  return false
+  cli -> game ++ : hostWait()
+  game -> host ++ : waitThisTurn()
+  host -> host ++ : completeTask()
+  deactivate host
+  deactivate host
+  return
+  cli ->> M : "HOST: ... so the Host waits."
+
+  cli -> game ++ : waiterHasTask()
+  return true
+  cli ->> M : "Waiter task (0-3)"
+  M ->> cli : 3
+  cli ->> M : "Customer number (0 = back)"
+  M ->> cli : 2
+  cli -> game ++ : result=waiterServe(2)
+  game -> victor ++ : getOrder()
+  return order
+  alt the Waiter has not acted and the order is READY
+    game -> waiter ++ : serve(order, 5)
+    waiter -> waiter ++ : completeTask()
+    deactivate waiter
+    waiter -> order ++ : markServed()
+    note right of order : SERVED
+    deactivate order
+    waiter -> order ++ : getCustomer()
+    return victor
+    waiter -> victor ++ : startEating(5)
+    note right of victor : EATING, so no more satisfaction loss
+    deactivate victor
+    deactivate waiter
+    game -> score ++ : recordServed()
+    deactivate score
+    game -->> cli : success(message)
+  else else
+    game -->> cli : failure(reason)
+  end
+  deactivate game
+  cli ->> M : ">> Waiter serves Victor's Burger ..."
+
+  cli -> game ++ : chefHasTask()
+  return false
+  cli -> game ++ : chefWait()
+  game -> chef ++ : waitThisTurn()
+  chef -> chef ++ : completeTask()
+  deactivate chef
+  deactivate chef
+  return
+  cli ->> M : "CHEF: ... so the Chef waits."
+
+  cli -> game ++ : endTurn()
+  ref over game, score : EndTurn
+  note over hh, victor : Happy Hour is over: happyHour.endTurn() makes turnsLeft 0.
+  return events
+  cli ->> M : end of turn 5 events
+
+newpage
+
+  note over cli, game : turn 6: Victor finishes eating
+  cli -> game ++ : events=startTurn()
+  return events
+  cli ->> M : turn 6: queue, tables, staff tasks
+  note over cli, game
+    hostHasTask(), waiterHasTask() and chefHasTask() all return false,
+    so the CLI calls hostWait(), waiterWait() and chefWait() as in turn 5.
+  end note
+  cli -> game ++ : endTurn()
+  game -> game ++ : checkFinishedEating(events)
+  loop for each customer
+    game -> victor ++ : finishEating(6)
+    note right of victor : served on turn 5, before turn 6, so READY_TO_PAY
+    return true
+  end
+  deactivate game
+  game -> game ++ : chargeNextCustomer(events)
+  deactivate game
+  game -> game ++ : checkWaitingCustomers(events)
+  deactivate game
+  game -> game ++ : updateHappyHour(events)
+  deactivate game
+  return events
+  cli ->> M : "* Victor has finished eating ..."
+
+  note over cli, game : turn 7: the Cashier charges Victor
+  cli -> game ++ : events=startTurn()
+  return events
+  cli ->> M : turn 7: queue, tables, staff tasks
+  note over cli, game
+    Chloe (#3) arrives. The Host seats her, the Waiter takes her order
+    and the Chef starts it, with the same calls as for Victor in turn 4.
+  end note
+  cli -> game ++ : endTurn()
+  game -> game ++ : checkFinishedEating(events)
+  deactivate game
+  game -> game ++ : chargeNextCustomer(events)
+  game -> cashier ++ : payer=chooseNextCustomer(customers, 7)
+  loop for each customer
+    cashier -> victor ++ : canPay(7)
+    return true
+  end
+  return victor
+  opt payer != null
+    game -> cashier ++ : amount=collectPayment(victor)
+    cashier -> cashier ++ : completeTask()
+    deactivate cashier
+    cashier -> victor ++ : pay()
+    note right of victor : PAID
+    victor -> order ++ : markPaid()
+    note right of order : PAID
+    deactivate order
+    deactivate victor
+    cashier -> victor ++ : getOrder()
+    return order
+    cashier -> order ++ : getBill()
+    return 1080
+    return 1080
+    game -> game ++ : table=freeTableOf(victor)
+    game -> table ++ : free()
+    deactivate table
+    deactivate game
+    game -> victor ++ : getSatisfaction()
+    return 100
+    game -> score ++ : recordPayment(1080, 100)
+    deactivate score
+  end
+  deactivate game
+  game -> game ++ : checkWaitingCustomers(events)
+  note right of game : Chloe is still waiting for her food: 100 -> 92
+  deactivate game
+  game -> game ++ : updateHappyHour(events)
+  deactivate game
+  return events
+  cli ->> M : "* Cashier collects $10.80 from Victor ..."
+
+end
+
+newpage
+
+note over cli, game : after turn 18: isGameOver() is true, so the loop ends and the CLI checks the result
+cli -> game ++ : isVictory()
+game -> goal ++ : isMetBy(scoreboard)
+goal -> goal ++ : isPaidCustomersMet(score)
+goal -> score ++ : getPaidCount()
+return 5
+deactivate goal
+goal -> goal ++ : isRevenueMet(score)
+goal -> score ++ : getRevenue()
+return 9180
+deactivate goal
+goal -> goal ++ : isSatisfactionMet(score)
+goal -> score ++ : hasPayments()
+return true
+goal -> score ++ : getAverageSatisfaction()
+return 80.8
+deactivate goal
+note over hh, cashier : 5 paid >= 4, $91.80 >= $45.00 and 80.8 >= 60, so all three targets are met
+return true
+return true
+cli ->> M : "RESULT: VICTORY -\nall three targets were met!"
+deactivate cli
+@enduml

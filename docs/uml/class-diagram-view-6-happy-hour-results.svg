@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="588" height="821" viewBox="0 0 588 821" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<g transform="translate(24.0,24.0)">
+<polyline points="40.0,41.0 40.0,160.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="260.0,61.0 260.0,110.0 130.0,110.0 130.0,160.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="260.0,61.0 260.0,110.0 380.0,110.0 380.0,160.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="337.0,20.0 540.0,20.0 540.0,500.0 420.0,500.0 420.0,540.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="300.0,540.0 300.0,441.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<rect x="0.0" y="0.0" width="95" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="47.5" y="15.0" font-size="12" text-anchor="middle">&lt;&lt;boundary&gt;&gt;</text>
+<text x="47.5" y="33.0" font-size="14" font-weight="bold" text-anchor="middle">RestaurantCLI</text>
+<rect x="230.0" y="0.0" width="107" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="283.5" y="15.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="283.5" y="33.0" font-size="14" font-weight="bold" text-anchor="middle">GameController</text>
+<rect x="0.0" y="160.0" width="176" height="233" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="88.0" y="175.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="88.0" y="193.0" font-size="14" font-weight="bold" text-anchor="middle">HappyHour</text>
+<line x1="0.0" y1="201.0" x2="176.0" y2="201.0" stroke="black" stroke-width="1"/>
+<text x="7.0" y="217.0" font-size="13">+DURATION: int = 2</text><line x1="7.0" y1="219.0" x2="109.4" y2="219.0" stroke="black" stroke-width="0.8"/>
+<text x="7.0" y="233.0" font-size="13">+DISCOUNT_PERCENT: int = 20</text><line x1="7.0" y1="235.0" x2="168.9" y2="235.0" stroke="black" stroke-width="0.8"/>
+<text x="7.0" y="249.0" font-size="13">+RECOVERY: int = 15</text><line x1="7.0" y1="251.0" x2="113.9" y2="251.0" stroke="black" stroke-width="0.8"/>
+<text x="7.0" y="265.0" font-size="13">-used: boolean</text>
+<text x="7.0" y="281.0" font-size="13">-turnsLeft: int</text>
+<line x1="0.0" y1="289.0" x2="176.0" y2="289.0" stroke="black" stroke-width="1"/>
+<text x="7.0" y="305.0" font-size="13">+isAvailable(): boolean</text>
+<text x="7.0" y="321.0" font-size="13">+activate(): void</text>
+<text x="7.0" y="337.0" font-size="13">+isActive(): boolean</text>
+<text x="7.0" y="353.0" font-size="13">+getTurnsLeft(): int</text>
+<text x="7.0" y="369.0" font-size="13">+applyDiscount(bill: int): int</text>
+<text x="7.0" y="385.0" font-size="13">+endTurn(): void</text>
+<rect x="210.0" y="160.0" width="286" height="281" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="353.0" y="175.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="353.0" y="193.0" font-size="14" font-weight="bold" text-anchor="middle">Scoreboard</text>
+<line x1="210.0" y1="201.0" x2="496.0" y2="201.0" stroke="black" stroke-width="1"/>
+<text x="217.0" y="217.0" font-size="13">-revenue: int</text>
+<text x="217.0" y="233.0" font-size="13">-servedCount: int</text>
+<text x="217.0" y="249.0" font-size="13">-paidCount: int</text>
+<text x="217.0" y="265.0" font-size="13">-paidSatisfactionTotal: int</text>
+<text x="217.0" y="281.0" font-size="13">-unhappyDepartures: int</text>
+<line x1="210.0" y1="289.0" x2="496.0" y2="289.0" stroke="black" stroke-width="1"/>
+<text x="217.0" y="305.0" font-size="13">+recordServed(): void</text>
+<text x="217.0" y="321.0" font-size="13">+recordPayment(amount: int, satisfaction: int): void</text>
+<text x="217.0" y="337.0" font-size="13">+recordUnhappyDeparture(): void</text>
+<text x="217.0" y="353.0" font-size="13">+hasPayments(): boolean</text>
+<text x="217.0" y="369.0" font-size="13">+getAverageSatisfaction(): double</text>
+<text x="217.0" y="385.0" font-size="13">+getRevenue(): int</text>
+<text x="217.0" y="401.0" font-size="13">+getServedCount(): int</text>
+<text x="217.0" y="417.0" font-size="13">+getPaidCount(): int</text>
+<text x="217.0" y="433.0" font-size="13">+getUnhappyDepartures(): int</text>
+<rect x="30.0" y="540.0" width="440" height="233" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="250.0" y="555.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="250.0" y="573.0" font-size="14" font-weight="bold" text-anchor="middle">Objective</text>
+<line x1="30.0" y1="581.0" x2="470.0" y2="581.0" stroke="black" stroke-width="1"/>
+<text x="37.0" y="597.0" font-size="13">-minPaidCustomers: int</text>
+<text x="37.0" y="613.0" font-size="13">-minRevenue: int</text>
+<text x="37.0" y="629.0" font-size="13">-minAverageSatisfaction: int</text>
+<line x1="30.0" y1="637.0" x2="470.0" y2="637.0" stroke="black" stroke-width="1"/>
+<text x="37.0" y="653.0" font-size="13">+Objective(minPaidCustomers: int, minRevenue: int, minAverageSatisfaction: int)</text>
+<text x="37.0" y="669.0" font-size="13">+isPaidCustomersMet(score: Scoreboard): boolean</text>
+<text x="37.0" y="685.0" font-size="13">+isRevenueMet(score: Scoreboard): boolean</text>
+<text x="37.0" y="701.0" font-size="13">+isSatisfactionMet(score: Scoreboard): boolean</text>
+<text x="37.0" y="717.0" font-size="13">+isMetBy(score: Scoreboard): boolean</text>
+<text x="37.0" y="733.0" font-size="13">+getMinPaidCustomers(): int</text>
+<text x="37.0" y="749.0" font-size="13">+getMinRevenue(): int</text>
+<text x="37.0" y="765.0" font-size="13">+getMinAverageSatisfaction(): int</text>
+<polyline points="46.0,148.0 40.0,160.0 34.0,148.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polygon points="260.0,41.0 253.5,51.0 260.0,61.0 266.5,51.0" fill="black" stroke="black" stroke-width="1.2"/>
+<polyline points="426.0,528.0 420.0,540.0 414.0,528.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="294.0,453.0 300.0,441.0 306.0,453.0" fill="none" stroke="black" stroke-width="1.2"/>
+<rect x="43.0" y="93.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="44.0" y="104.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="133.0" y="129.0" width="60.0" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="134.0" y="140.0" font-size="12">1</text>
+<text x="134.0" y="154.0" font-size="12">-happyHour</text>
+<rect x="383.0" y="129.0" width="60.4" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="384.0" y="140.0" font-size="12">1</text>
+<text x="384.0" y="154.0" font-size="12">-scoreboard</text>
+<rect x="423.0" y="509.0" width="50.2" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="424.0" y="520.0" font-size="12">1</text>
+<text x="424.0" y="534.0" font-size="12">-objective</text>
+<rect x="303.0" y="483.5" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="304.0" y="494.5" font-size="12">&lt;&lt;use&gt;&gt;</text>
+</g></svg>

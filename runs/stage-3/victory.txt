@@ -1,0 +1,68 @@
+// Stage 3 victory run. One answer per line, anything after // is a note the game ignores.
+// The questions each turn, when they apply: Happy Hour (until it is used), Host, Waiter, Chef.
+// Plan: the Host seats each customer as they arrive, so the Waiter can take the order in the
+// same turn and the Chef can start cooking straight away. Happy Hour goes on when the VIP orders:
+// $15.00 x 0.9 (VIP) x 0.8 (Happy Hour) = $10.80, the same as the brief's example.
+// Turn 1: Alice (#1) arrives
+0    // Happy Hour: not yet
+1    // Host: seat Alice
+2    // Waiter: take order
+1    // Alice orders Salad
+1    // Chef: Alice's Salad -> READY
+// Turn 2
+0    // Happy Hour: not yet
+3    // Waiter: serve
+1    // Alice
+// Turn 3: nothing for the Host, Waiter or Chef
+0    // Happy Hour: not yet
+// Turn 4: Victor (#2, VIP) arrives; Alice pays at the end of the turn
+1    // Happy Hour: ON for turns 4 and 5
+2    // Host: seat Victor
+2    // Waiter: take order
+2    // Victor orders Burger: $15.00 -> VIP $13.50 -> Happy Hour $10.80, locked into the order
+2    // Chef: Victor's Burger -> READY
+// Turn 5: Happy Hour's second turn: Victor recovers 15 satisfaction at the start of the turn
+3    // Waiter: serve
+2    // Victor
+// Turn 6: nothing to do (Happy Hour is used up, so it is not offered again)
+// Turn 7: Chloe (#3) arrives; Victor pays $10.80 at the end of the turn
+3    // Host: seat Chloe
+2    // Waiter: take order
+3    // Chloe orders Pasta (2 units)
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 8: the Waiter has nothing to do
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 9
+3    // Waiter: serve
+3    // Chloe
+// Turn 10: Carmen (#4, Critic) arrives
+4    // Host: seat Carmen
+2    // Waiter: take order
+4    // Carmen (Critic) orders the most demanding item: Burger + Pasta Combo (3 units, $29.70)
+4    // Chef: combo unit 1 of 3
+// Turn 11: Chloe pays at the end of the turn
+4    // Chef: combo unit 2 of 3
+// Turn 12
+4    // Chef: combo unit 3 of 3 -> READY
+// Turn 13: Ethan (#5) arrives. Staff constraint: serve Carmen or take Ethan's order?
+// Ethan's combo needs 3 units, so his order must start now for him to pay by turn 18.
+5    // Host: seat Ethan
+2    // Waiter: take order
+5    // Ethan orders Salad + Pasta Combo (3 units, $24.30)
+5    // Chef: Ethan's combo unit 1 of 3
+// Turn 14
+3    // Waiter: serve
+4    // Carmen
+5    // Chef: Ethan's combo unit 2 of 3
+// Turn 15
+5    // Chef: Ethan's combo unit 3 of 3 -> READY
+// Turn 16: Fiona (#6) arrives but both tables are occupied; Carmen pays at the end of the turn
+3    // Waiter: serve
+5    // Ethan
+// Turn 17
+6    // Host: seat Fiona
+2    // Waiter: take order
+6    // Fiona orders Burger + Pasta Combo
+6    // Chef: Fiona's combo unit 1 of 3
+// Turn 18: Ethan pays at the end of the turn. Fiona cannot finish in time (intended by the brief).
+6    // Chef: Fiona's combo unit 2 of 3

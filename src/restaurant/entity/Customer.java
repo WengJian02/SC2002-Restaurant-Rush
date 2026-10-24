@@ -85,6 +85,11 @@ public abstract class Customer {
         satisfaction = Math.max(0, satisfaction - getSatisfactionLoss());
     }
 
+    // used by Happy Hour, never goes above 100
+    public void recoverSatisfaction(int amount) {
+        satisfaction = Math.min(MAX_SATISFACTION, satisfaction + amount);
+    }
+
     // leaves without paying, an unfinished order gets cancelled
     public void leave() {
         if (!isWaiting()) {

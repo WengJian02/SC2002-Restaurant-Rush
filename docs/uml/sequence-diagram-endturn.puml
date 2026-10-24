@@ -1,0 +1,141 @@
+@startuml
+' The end-of-turn steps in GameController.endTurn(). sequence-diagram.puml uses this as "ref EndTurn".
+
+skinparam style strictuml
+skinparam guillemet false
+skinparam shadowing false
+skinparam roundCorner 0
+skinparam defaultFontName Carlito
+skinparam defaultFontSize 13
+skinparam sequenceMessageAlign center
+skinparam ArrowColor black
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ParticipantFontStyle bold
+skinparam ControlBackgroundColor white
+skinparam ControlBorderColor black
+skinparam ControlFontStyle bold
+skinparam EntityBackgroundColor white
+skinparam EntityBorderColor black
+skinparam EntityFontStyle bold
+skinparam LifeLineBorderColor black
+skinparam SequenceLifeLineBackgroundColor #8C9BEA
+skinparam SequenceGroupBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupHeaderFontStyle bold
+skinparam SequenceGroupHeaderFontSize 13
+skinparam SequenceGroupFontStyle plain
+skinparam SequenceGroupFontSize 13
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ParticipantPadding 6
+hide footbox
+
+mainframe <b>sd EndTurn</b>
+
+control "game:GameController" as game
+entity "cashier:Cashier" as cashier
+entity "customer:Customer" as c
+entity "order:Order" as o
+entity "table:Table" as t
+entity "queue:WaitingQueue" as queue
+entity "scoreboard:Scoreboard" as score
+entity "happyHour:HappyHour" as hh
+
+note over game, o
+  Runs at the end of every turn, after the manager's choices.
+  Inside a loop, customer is each customer of the game in turn. Elsewhere it is
+  the customer named in the message: the payer, or a customer who leaves.
+  order is that customer's order and table is the table they sit at.
+end note
+
+[o-> game ++ : endTurn()
+
+game -> game ++ : checkFinishedEating(events)
+loop for each customer
+  game -> c ++ : finishEating(turn)
+  note right of c : EATING and served on an earlier turn: becomes READY_TO_PAY
+  return finished
+end
+deactivate game
+
+game -> game ++ : chargeNextCustomer(events)
+game -> cashier ++ : payer=chooseNextCustomer(customers, turn)
+loop for each customer
+  cashier -> c ++ : canPay(turn)
+  return ok
+end
+note right of cashier : oldest first: the earliest READY_TO_PAY customer, or null
+return payer
+opt payer != null
+  game -> cashier ++ : amount=collectPayment(payer)
+  cashier -> cashier ++ : completeTask()
+  deactivate cashier
+  cashier -> c ++ : pay()
+  c -> o ++ : markPaid()
+  deactivate o
+  deactivate c
+  cashier -> c ++ : getOrder()
+  return order
+  cashier -> o ++ : getBill()
+  return bill
+  return bill
+  game -> game ++ : table=freeTableOf(payer)
+  game -> t ++ : free()
+  deactivate t
+  deactivate game
+  game -> c ++ : getSatisfaction()
+  return satisfaction
+  game -> score ++ : recordPayment(amount, satisfaction)
+  deactivate score
+end
+deactivate game
+
+game -> game ++ : checkWaitingCustomers(events)
+loop for each customer
+  game -> c ++ : isWaiting()
+  return waiting
+  opt waiting
+    game -> c ++ : loseSatisfaction()
+    c -> c ++ : getSatisfactionLoss()
+    note right of c
+      abstract in Customer, so the subclass decides:
+      RegularCustomer 8, VIPCustomer 5, CriticCustomer 12
+    end note
+    deactivate c
+    deactivate c
+    game -> c ++ : getSatisfaction()
+    return satisfaction
+  end
+end
+loop for each customer whose satisfaction reached 0
+  game -> c ++ : leave()
+  opt order != null
+    c -> o ++ : cancel()
+    deactivate o
+  end
+  deactivate c
+  game -> queue ++ : remove(customer)
+  deactivate queue
+  game -> game ++ : table=freeTableOf(customer)
+  opt the customer was seated
+    game -> t ++ : free()
+    deactivate t
+  end
+  deactivate game
+  game -> score ++ : recordUnhappyDeparture()
+  deactivate score
+end
+deactivate game
+
+game -> game ++ : updateHappyHour(events)
+opt happyHour.isActive()
+  game -> hh ++ : endTurn()
+  note right of hh : turnsLeft - 1
+  deactivate hh
+end
+deactivate game
+
+[<-- game : events
+deactivate game
+@enduml

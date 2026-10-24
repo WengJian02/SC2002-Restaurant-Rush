@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1232" height="1040" viewBox="0 0 1232 1040" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
+<rect width="100%" height="100%" fill="white"/>
+<g transform="translate(344.0,174.0)">
+<polyline points="151.0,25.0 200.0,25.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="75.0,50.0 75.0,230.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="439.0,60.0 600.0,60.0 600.0,280.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="383.0,300.0 560.0,300.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="630.0,321.0 630.0,400.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="383.0,480.0 500.0,480.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="383.0,620.0 500.0,620.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="150.0,671.0 150.0,760.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="667.0,300.0 820.0,300.0 820.0,815.0 318.0,815.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="540.0,641.0 540.0,785.0 318.0,785.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="-44.0,344.5 0.0,344.5" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="320.0,-61.0 320.0,0.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<rect x="0.0" y="0.0" width="151" height="50" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="75.5" y="18.0" font-size="14" font-weight="bold" text-anchor="middle">Main</text>
+<line x1="0.0" y1="26.0" x2="151.0" y2="26.0" stroke="black" stroke-width="1"/>
+<text x="7.0" y="42.0" font-size="13">+main(args: String[]): void</text><line x1="7.0" y1="44.0" x2="143.6" y2="44.0" stroke="black" stroke-width="0.8"/>
+<rect x="200.0" y="0.0" width="239" height="169" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="319.5" y="15.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="319.5" y="33.0" font-size="14" font-weight="bold" text-anchor="middle">GameSetup</text>
+<line x1="200.0" y1="41.0" x2="439.0" y2="41.0" stroke="black" stroke-width="1"/>
+<text x="207.0" y="57.0" font-size="13">+MAX_TURNS: int = 18</text><line x1="207.0" y1="59.0" x2="327.4" y2="59.0" stroke="black" stroke-width="0.8"/>
+<text x="207.0" y="73.0" font-size="13">+TABLES: int = 2</text><line x1="207.0" y1="75.0" x2="290.4" y2="75.0" stroke="black" stroke-width="0.8"/>
+<line x1="200.0" y1="81.0" x2="439.0" y2="81.0" stroke="black" stroke-width="1"/>
+<text x="207.0" y="97.0" font-size="13">-GameSetup()</text>
+<text x="207.0" y="113.0" font-size="13">+createBaseGame(): GameController</text><line x1="207.0" y1="115.0" x2="401.4" y2="115.0" stroke="black" stroke-width="0.8"/>
+<text x="207.0" y="129.0" font-size="13">+createMenu(): Menu</text><line x1="207.0" y1="131.0" x2="323.4" y2="131.0" stroke="black" stroke-width="0.8"/>
+<text x="207.0" y="145.0" font-size="13">+createArrivals(): Map&lt;Integer, Customer&gt;</text><line x1="207.0" y1="147.0" x2="431.5" y2="147.0" stroke="black" stroke-width="0.8"/>
+<text x="207.0" y="161.0" font-size="13">+createObjective(): Objective</text><line x1="207.0" y1="163.0" x2="360.9" y2="163.0" stroke="black" stroke-width="0.8"/>
+<rect x="0.0" y="230.0" width="383" height="441" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="191.5" y="245.0" font-size="12" text-anchor="middle">&lt;&lt;boundary&gt;&gt;</text>
+<text x="191.5" y="263.0" font-size="14" font-weight="bold" text-anchor="middle">RestaurantCLI</text>
+<line x1="0.0" y1="271.0" x2="383.0" y2="271.0" stroke="black" stroke-width="1"/>
+<text x="7.0" y="287.0" font-size="13">-LINE: String</text><line x1="7.0" y1="289.0" x2="71.7" y2="289.0" stroke="black" stroke-width="0.8"/>
+<text x="7.0" y="303.0" font-size="13">-input: Scanner</text>
+<text x="7.0" y="319.0" font-size="13">-echo: boolean</text>
+<line x1="0.0" y1="327.0" x2="383.0" y2="327.0" stroke="black" stroke-width="1"/>
+<text x="7.0" y="343.0" font-size="13">+RestaurantCLI(game: GameController, input: Scanner, echo: boolean)</text>
+<text x="7.0" y="359.0" font-size="13">+play(): void</text>
+<text x="7.0" y="375.0" font-size="13">-askHappyHour(): void</text>
+<text x="7.0" y="391.0" font-size="13">-askHost(): void</text>
+<text x="7.0" y="407.0" font-size="13">-askWaiter(): void</text>
+<text x="7.0" y="423.0" font-size="13">-askChef(): void</text>
+<text x="7.0" y="439.0" font-size="13">-show(result: ActionResult): void</text>
+<text x="7.0" y="455.0" font-size="13">-showWelcome(): void</text>
+<text x="7.0" y="471.0" font-size="13">-showTurnStart(events: List&lt;String&gt;): void</text>
+<text x="7.0" y="487.0" font-size="13">-showTurnEnd(events: List&lt;String&gt;): void</text>
+<text x="7.0" y="503.0" font-size="13">-showFinalResult(): void</text>
+<text x="7.0" y="519.0" font-size="13">-happyHourStatus(): String</text>
+<text x="7.0" y="535.0" font-size="13">-describe(customer: Customer): String</text>
+<text x="7.0" y="551.0" font-size="13">-names(customers: List&lt;Customer&gt;): String</text>
+<text x="7.0" y="567.0" font-size="13">-orders(customers: List&lt;Customer&gt;): String</text>
+<text x="7.0" y="583.0" font-size="13">-joinTurns(turns: List&lt;Integer&gt;): String</text>
+<text x="7.0" y="599.0" font-size="13">-average(score: Scoreboard): String</text>
+<text x="7.0" y="615.0" font-size="13">-met(targetMet: boolean): String</text>
+<text x="7.0" y="631.0" font-size="13">-readChoice(prompt: String, max: int): int</text>
+<text x="7.0" y="647.0" font-size="13">-readNumber(prompt: String): int</text>
+<text x="7.0" y="663.0" font-size="13">-nextAnswer(): String</text>
+<rect x="560.0" y="280.0" width="107" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="613.5" y="295.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="613.5" y="313.0" font-size="14" font-weight="bold" text-anchor="middle">GameController</text>
+<rect x="500.0" y="400.0" width="271" height="169" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="635.5" y="415.0" font-size="12" text-anchor="middle">&lt;&lt;control&gt;&gt;</text>
+<text x="635.5" y="433.0" font-size="14" font-weight="bold" text-anchor="middle">ActionResult</text>
+<line x1="500.0" y1="441.0" x2="771.0" y2="441.0" stroke="black" stroke-width="1"/>
+<text x="507.0" y="457.0" font-size="13">-success: boolean</text>
+<text x="507.0" y="473.0" font-size="13">-message: String</text>
+<line x1="500.0" y1="481.0" x2="771.0" y2="481.0" stroke="black" stroke-width="1"/>
+<text x="507.0" y="497.0" font-size="13">-ActionResult(success: boolean, message: String)</text>
+<text x="507.0" y="513.0" font-size="13">+success(message: String): ActionResult</text><line x1="507.0" y1="515.0" x2="716.8" y2="515.0" stroke="black" stroke-width="0.8"/>
+<text x="507.0" y="529.0" font-size="13">+failure(reason: String): ActionResult</text><line x1="507.0" y1="531.0" x2="700.9" y2="531.0" stroke="black" stroke-width="0.8"/>
+<text x="507.0" y="545.0" font-size="13">+isSuccess(): boolean</text>
+<text x="507.0" y="561.0" font-size="13">+getMessage(): String</text>
+<rect x="500.0" y="600.0" width="81" height="41" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="540.5" y="615.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="540.5" y="633.0" font-size="14" font-weight="bold" text-anchor="middle">HappyHour</text>
+<rect x="100.0" y="760.0" width="218" height="82" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="209.0" y="778.0" font-size="14" font-weight="bold" text-anchor="middle">Money</text>
+<line x1="100.0" y1="786.0" x2="318.0" y2="786.0" stroke="black" stroke-width="1"/>
+<text x="107.0" y="802.0" font-size="13">-Money()</text>
+<text x="107.0" y="818.0" font-size="13">+format(cents: int): String</text><line x1="107.0" y1="820.0" x2="243.1" y2="820.0" stroke="black" stroke-width="0.8"/>
+<text x="107.0" y="834.0" font-size="13">+percentOf(cents: int, percent: int): int</text><line x1="107.0" y1="836.0" x2="311.0" y2="836.0" stroke="black" stroke-width="0.8"/>
+<path d="M-320.0,300.0 H-54.0 L-44.0,310.0 V389.0 H-320.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M-54.0,300.0 V310.0 H-44.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="-312.0" y="319.0" font-size="12"><tspan font-weight="bold">Boundary</tspan></text>
+<text x="-312.0" y="334.0" font-size="12">Reads the manager&#x27;s numbers and prints the game.</text>
+<text x="-312.0" y="349.0" font-size="12">Every choice goes through GameController. For the</text>
+<text x="-312.0" y="364.0" font-size="12">display it also &lt;&lt;use&gt;&gt;s Customer, Order, Table,</text>
+<text x="-312.0" y="379.0" font-size="12">Staff, MenuItem, Scoreboard and Objective.</text>
+<path d="M200.0,-150.0 H470.0 L480.0,-140.0 V-61.0 H200.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M470.0,-150.0 V-140.0 H480.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="208.0" y="-131.0" font-size="12"><tspan font-weight="bold">Base setting</tspan></text>
+<text x="208.0" y="-116.0" font-size="12">createMenu(), createArrivals() and createObjective()</text>
+<text x="208.0" y="-101.0" font-size="12">also &lt;&lt;instantiate&gt;&gt; Menu, MenuItem, ComboMeal,</text>
+<text x="208.0" y="-86.0" font-size="12">RegularCustomer, VIPCustomer, CriticCustomer</text>
+<text x="208.0" y="-71.0" font-size="12">and Objective.</text>
+<polyline points="188.0,19.0 200.0,25.0 188.0,31.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="81.0,218.0 75.0,230.0 69.0,218.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="606.0,268.0 600.0,280.0 594.0,268.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="548.0,294.0 560.0,300.0 548.0,306.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="636.0,388.0 630.0,400.0 624.0,388.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="488.0,474.0 500.0,480.0 488.0,486.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="488.0,614.0 500.0,620.0 488.0,626.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="156.0,748.0 150.0,760.0 144.0,748.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="330.0,821.0 318.0,815.0 330.0,809.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="330.0,791.0 318.0,785.0 330.0,779.0" fill="none" stroke="black" stroke-width="1.2"/>
+<rect x="154.4" y="10.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="155.4" y="21.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
+<rect x="78.0" y="133.0" width="77.6" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="79.0" y="144.0" font-size="12">&lt;&lt;instantiate&gt;&gt;</text>
+<rect x="603.0" y="163.0" width="77.6" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="604.0" y="174.0" font-size="12">&lt;&lt;instantiate&gt;&gt;</text>
+<rect x="524.6" y="270.0" width="32.4" height="28.0" fill="white" fill-opacity="0.85"/>
+<text x="525.6" y="281.0" font-size="12">1</text>
+<text x="525.6" y="295.0" font-size="12">-game</text>
+<rect x="633.0" y="353.5" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="634.0" y="364.5" font-size="12">&lt;&lt;call&gt;&gt;</text>
+<rect x="420.0" y="465.0" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="421.0" y="476.0" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="420.0" y="605.0" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="421.0" y="616.0" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="153.0" y="708.5" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="154.0" y="719.5" font-size="12">&lt;&lt;call&gt;&gt;</text>
+<rect x="823.0" y="617.5" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="824.0" y="628.5" font-size="12">&lt;&lt;call&gt;&gt;</text>
+<rect x="407.9" y="770.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="408.9" y="781.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
+</g></svg>

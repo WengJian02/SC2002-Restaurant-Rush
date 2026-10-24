@@ -3,6 +3,7 @@ package restaurant.control;
 import java.util.Map;
 import java.util.TreeMap;
 
+import restaurant.entity.ComboMeal;
 import restaurant.entity.CriticCustomer;
 import restaurant.entity.Customer;
 import restaurant.entity.Menu;
@@ -27,9 +28,15 @@ public final class GameSetup {
     // prices in cents
     public static Menu createMenu() {
         Menu menu = new Menu();
-        menu.addItem(new MenuItem("Salad", 900, 1));
-        menu.addItem(new MenuItem("Burger", 1500, 1));
-        menu.addItem(new MenuItem("Pasta", 1800, 2));
+        MenuItem salad = new MenuItem("Salad", 900, 1);
+        MenuItem burger = new MenuItem("Burger", 1500, 1);
+        MenuItem pasta = new MenuItem("Pasta", 1800, 2);
+        menu.addItem(salad);
+        menu.addItem(burger);
+        menu.addItem(pasta);
+        menu.addItem(new ComboMeal(salad, burger));
+        menu.addItem(new ComboMeal(salad, pasta));
+        menu.addItem(new ComboMeal(burger, pasta));
         return menu;
     }
 

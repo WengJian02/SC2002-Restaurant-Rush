@@ -1,0 +1,75 @@
+// Stage 3 extra run: the same game as the victory run except for when Happy Hour is used.
+// Anything after // is a note the game ignores.
+// Happy Hour is kept for turn 13 instead of turn 4 (the VIP's order). By then the Critic has been
+// waiting for her combo and Ethan arrives, so both rounds of +15 go to customers who need them.
+// Turn 1: Alice (#1) arrives
+0    // Happy Hour: not yet
+1    // Host: seat Alice
+2    // Waiter: take order
+1    // Alice orders Salad
+1    // Chef: Alice's Salad -> READY
+// Turn 2
+0    // Happy Hour: not yet
+3    // Waiter: serve
+1    // Alice
+// Turn 3
+0    // Happy Hour: not yet
+// Turn 4: Victor (#2, VIP) arrives
+0    // Happy Hour: not yet (Victor pays the VIP price $13.50)
+2    // Host: seat Victor
+2    // Waiter: take order
+2    // Victor orders Burger
+2    // Chef: Victor's Burger -> READY
+// Turn 5
+0    // Happy Hour: not yet
+3    // Waiter: serve
+2    // Victor
+// Turn 6
+0    // Happy Hour: not yet
+// Turn 7: Chloe (#3) arrives
+0    // Happy Hour: not yet
+3    // Host: seat Chloe
+2    // Waiter: take order
+3    // Chloe orders Pasta
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 8
+0    // Happy Hour: not yet
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 9
+0    // Happy Hour: not yet
+3    // Waiter: serve
+3    // Chloe
+// Turn 10: Carmen (#4, Critic) arrives
+0    // Happy Hour: not yet
+4    // Host: seat Carmen
+2    // Waiter: take order
+4    // Carmen orders Burger + Pasta Combo
+4    // Chef: combo unit 1 of 3
+// Turn 11
+0    // Happy Hour: not yet
+4    // Chef: combo unit 2 of 3
+// Turn 12
+0    // Happy Hour: not yet
+4    // Chef: combo unit 3 of 3 -> READY
+// Turn 13: Ethan (#5) arrives
+1    // Happy Hour: ON for turns 13 and 14, Carmen recovers 15 at once
+5    // Host: seat Ethan
+2    // Waiter: take order
+5    // Ethan orders Salad + Pasta Combo: $24.30 -> Happy Hour $19.44
+5    // Chef: Ethan's combo unit 1 of 3
+// Turn 14: second Happy Hour turn: Carmen and Ethan recover 15 at the start of the turn
+3    // Waiter: serve
+4    // Carmen
+5    // Chef: Ethan's combo unit 2 of 3
+// Turn 15
+5    // Chef: Ethan's combo unit 3 of 3 -> READY
+// Turn 16: Fiona (#6) arrives; both tables are occupied
+3    // Waiter: serve
+5    // Ethan
+// Turn 17
+6    // Host: seat Fiona
+2    // Waiter: take order
+6    // Fiona orders Burger + Pasta Combo
+6    // Chef: Fiona's combo unit 1 of 3
+// Turn 18
+6    // Chef: Fiona's combo unit 2 of 3

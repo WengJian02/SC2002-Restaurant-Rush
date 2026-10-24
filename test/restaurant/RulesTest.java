@@ -19,9 +19,11 @@ import restaurant.control.ActionResult;
 import restaurant.control.GameController;
 import restaurant.control.GameSetup;
 import restaurant.entity.Cashier;
+import restaurant.entity.ComboMeal;
 import restaurant.entity.CriticCustomer;
 import restaurant.entity.Customer;
 import restaurant.entity.CustomerStatus;
+import restaurant.entity.Host;
 import restaurant.entity.Menu;
 import restaurant.entity.MenuItem;
 import restaurant.entity.Objective;
@@ -29,13 +31,14 @@ import restaurant.entity.Order;
 import restaurant.entity.OrderStatus;
 import restaurant.entity.RegularCustomer;
 import restaurant.entity.Scoreboard;
+import restaurant.entity.Seater;
 import restaurant.entity.Staff;
 import restaurant.entity.Table;
 import restaurant.entity.VIPCustomer;
 import restaurant.entity.Waiter;
 import restaurant.util.Money;
 
-// Checks the rules from the brief one by one, then replays the saved runs in runs/stage-2
+// Checks the rules from the brief one by one, then replays the saved runs in runs/stage-3
 // through the real CLI. Run it from the project folder with test.sh or test.bat.
 public class RulesTest {
 
@@ -60,11 +63,15 @@ public class RulesTest {
         vipAndCriticBehaviour();
         everyCustomerTypeFollowsTheSameFlow();
         controllerHasNoTypeChecks();
-        replay("runs/stage-2/victory.txt", true, 5, 7350, "75.6");
-        replay("runs/stage-2/defeat.txt", false, 4, 5850, "54.3");
-        GameController criticLeaves = replay("runs/stage-2/critic-leaves.txt", true, 4, 5550, "83.5");
-        check(criticLeaves.getScoreboard().getUnhappyDepartures() == 1,
-                "the ignored Critic leaves at 0 and is counted as an unhappy departure");
+        comboMeals();
+        hostSeatsOneCustomerPerTurn();
+        happyHourPricing();
+        happyHourRecovery();
+        replay("runs/stage-3/victory.txt", true, 5, 9180, "80.8");
+        replay("runs/stage-3/happy-hour-late.txt", true, 5, 8964, "87.4");
+        GameController defeat = replay("runs/stage-3/defeat.txt", false, 3, 3870, "65.7");
+        check(defeat.getScoreboard().getUnhappyDepartures() == 1,
+                "in the defeat run the neglected Critic leaves at 0 and is counted as an unhappy departure");
 
         System.out.println();
         System.out.println(passed + " checks passed, " + failed + " failed.");
@@ -78,15 +85,20 @@ public class RulesTest {
         GameController game = GameSetup.createBaseGame();
         check(game.getMaxTurns() == 18, "18 turns");
         check(game.getTables().size() == 2, "2 tables");
-        check(roles(game.getStaff()).equals(Arrays.asList("Waiter", "Chef", "Cashier")), "staff: one Waiter, one Chef and one Cashier");
+        check(roles(game.getStaff()).equals(Arrays.asList("Host", "Waiter", "Chef", "Cashier")),
+                "staff: one Host (Stage 3), one Waiter, one Chef and one Cashier");
         check(game.getArrivalTurns().equals(Arrays.asList(1, 4, 7, 10, 13, 16)),
                 "one customer arrives at the start of turns 1, 4, 7, 10, 13 and 16");
         Menu menu = game.getMenu();
-        check(menu.size() == 3
-                        && isItem(menu.getItem(0), "Salad", 900, 1)
+        check(isItem(menu.getItem(0), "Salad", 900, 1)
                         && isItem(menu.getItem(1), "Burger", 1500, 1)
                         && isItem(menu.getItem(2), "Pasta", 1800, 2),
                 "menu: Salad $9.00 (1 unit), Burger $15.00 (1 unit), Pasta $18.00 (2 units)");
+        check(menu.size() == 6
+                        && isItem(menu.getItem(3), "Salad + Burger Combo", 2160, 2)
+                        && isItem(menu.getItem(4), "Salad + Pasta Combo", 2430, 3)
+                        && isItem(menu.getItem(5), "Burger + Pasta Combo", 2970, 3),
+                "Stage 3 menu adds three combos: $21.60 (2 units), $24.30 (3 units), $29.70 (3 units)");
         Objective goal = game.getObjective();
         check(goal.getMinPaidCustomers() == 4 && goal.getMinRevenue() == 4500 && goal.getMinAverageSatisfaction() == 60,
                 "objective: at least 4 paid customers, $45.00 revenue and average satisfaction 60");
@@ -311,7 +323,7 @@ public class RulesTest {
 
     private static void customersChooseTheirOwnFood() {
         section("Customers choose their own food (documented deterministic rule)");
-        Menu menu = GameSetup.createMenu();
+        Menu menu = threeDishMenu();
         String[] expected = {"Salad", "Burger", "Pasta", "Salad", "Burger", "Pasta"};
         boolean allMatch = true;
         for (int number = 1; number <= 6; number++) {
@@ -364,14 +376,14 @@ public class RulesTest {
 
     private static void badInputIsHandled() {
         section("Robust input handling through the command-line interface");
-        // turn 1: the Waiter gets "hello", 7, then seat #9 (not queued), then seat Alice.
-        // Then the input runs out, so everything after that is Wait.
-        String answers = "hello\n7\n1\n9\n1\n1\n";
+        // turn 1: Happy Hour gets "hello", 7, then 0 (no). Host gets 9 (not queued), then 0 (wait).
+        // Waiter gets 7, then seats Alice. Then the input runs out, so everything after that is Wait.
+        String answers = "hello\n7\n0\n9\n0\n7\n1\n1\n";
         GameController game = GameSetup.createBaseGame();
         String output = playThroughCli(game, answers, false);
         check(output.contains("\"hello\" is not a number"), "text instead of a number is rejected and asked again");
         check(output.contains("Please enter a number from 0 to 3"), "a number that is not an option is rejected and asked again");
-        check(output.contains("Customer #9 is not in the waiting queue"), "an invalid customer is explained and the Waiter chooses again");
+        check(output.contains("Customer #9 is not in the waiting queue"), "an invalid customer is explained and the Host chooses again");
         check(output.contains("Waiter seats Alice at Table 1"), "the valid choice is then carried out");
         check(output.contains("(no more input)") && game.isGameOver() && output.contains("RESULT: DEFEAT"),
                 "when the input runs out every remaining choice is Wait and the game still plays all 18 turns");
@@ -393,7 +405,7 @@ public class RulesTest {
         check(Money.percentOf(999, 90) == 899 && Money.percentOf(1005, 90) == 905,
                 "percentages are rounded to the nearest cent ($8.991 -> $8.99, $9.045 -> $9.05)");
 
-        Menu menu = GameSetup.createMenu();
+        Menu menu = threeDishMenu();
         boolean alwaysPasta = true;
         for (int number = 1; number <= 6; number++) {
             alwaysPasta = alwaysPasta && new CriticCustomer(number, "Critic" + number).chooseMenuItem(menu).getName().equals("Pasta");
@@ -466,6 +478,213 @@ public class RulesTest {
                 "GameController has no instanceof or type checks: it only calls Customer methods");
     }
 
+    private static void comboMeals() {
+        section("Stage 3: ComboMeal");
+        MenuItem salad = new MenuItem("Salad", 900, 1);
+        MenuItem burger = new MenuItem("Burger", 1500, 1);
+        MenuItem pasta = new MenuItem("Pasta", 1800, 2);
+        ComboMeal saladPasta = new ComboMeal(salad, pasta);
+        check(isItem(saladPasta, "Salad + Pasta Combo", 2430, 3)
+                        && saladPasta.getFirst() == salad && saladPasta.getSecond() == pasta,
+                "brief's example: Salad + Pasta = ($9 + $18) x 0.9 = $24.30, 3 units, made of those two items");
+        check(isItem(new ComboMeal(salad, burger), "Salad + Burger Combo", 2160, 2)
+                        && isItem(new ComboMeal(burger, pasta), "Burger + Pasta Combo", 2970, 3),
+                "Salad + Burger = $21.60 (2 units), Burger + Pasta = $29.70 (3 units)");
+        check(new ComboMeal(new MenuItem("A", 999, 1), new MenuItem("B", 500, 1)).getPrice() == 1349
+                        && new ComboMeal(new MenuItem("A", 505, 1), new MenuItem("B", 500, 1)).getPrice() == 905,
+                "the combo price is rounded to the nearest cent ($13.491 -> $13.49, $9.045 -> $9.05)");
+
+        Menu menu = GameSetup.createMenu();
+        String[] expected = {"Salad", "Burger", "Pasta", "Salad + Burger Combo", "Salad + Pasta Combo", "Burger + Pasta Combo"};
+        boolean allMatch = true;
+        for (int number = 1; number <= 6; number++) {
+            allMatch = allMatch && new RegularCustomer(number, "Customer" + number).chooseMenuItem(menu).getName().equals(expected[number - 1]);
+        }
+        check(allMatch, "combo choice rule: the same food rule on the longer menu, so customers 4, 5 and 6 choose combos");
+        check(new CriticCustomer(4, "Carmen").chooseMenuItem(menu).getName().equals("Burger + Pasta Combo"),
+                "a Critic chooses the Burger + Pasta Combo: 3 units, and dearer than the other 3-unit combo");
+
+        Map<Integer, Customer> arrivals = new TreeMap<>();
+        Customer eve = new RegularCustomer(5, "Eve");   // customer #5 orders the Salad + Pasta Combo
+        arrivals.put(1, eve);
+        GameController game = gameWith(arrivals, menu);
+        game.startTurn();
+        game.hostSeat(5);
+        ActionResult order = game.waiterTakeOrder(5);
+        game.chefPrepare(5);
+        game.endTurn();
+        check(order.getMessage().contains("Salad + Pasta Combo") && order.getMessage().contains("$24.30"),
+                "a customer orders a combo like any dish and its price is shown");
+        for (int turn = 2; turn <= 3; turn++) {
+            game.startTurn();
+            game.waiterWait();
+            game.chefPrepare(5);
+            game.endTurn();
+        }
+        check(eve.getOrder().isReady() && eve.getOrder().getUnitsDone() == 3, "the Chef prepares a combo one unit per turn: READY after 3 units");
+        while (!game.isGameOver()) {
+            game.startTurn();
+            game.waiterServe(5);
+            game.endTurn();
+        }
+        check(eve.getStatus() == CustomerStatus.PAID && game.getScoreboard().getRevenue() == 2430,
+                "the combo is served, eaten and paid through the usual steps ($24.30)");
+    }
+
+    private static void hostSeatsOneCustomerPerTurn() {
+        section("Stage 3: Host");
+        check(new Host() instanceof Seater && new Waiter() instanceof Seater, "both the Host and the Waiter can seat (Seater)");
+        Map<Integer, Customer> arrivals = new TreeMap<>();
+        arrivals.put(1, new RegularCustomer(1, "Ann"));
+        arrivals.put(2, new RegularCustomer(2, "Bob"));
+        arrivals.put(3, new RegularCustomer(3, "Cat"));
+        GameController game = gameWith(arrivals);
+        game.startTurn();
+        check(game.hostSeat(1).isSuccess() && game.waiterTakeOrder(1).isSuccess(),
+                "a customer seated by the Host can give their order to the Waiter in the same turn");
+        game.endTurn();
+
+        game.startTurn();
+        check(game.hostSeat(2).isSuccess(), "the Host seats a queued customer");
+        game.endTurn();
+        game.startTurn();
+        ActionResult noTable = game.hostSeat(3);
+        check(!noTable.isSuccess() && noTable.getMessage().contains("Every table is occupied"),
+                "the Host follows the same seating rule as the Waiter (refused when no table is free)");
+
+        Map<Integer, Customer> twoWaiting = new TreeMap<>();
+        twoWaiting.put(1, new RegularCustomer(1, "Ann"));
+        twoWaiting.put(2, new RegularCustomer(2, "Bob"));
+        GameController busy = gameWith(twoWaiting);
+        busy.startTurn();
+        busy.hostWait();
+        busy.waiterWait();
+        busy.endTurn();
+        busy.startTurn();
+        check(busy.hostSeat(1).isSuccess(), "turn 2: the Host seats Ann");
+        ActionResult second = busy.hostSeat(2);
+        check(!second.isSuccess() && second.getMessage().contains("Host has already done a task"),
+                "the Host seats at most one customer per turn");
+        check(busy.waiterSeat(2).isSuccess(), "the Waiter can still seat Bob in the same turn, in addition to the Host");
+        check(!busy.hostHasTask() && busy.getWaitingCustomers().isEmpty(), "both customers were seated in one turn");
+    }
+
+    private static void happyHourPricing() {
+        section("Stage 3: Happy Hour - activation, duration and pricing");
+        Map<Integer, Customer> arrivals = new TreeMap<>();
+        Customer victor = new VIPCustomer(2, "Victor");   // orders Burger
+        Customer ann = new RegularCustomer(1, "Ann");   // orders Salad
+        Customer cat = new RegularCustomer(3, "Cat");   // orders Pasta
+        arrivals.put(1, victor);
+        arrivals.put(2, ann);
+        arrivals.put(3, cat);
+        GameController game = gameWith(arrivals);
+
+        game.startTurn();   // turn 1: Victor orders before Happy Hour
+        game.hostSeat(2);
+        ActionResult before = game.waiterTakeOrder(2);
+        game.chefPrepare(2);
+        ActionResult late = game.activateHappyHour();
+        check(before.getMessage().contains("$13.50"), "before Happy Hour the VIP's Burger costs $13.50");
+        check(!late.isSuccess() && late.getMessage().contains("start of a turn"),
+                "Happy Hour cannot be switched on after a staff member has acted this turn");
+        game.endTurn();
+
+        game.startTurn();   // turn 2: switch Happy Hour on
+        check(game.canActivateHappyHour() && game.activateHappyHour().isSuccess(), "Happy Hour is switched on at the start of turn 2");
+        check(game.isHappyHourActive() && game.getHappyHourTurnsLeft() == 2,
+                "it lasts this turn and the next (2 turns left when switched on)");
+        game.hostSeat(1);
+        ActionResult during = game.waiterTakeOrder(1);
+        game.chefPrepare(1);
+        game.endTurn();
+        check(during.getMessage().contains("$7.20"), "an order taken during Happy Hour gets 20% off ($9.00 -> $7.20)");
+        check(victor.getOrder().getBill() == 1350, "an order placed before Happy Hour keeps its locked price");
+
+        game.startTurn();   // turn 3: second and last Happy Hour turn
+        check(game.isHappyHourActive() && game.getHappyHourTurnsLeft() == 1, "turn 3: still on, 1 turn left");
+        ActionResult again = game.activateHappyHour();
+        check(!again.isSuccess() && again.getMessage().contains("already been used"), "Happy Hour can be used only once per game");
+        game.waiterServe(2);
+        game.endTurn();
+        check(!game.isHappyHourActive() && !game.isHappyHourAvailable(), "after its two turns Happy Hour is over and cannot return");
+
+        while (game.getTurn() < 6) {   // turns 4-6: Cat orders after Happy Hour
+            game.startTurn();
+            if (game.getTurn() == 4) {
+                game.waiterServe(1);
+            } else if (game.getTurn() == 6) {
+                game.hostSeat(3);
+                ActionResult after = game.waiterTakeOrder(3);
+                check(after.getMessage().contains("Bill: $18.00."), "an order taken after Happy Hour pays the full price");
+            }
+            game.endTurn();
+        }
+        check(game.getScoreboard().getRevenue() == 1350 + 720, "the locked prices are what the Cashier collects ($13.50 + $7.20)");
+
+        Map<Integer, Customer> vipOnly = new TreeMap<>();
+        vipOnly.put(1, new VIPCustomer(2, "Vera"));
+        GameController stacking = gameWith(vipOnly);
+        stacking.startTurn();
+        stacking.activateHappyHour();
+        stacking.hostSeat(2);
+        check(stacking.waiterTakeOrder(2).getMessage().contains("$10.80"),
+                "VIP discount first, then Happy Hour: Burger $15.00 x 0.9 x 0.8 = $10.80 (brief's example)");
+    }
+
+    private static void happyHourRecovery() {
+        section("Stage 3: Happy Hour - satisfaction recovery");
+        Map<Integer, Customer> arrivals = new TreeMap<>();
+        Customer rita = new RegularCustomer(1, "Rita");    // served before Happy Hour
+        Customer carl = new CriticCustomer(4, "Carl");   // left waiting in the queue
+        arrivals.put(1, rita);
+        arrivals.put(2, carl);
+        GameController game = gameWith(arrivals);
+        game.startTurn();   // turn 1: Rita seated, ordered and cooked for
+        game.hostSeat(1);
+        game.waiterTakeOrder(1);
+        game.chefPrepare(1);
+        game.endTurn();
+        game.startTurn();   // turn 2: Rita served; Carl arrives and waits
+        game.hostWait();
+        game.waiterServe(1);
+        game.endTurn();
+        game.startTurn();   // turn 3: nobody acts
+        game.hostWait();
+        game.waiterWait();
+        game.endTurn();
+        game.startTurn();   // turn 4: Happy Hour on
+        game.activateHappyHour();
+        check(carl.getSatisfaction() == 91, "a customer waiting for a table recovers 15 as soon as Happy Hour starts (76 -> 91)");
+        check(rita.getStatus() == CustomerStatus.READY_TO_PAY && rita.getSatisfaction() == 92,
+                "a customer who has already been served does not recover (stays 92)");
+        game.hostWait();
+        game.waiterWait();
+        game.endTurn();
+        game.startTurn();   // turn 5: second Happy Hour turn
+        check(carl.getSatisfaction() == 94, "at the start of the second turn the waiting customer recovers 15 again (79 -> 94)");
+
+        Map<Integer, Customer> leaver = new TreeMap<>();
+        Customer critic = new CriticCustomer(4, "Cora");
+        leaver.put(1, critic);
+        GameController late = gameWith(leaver);
+        for (int turn = 1; turn <= 9; turn++) {
+            late.startTurn();
+            late.hostWait();
+            late.waiterWait();
+            late.endTurn();
+        }
+        late.startTurn();
+        late.activateHappyHour();
+        check(critic.getStatus() == CustomerStatus.LEFT && critic.getSatisfaction() == 0,
+                "a customer who has already left is not affected by Happy Hour");
+
+        Customer capped = new RegularCustomer(1, "Max");
+        capped.loseSatisfaction();
+        capped.recoverSatisfaction(15);
+        check(capped.getSatisfaction() == 100, "recovery never goes above 100 (92 + 15 -> 100)");
+    }
+
     // replays a saved run through the CLI and compares the output with its transcript
     private static GameController replay(String runFile, boolean victory, int paid, int revenue, String average) throws IOException {
         String transcriptFile = runFile.replace(".txt", "-transcript.txt");
@@ -486,10 +705,22 @@ public class RulesTest {
         return game;
     }
 
-    // base turns, tables, menu and objective but our own arrivals
+    // base turns, tables and objective but our own arrivals. It uses the brief's three dishes, so the
+    // stage 1 and 2 checks still get the same orders now that the menu also has combos.
     private static GameController gameWith(Map<Integer, Customer> arrivals) {
-        return new GameController(GameSetup.MAX_TURNS, GameSetup.TABLES, GameSetup.createMenu(), arrivals,
-                GameSetup.createObjective());
+        return gameWith(arrivals, threeDishMenu());
+    }
+
+    private static GameController gameWith(Map<Integer, Customer> arrivals, Menu menu) {
+        return new GameController(GameSetup.MAX_TURNS, GameSetup.TABLES, menu, arrivals, GameSetup.createObjective());
+    }
+
+    private static Menu threeDishMenu() {
+        Menu menu = new Menu();
+        menu.addItem(new MenuItem("Salad", 900, 1));
+        menu.addItem(new MenuItem("Burger", 1500, 1));
+        menu.addItem(new MenuItem("Pasta", 1800, 2));
+        return menu;
     }
 
     // a customer who becomes READY_TO_PAY on the given turn

@@ -10,11 +10,14 @@ import restaurant.entity.Cashier;
 import restaurant.entity.Chef;
 import restaurant.entity.Customer;
 import restaurant.entity.CustomerStatus;
+import restaurant.entity.HappyHour;
+import restaurant.entity.Host;
 import restaurant.entity.Menu;
 import restaurant.entity.MenuItem;
 import restaurant.entity.Objective;
 import restaurant.entity.Order;
 import restaurant.entity.Scoreboard;
+import restaurant.entity.Seater;
 import restaurant.entity.Staff;
 import restaurant.entity.Table;
 import restaurant.entity.WaitingQueue;
@@ -32,9 +35,11 @@ public class GameController {
     private final List<Customer> customers = new ArrayList<>();   // everyone who has arrived so far
     private final List<Table> tables = new ArrayList<>();
     private final WaitingQueue queue = new WaitingQueue();
+    private final Host host = new Host();
     private final Waiter waiter = new Waiter();
     private final Chef chef = new Chef();
     private final Cashier cashier = new Cashier();
+    private final HappyHour happyHour = new HappyHour();
     private final Scoreboard scoreboard = new Scoreboard();
     private int turn = 0;
 
@@ -63,28 +68,44 @@ public class GameController {
             events.add(arriving + " arrives and joins the waiting queue with satisfaction "
                     + arriving.getSatisfaction() + ".");
         }
+        // still on from last turn, so this is its second turn
+        if (happyHour.isActive()) {
+            events.add("Second turn of Happy Hour. " + recoverWaitingCustomers());
+        }
         return events;
     }
 
     // Steps 2 and 3: the manager's choices.
     // When a choice is refused we say why, and the staff member has not used up their task.
 
+    // only once per game, and only before any staff member has acted this turn
+    public ActionResult activateHappyHour() {
+        if (!happyHour.isAvailable()) {
+            return ActionResult.failure("Happy Hour has already been used in this game.");
+        }
+        if (anyStaffHasActed()) {
+            return ActionResult.failure("Happy Hour can only be switched on at the start of a turn, "
+                    + "before any staff member acts.");
+        }
+        happyHour.activate();
+        return ActionResult.success("Happy Hour is ON for this turn and the next: orders taken get "
+                + HappyHour.DISCOUNT_PERCENT + "% off. " + recoverWaitingCustomers());
+    }
+
+    public ActionResult hostSeat(int customerNumber) {
+        return seatFromQueue(host, customerNumber);
+    }
+
+    public ActionResult hostWait() {
+        if (host.hasActed()) {
+            return alreadyActed(host.getRole());
+        }
+        host.waitThisTurn();
+        return ActionResult.success("The Host waits this turn.");
+    }
+
     public ActionResult waiterSeat(int customerNumber) {
-        if (waiter.hasActed()) {
-            return alreadyActed(waiter.getRole());
-        }
-        Customer customer = findCustomer(customerNumber);
-        if (customer == null || !queue.contains(customer)) {
-            return ActionResult.failure("Customer #" + customerNumber + " is not in the waiting queue.");
-        }
-        Table table = findFreeTable();
-        if (table == null) {
-            return ActionResult.failure("Every table is occupied. "
-                    + "A table is only freed when its customer pays or leaves.");
-        }
-        waiter.seat(customer, table);
-        queue.remove(customer);
-        return ActionResult.success("Waiter seats " + customer.getName() + " at Table " + table.getNumber() + ".");
+        return seatFromQueue(waiter, customerNumber);
     }
 
     public ActionResult waiterTakeOrder(int customerNumber) {
@@ -99,13 +120,22 @@ public class GameController {
             return ActionResult.failure("Only a seated customer who has not ordered yet can order. "
                     + customer.getName() + " is " + customer.getStatus() + ".");
         }
-        // the customer picks the food, and the bill is locked into the order from now on
+        // the customer picks the food. Their own discount first, then Happy Hour.
+        // The bill is locked into the order from now on.
         MenuItem item = customer.chooseMenuItem(menu);
         int bill = customer.calculateBill(item.getPrice());
+        bill = happyHour.applyDiscount(bill);
         waiter.takeOrder(customer, item, bill);
 
         String message = customer.getName() + " orders " + item.getName() + " ("
                 + item.getPrepUnitsText() + "). Bill: " + Money.format(bill);
+        if (bill != item.getPrice()) {
+            message += " (menu price " + Money.format(item.getPrice());
+            if (happyHour.isActive()) {
+                message += ", Happy Hour " + HappyHour.DISCOUNT_PERCENT + "% off included";
+            }
+            message += ")";
+        }
         return ActionResult.success(message + ".");
     }
 
@@ -185,6 +215,7 @@ public class GameController {
         checkFinishedEating(events);
         chargeNextCustomer(events);
         checkWaitingCustomers(events);
+        updateHappyHour(events);
         return events;
     }
 
@@ -220,7 +251,7 @@ public class GameController {
     }
 
     public List<Staff> getStaff() {
-        return Arrays.asList(waiter, chef, cashier);
+        return Arrays.asList(host, waiter, chef, cashier);
     }
 
     public List<Integer> getArrivalTurns() {
@@ -276,6 +307,26 @@ public class GameController {
 
     public Customer getNextCustomerToPay() {
         return cashier.chooseNextCustomer(customers, turn);
+    }
+
+    public boolean hostHasTask() {
+        return !host.hasActed() && !getCustomersToSeat().isEmpty();
+    }
+
+    public boolean canActivateHappyHour() {
+        return happyHour.isAvailable() && !anyStaffHasActed();
+    }
+
+    public boolean isHappyHourAvailable() {
+        return happyHour.isAvailable();
+    }
+
+    public boolean isHappyHourActive() {
+        return happyHour.isActive();
+    }
+
+    public int getHappyHourTurnsLeft() {
+        return happyHour.getTurnsLeft();
     }
 
     public boolean waiterHasTask() {
@@ -348,6 +399,65 @@ public class GameController {
             }
             events.add(message);
         }
+    }
+
+    // Happy Hour uses up one of its turns at the end of each turn it is on
+    private void updateHappyHour(List<String> events) {
+        if (!happyHour.isActive()) {
+            return;
+        }
+        happyHour.endTurn();
+        if (happyHour.isActive()) {
+            int left = happyHour.getTurnsLeft();
+            events.add("Happy Hour continues next turn (" + left + (left == 1 ? " turn" : " turns") + " left).");
+        } else {
+            events.add("Happy Hour is over.");
+        }
+    }
+
+    // seating rule for both the Waiter and the Host
+    private ActionResult seatFromQueue(Seater seater, int customerNumber) {
+        if (seater.hasActed()) {
+            return alreadyActed(seater.getRole());
+        }
+        Customer customer = findCustomer(customerNumber);
+        if (customer == null || !queue.contains(customer)) {
+            return ActionResult.failure("Customer #" + customerNumber + " is not in the waiting queue.");
+        }
+        Table table = findFreeTable();
+        if (table == null) {
+            return ActionResult.failure("Every table is occupied. "
+                    + "A table is only freed when its customer pays or leaves.");
+        }
+        seater.seat(customer, table);
+        queue.remove(customer);
+        return ActionResult.success(seater.getRole() + " seats " + customer.getName()
+                + " at Table " + table.getNumber() + ".");
+    }
+
+    // Happy Hour: customers waiting for a table or for food get some satisfaction back (max 100)
+    private String recoverWaitingCustomers() {
+        List<String> recovered = new ArrayList<>();
+        for (Customer customer : customers) {
+            if (customer.isWaiting()) {
+                customer.recoverSatisfaction(HappyHour.RECOVERY);
+                recovered.add(customer.getName() + " " + customer.getSatisfaction());
+            }
+        }
+        if (recovered.isEmpty()) {
+            return "Nobody is waiting, so nobody recovers satisfaction.";
+        }
+        return "Customers waiting for a table or for food recover " + HappyHour.RECOVERY
+                + " satisfaction (max " + Customer.MAX_SATISFACTION + "): " + String.join(", ", recovered) + ".";
+    }
+
+    private boolean anyStaffHasActed() {
+        for (Staff member : getStaff()) {
+            if (member.hasActed()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Customer findCustomer(int number) {

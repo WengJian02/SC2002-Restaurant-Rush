@@ -8,6 +8,7 @@ import java.util.Scanner;
 import restaurant.control.ActionResult;
 import restaurant.control.GameController;
 import restaurant.entity.Customer;
+import restaurant.entity.HappyHour;
 import restaurant.entity.MenuItem;
 import restaurant.entity.Objective;
 import restaurant.entity.Order;
@@ -37,6 +38,8 @@ public class RestaurantCLI {
         while (!game.isGameOver()) {
             List<String> events = game.startTurn();
             showTurnStart(events);
+            askHappyHour();
+            askHost();
             askWaiter();
             askChef();
             showTurnEnd(game.endTurn());
@@ -44,7 +47,46 @@ public class RestaurantCLI {
         showFinalResult();
     }
 
-    // the Waiter is always asked before the Chef
+    // Happy Hour is only offered at the start of a turn, then the Host, Waiter and Chef
+    // are asked in that order (the Waiter always acts before the Chef)
+
+    private void askHappyHour() {
+        if (!game.canActivateHappyHour()) {
+            return;
+        }
+        System.out.println();
+        System.out.println("HAPPY HOUR - can be used once per game. It lasts this turn and the next: orders taken get");
+        System.out.println(HappyHour.DISCOUNT_PERCENT + "% off, and customers waiting for a table or for food recover "
+                + HappyHour.RECOVERY + " satisfaction each turn.");
+        int answer = readChoice("Switch Happy Hour on now? (1 = yes, 0 = no): ", 1);
+        if (answer == 1) {
+            show(game.activateHappyHour());
+        }
+    }
+
+    private void askHost() {
+        if (!game.hostHasTask()) {
+            game.hostWait();
+            System.out.println();
+            System.out.println("HOST: nobody can be seated this turn, so the Host waits.");
+            return;
+        }
+        while (true) {
+            System.out.println();
+            System.out.println("HOST - seat one customer from the waiting queue   ["
+                    + names(game.getCustomersToSeat()) + "]");
+            int customer = readNumber("Customer number to seat (0 = wait): ");
+            if (customer == 0) {
+                show(game.hostWait());
+                return;
+            }
+            ActionResult result = game.hostSeat(customer);
+            show(result);
+            if (result.isSuccess()) {
+                return;
+            }
+        }
+    }
 
     private void askWaiter() {
         if (!game.waiterHasTask()) {
@@ -145,6 +187,7 @@ public class RestaurantCLI {
         System.out.println("TURN " + game.getTurn() + " of " + game.getMaxTurns()
                 + "  |  Revenue " + Money.format(score.getRevenue())
                 + "  |  Average satisfaction of paid customers " + average(score));
+        System.out.println("Happy Hour: " + happyHourStatus());
         System.out.println(LINE);
         for (String event : events) {
             System.out.println("* " + event);
@@ -162,6 +205,7 @@ public class RestaurantCLI {
             System.out.println("  Table " + table.getNumber() + ": " + occupant);
         }
         System.out.println("Staff tasks available:");
+        System.out.println("  Host   : seat [" + names(game.getCustomersToSeat()) + "]");
         System.out.println("  Waiter : seat [" + names(game.getCustomersToSeat())
                 + "]  take order [" + names(game.getCustomersToOrder())
                 + "]  serve [" + names(game.getCustomersToServe()) + "]");
@@ -206,6 +250,20 @@ public class RestaurantCLI {
         } else {
             System.out.println("RESULT: DEFEAT - not every target was met.");
         }
+    }
+
+    private String happyHourStatus() {
+        if (game.isHappyHourActive()) {
+            int turnsLeft = game.getHappyHourTurnsLeft();
+            if (turnsLeft == 1) {
+                return "ON - 1 turn left (this one)";
+            }
+            return "ON - " + turnsLeft + " turns left, including this one";
+        }
+        if (game.isHappyHourAvailable()) {
+            return "available (once per game, switched on at the start of a turn)";
+        }
+        return "used";
     }
 
     // e.g. "#3 Chloe (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 1/2"
