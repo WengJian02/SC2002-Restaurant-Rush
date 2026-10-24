@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="2659" height="1911" viewBox="0 0 2659 1911" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="2659" height="1971" viewBox="0 0 2659 1971" font-family="Carlito, Calibri, 'Segoe UI', Arial, sans-serif">
 <rect width="100%" height="100%" fill="white"/>
 <g transform="translate(344.0,174.0)">
 <polyline points="151.0,25.0 200.0,25.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
@@ -8,7 +8,7 @@
 <polyline points="190.0,623.0 190.0,680.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="40.0,623.0 40.0,950.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="500.0,710.0 327.0,710.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
-<polyline points="500.0,740.0 440.0,740.0 440.0,983.0 171.0,983.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="500.0,740.0 440.0,740.0 440.0,983.0 238.0,983.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="530.0,779.0 530.0,1080.0 263.0,1080.0 263.0,1120.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
 <polyline points="560.0,759.0 560.0,1440.0 410.0,1440.0 410.0,1480.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
 <polyline points="280.0,1480.0 280.0,1401.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
@@ -33,13 +33,17 @@
 <polyline points="1417.0,640.0 1650.0,640.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
 <polyline points="1480.0,830.0 1650.0,830.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
 <polyline points="1902.0,980.0 2000.0,980.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
-<polyline points="1776.0,1100.0 1776.0,1220.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="1776.0,1100.0 1776.0,1180.0 1578.0,1180.0 1578.0,1220.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="1776.0,1100.0 1776.0,1180.0 1856.5,1180.0 1856.5,1220.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
+<polyline points="1776.0,1100.0 1776.0,1180.0 2136.0,1180.0 2136.0,1220.0" fill="none" stroke="black" stroke-width="1" stroke-linejoin="miter"/>
 <polyline points="1650.0,1074.0 740.0,1074.0 740.0,1330.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="1800.0,1357.0 1800.0,1773.0 -50.0,1773.0 -50.0,980.0 20.0,980.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="730.5,-46.0 730.5,110.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="320.0,-76.0 320.0,0.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="-44.0,344.5 0.0,344.5" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="1800.0,77.0 1759.0,77.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <polyline points="1548.0,992.0 1650.0,992.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
+<polyline points="2142.0,1540.0 2142.0,1333.0" fill="none" stroke="black" stroke-width="1" stroke-dasharray="6,4" stroke-linejoin="miter"/>
 <rect x="0.0" y="0.0" width="151" height="50" fill="white" stroke="black" stroke-width="1.2"/>
 <text x="75.5" y="18.0" font-size="14" font-weight="bold" text-anchor="middle">Main</text>
 <line x1="0.0" y1="26.0" x2="151.0" y2="26.0" stroke="black" stroke-width="1"/>
@@ -136,11 +140,12 @@
 <text x="63.0" y="809.0" font-size="13">+failure(reason: String): ActionResult</text><line x1="63.0" y1="811.0" x2="256.9" y2="811.0" stroke="black" stroke-width="0.8"/>
 <text x="63.0" y="825.0" font-size="13">+isSuccess(): boolean</text>
 <text x="63.0" y="841.0" font-size="13">+getMessage(): String</text>
-<rect x="20.0" y="950.0" width="151" height="66" fill="white" stroke="black" stroke-width="1.2"/>
-<text x="95.5" y="968.0" font-size="14" font-weight="bold" text-anchor="middle">Money</text>
-<line x1="20.0" y1="976.0" x2="171.0" y2="976.0" stroke="black" stroke-width="1"/>
+<rect x="20.0" y="950.0" width="218" height="82" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="129.0" y="968.0" font-size="14" font-weight="bold" text-anchor="middle">Money</text>
+<line x1="20.0" y1="976.0" x2="238.0" y2="976.0" stroke="black" stroke-width="1"/>
 <text x="27.0" y="992.0" font-size="13">-Money()</text>
 <text x="27.0" y="1008.0" font-size="13">+format(cents: int): String</text><line x1="27.0" y1="1010.0" x2="163.1" y2="1010.0" stroke="black" stroke-width="0.8"/>
+<text x="27.0" y="1024.0" font-size="13">+percentOf(cents: int, percent: int): int</text><line x1="27.0" y1="1026.0" x2="231.0" y2="1026.0" stroke="black" stroke-width="0.8"/>
 <rect x="120.0" y="1120.0" width="286" height="281" fill="white" stroke="black" stroke-width="1.2"/>
 <text x="263.0" y="1135.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
 <text x="263.0" y="1153.0" font-size="14" font-weight="bold" text-anchor="middle">Scoreboard</text>
@@ -327,13 +332,31 @@
 <text x="2147.0" y="1019.0" font-size="13">SERVED</text>
 <text x="2147.0" y="1035.0" font-size="13">PAID</text>
 <text x="2147.0" y="1051.0" font-size="13">CANCELLED</text>
-<rect x="1648.0" y="1220.0" width="256" height="97" fill="white" stroke="black" stroke-width="1.2"/>
-<text x="1776.0" y="1235.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
-<text x="1776.0" y="1253.0" font-size="14" font-weight="bold" text-anchor="middle">RegularCustomer</text>
-<line x1="1648.0" y1="1261.0" x2="1904.0" y2="1261.0" stroke="black" stroke-width="1"/>
-<text x="1655.0" y="1277.0" font-size="13">+RegularCustomer(number: int, name: String)</text>
-<text x="1655.0" y="1293.0" font-size="13">+getType(): String</text>
-<text x="1655.0" y="1309.0" font-size="13">+getSatisfactionLoss(): int</text>
+<rect x="1450.0" y="1220.0" width="256" height="97" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="1578.0" y="1235.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="1578.0" y="1253.0" font-size="14" font-weight="bold" text-anchor="middle">RegularCustomer</text>
+<line x1="1450.0" y1="1261.0" x2="1706.0" y2="1261.0" stroke="black" stroke-width="1"/>
+<text x="1457.0" y="1277.0" font-size="13">+RegularCustomer(number: int, name: String)</text>
+<text x="1457.0" y="1293.0" font-size="13">+getType(): String</text>
+<text x="1457.0" y="1309.0" font-size="13">+getSatisfactionLoss(): int</text>
+<rect x="1740.0" y="1220.0" width="233" height="137" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="1856.5" y="1235.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="1856.5" y="1253.0" font-size="14" font-weight="bold" text-anchor="middle">VIPCustomer</text>
+<line x1="1740.0" y1="1261.0" x2="1973.0" y2="1261.0" stroke="black" stroke-width="1"/>
+<text x="1747.0" y="1277.0" font-size="13">-BILL_PERCENT: int = 90</text><line x1="1747.0" y1="1279.0" x2="1871.9" y2="1279.0" stroke="black" stroke-width="0.8"/>
+<line x1="1740.0" y1="1285.0" x2="1973.0" y2="1285.0" stroke="black" stroke-width="1"/>
+<text x="1747.0" y="1301.0" font-size="13">+VIPCustomer(number: int, name: String)</text>
+<text x="1747.0" y="1317.0" font-size="13">+getType(): String</text>
+<text x="1747.0" y="1333.0" font-size="13">+getSatisfactionLoss(): int</text>
+<text x="1747.0" y="1349.0" font-size="13">+calculateBill(menuPrice: int): int</text>
+<rect x="2010.0" y="1220.0" width="252" height="113" fill="white" stroke="black" stroke-width="1.2"/>
+<text x="2136.0" y="1235.0" font-size="12" text-anchor="middle">&lt;&lt;entity&gt;&gt;</text>
+<text x="2136.0" y="1253.0" font-size="14" font-weight="bold" text-anchor="middle">CriticCustomer</text>
+<line x1="2010.0" y1="1261.0" x2="2262.0" y2="1261.0" stroke="black" stroke-width="1"/>
+<text x="2017.0" y="1277.0" font-size="13">+CriticCustomer(number: int, name: String)</text>
+<text x="2017.0" y="1293.0" font-size="13">+getType(): String</text>
+<text x="2017.0" y="1309.0" font-size="13">+getSatisfactionLoss(): int</text>
+<text x="2017.0" y="1325.0" font-size="13">+chooseMenuItem(menu: Menu): MenuItem</text>
 <path d="M600.0,-150.0 H851.0 L861.0,-140.0 V-46.0 H600.0 Z" fill="white" stroke="black" stroke-width="1"/>
 <path d="M851.0,-150.0 V-140.0 H861.0" fill="none" stroke="black" stroke-width="1"/>
 <text x="608.0" y="-131.0" font-size="12"><tspan font-weight="bold">Composition</tspan></text>
@@ -342,12 +365,12 @@
 <text x="608.0" y="-86.0" font-size="12">part of one game (filled diamond). Customers</text>
 <text x="608.0" y="-71.0" font-size="12">come in from GameSetup and exist on their own</text>
 <text x="608.0" y="-56.0" font-size="12">(hollow diamond).</text>
-<path d="M200.0,-150.0 H470.0 L480.0,-140.0 V-76.0 H200.0 Z" fill="white" stroke="black" stroke-width="1"/>
-<path d="M470.0,-150.0 V-140.0 H480.0" fill="none" stroke="black" stroke-width="1"/>
+<path d="M200.0,-150.0 H494.0 L504.0,-140.0 V-76.0 H200.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M494.0,-150.0 V-140.0 H504.0" fill="none" stroke="black" stroke-width="1"/>
 <text x="208.0" y="-131.0" font-size="12"><tspan font-weight="bold">Base setting</tspan></text>
 <text x="208.0" y="-116.0" font-size="12">createMenu(), createArrivals() and createObjective()</text>
-<text x="208.0" y="-101.0" font-size="12">also &lt;&lt;instantiate&gt;&gt; Menu, MenuItem,</text>
-<text x="208.0" y="-86.0" font-size="12">RegularCustomer and Objective.</text>
+<text x="208.0" y="-101.0" font-size="12">also &lt;&lt;instantiate&gt;&gt; Menu, MenuItem, RegularCustomer,</text>
+<text x="208.0" y="-86.0" font-size="12">VIPCustomer, CriticCustomer and Objective.</text>
 <path d="M-320.0,300.0 H-54.0 L-44.0,310.0 V389.0 H-320.0 Z" fill="white" stroke="black" stroke-width="1"/>
 <path d="M-54.0,300.0 V310.0 H-44.0" fill="none" stroke="black" stroke-width="1"/>
 <text x="-312.0" y="319.0" font-size="12"><tspan font-weight="bold">Boundary</tspan></text>
@@ -369,6 +392,15 @@
 <text x="1258.0" y="1004.0" font-size="12">out of order: pay() before READY_TO_PAY, or leave()</text>
 <text x="1258.0" y="1019.0" font-size="12">when not waiting. Order works the same way</text>
 <text x="1258.0" y="1034.0" font-size="12">(markServed() needs READY, markPaid() needs SERVED).</text>
+<path d="M2010.0,1540.0 H2264.0 L2274.0,1550.0 V1659.0 H2010.0 Z" fill="white" stroke="black" stroke-width="1"/>
+<path d="M2264.0,1540.0 V1550.0 H2274.0" fill="none" stroke="black" stroke-width="1"/>
+<text x="2018.0" y="1559.0" font-size="12"><tspan font-weight="bold">Polymorphism</tspan> (stage 2)</text>
+<text x="2018.0" y="1574.0" font-size="12">GameController only calls Customer methods.</text>
+<text x="2018.0" y="1589.0" font-size="12">getSatisfactionLoss(): Regular 8, VIP 5, Critic 12</text>
+<text x="2018.0" y="1604.0" font-size="12">calculateBill(): VIP 10% off</text>
+<text x="2018.0" y="1619.0" font-size="12">chooseMenuItem(): the Critic picks the item with</text>
+<text x="2018.0" y="1634.0" font-size="12">the most preparation units</text>
+<text x="2018.0" y="1649.0" font-size="12">No instanceof or type checks anywhere.</text>
 <polyline points="188.0,19.0 200.0,25.0 188.0,31.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polyline points="81.0,218.0 75.0,230.0 69.0,218.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polyline points="526.0,98.0 520.0,110.0 514.0,98.0" fill="none" stroke="black" stroke-width="1.2"/>
@@ -376,7 +408,7 @@
 <polyline points="196.0,668.0 190.0,680.0 184.0,668.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polyline points="46.0,938.0 40.0,950.0 34.0,938.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polyline points="339.0,716.0 327.0,710.0 339.0,704.0" fill="none" stroke="black" stroke-width="1.2"/>
-<polyline points="183.0,989.0 171.0,983.0 183.0,977.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="250.0,989.0 238.0,983.0 250.0,977.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polygon points="530.0,759.0 523.5,769.0 530.0,779.0 536.5,769.0" fill="black" stroke="black" stroke-width="1.2"/>
 <polyline points="416.0,1468.0 410.0,1480.0 404.0,1468.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polyline points="274.0,1413.0 280.0,1401.0 286.0,1413.0" fill="none" stroke="black" stroke-width="1.2"/>
@@ -398,6 +430,7 @@
 <polyline points="1988.0,974.0 2000.0,980.0 1988.0,986.0" fill="none" stroke="black" stroke-width="1.2"/>
 <polygon points="1776.0,1084.0 1767.0,1100.0 1785.0,1100.0" fill="white" stroke="black" stroke-width="1.2"/>
 <polyline points="746.0,1318.0 740.0,1330.0 734.0,1318.0" fill="none" stroke="black" stroke-width="1.2"/>
+<polyline points="8.0,974.0 20.0,980.0 8.0,986.0" fill="none" stroke="black" stroke-width="1.2"/>
 <rect x="154.4" y="10.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
 <text x="155.4" y="21.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
 <rect x="78.0" y="133.0" width="77.6" height="14.0" fill="white" fill-opacity="0.85"/>
@@ -413,8 +446,8 @@
 <text x="44.0" y="654.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
 <rect x="392.4" y="695.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
 <text x="393.4" y="706.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
-<rect x="284.4" y="968.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
-<text x="285.4" y="979.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
+<rect x="443.0" y="854.5" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="444.0" y="865.5" font-size="12">&lt;&lt;call&gt;&gt;</text>
 <rect x="266.0" y="1089.0" width="60.4" height="28.0" fill="white" fill-opacity="0.85"/>
 <text x="267.0" y="1100.0" font-size="12">1</text>
 <text x="267.0" y="1114.0" font-size="12">-scoreboard</text>
@@ -479,4 +512,6 @@
 <text x="1963.2" y="975.0" font-size="12">-status</text>
 <rect x="1173.5" y="1059.0" width="42.9" height="14.0" fill="white" fill-opacity="0.85"/>
 <text x="1174.5" y="1070.0" font-size="12">&lt;&lt;use&gt;&gt;</text>
+<rect x="853.9" y="1758.0" width="42.2" height="14.0" fill="white" fill-opacity="0.85"/>
+<text x="854.9" y="1769.0" font-size="12">&lt;&lt;call&gt;&gt;</text>
 </g></svg>

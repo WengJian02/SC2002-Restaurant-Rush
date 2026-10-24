@@ -5,7 +5,7 @@ can be reproduced. Each run is a plain text file of answers, one per line, and a
 is a note. Replay a run with `--echo` to see each answer printed next to its prompt:
 
 ```
-./run.sh --echo < runs/stage-1/victory.txt        (Windows: run.bat --echo < runs\stage-1\victory.txt)
+./run.sh --echo < runs/stage-2/victory.txt        (Windows: run.bat --echo < runs\stage-2\victory.txt)
 ```
 
 The complete output of each run is saved next to it as `*-transcript.txt`. `./test.sh` replays
@@ -15,6 +15,8 @@ In the tables, "Waiting" lists every customer who lost satisfaction at the end o
 because they were still waiting for a table or for food.
 
 ## Stage 1 (tag `stage-1`)
+
+Replay these runs after `git checkout stage-1`: they use the Stage 1 arrivals (all Regular).
 
 Arrivals (all Regular, -8 per waiting turn): #1 Alice (turn 1), #2 Ben (turn 4), #3 Chloe (turn 7),
 #4 Daniel (turn 10), #5 Ethan (turn 13), #6 Fiona (turn 16). Under the food rule they order
@@ -87,7 +89,7 @@ manager's seating decisions differ.
 
 ### Rule checks in `test/restaurant/RulesTest.java`
 
-`./test.sh` runs 78 checks for Stage 1:
+At tag `stage-1`, `./test.sh` runs 78 checks:
 
 | Group | What is checked |
 | --- | --- |
@@ -104,3 +106,118 @@ manager's seating decisions differ.
 | Result | Victory needs all three targets (boundary values 4 paid, $45.00, average 60 are met; 59.75 is not) |
 | Money and input | Cents shown as dollars; text, wrong options and invalid customers are rejected and asked again; running out of input still finishes the game |
 | Replays | Both runs above give the expected result and match their saved transcripts |
+
+## Stage 2 (tag `stage-2`)
+
+Arrivals: #1 Alice (Regular, turn 1), #2 Victor (VIP, turn 4), #3 Chloe (Regular, turn 7),
+#4 Carmen (Critic, turn 10), #5 Ethan (Regular, turn 13), #6 Fiona (Regular, turn 16).
+They order Salad, Burger ($13.50 for the VIP), Pasta, Pasta (the Critic's most demanding dish),
+Burger and Pasta. Satisfaction lost per waiting turn: Regular 8, VIP 5, Critic 12.
+
+### Victory run: `runs/stage-2/victory.txt`
+
+The manager follows the Stage 1 plan: seat on arrival, take the order the next turn, cook straight
+away and serve READY dishes first. On turn 14 the Waiter must choose between serving the Critic and
+taking Ethan's order. The Critic loses 12 per turn, so she is served first.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Waiter seats Alice (Table 1)<br>Chef: nothing to do | Waiting: Alice 92 |
+| 2 |  | Waiter takes Alice's order: Salad, bill $9.00<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 84 |
+| 3 |  | Waiter serves Alice's Salad<br>Chef: nothing to do |  |
+| 4 | #2 Victor (VIP) | Waiter seats Victor (Table 2)<br>Chef: nothing to do | Alice READY_TO_PAY<br>Waiting: Victor 95 |
+| 5 |  | Waiter takes Victor's order: Burger, bill $13.50<br>Chef: Victor's Burger 1/1, READY | Alice pays $9.00 (satisfaction 84)<br>Waiting: Victor 90 |
+| 6 |  | Waiter serves Victor's Burger<br>Chef: nothing to do |  |
+| 7 | #3 Chloe (Regular) | Waiter seats Chloe (Table 1)<br>Chef: nothing to do | Victor READY_TO_PAY<br>Waiting: Chloe 92 |
+| 8 |  | Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef: Chloe's Pasta 1/2 | Victor pays $13.50 (satisfaction 90)<br>Waiting: Chloe 84 |
+| 9 |  | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 76 |
+| 10 | #4 Carmen (Critic) | Waiter serves Chloe's Pasta<br>Chef: nothing to do | Waiting: Carmen 88 |
+| 11 |  | Waiter seats Carmen (Table 2)<br>Chef: nothing to do | Chloe READY_TO_PAY<br>Waiting: Carmen 76 |
+| 12 |  | Waiter takes Carmen's order: Pasta, bill $18.00<br>Chef: Carmen's Pasta 1/2 | Chloe pays $18.00 (satisfaction 76)<br>Waiting: Carmen 64 |
+| 13 | #5 Ethan (Regular) | Waiter seats Ethan (Table 1)<br>Chef: Carmen's Pasta 2/2, READY | Waiting: Carmen 52, Ethan 92 |
+| 14 |  | Waiter serves Carmen's Pasta<br>Chef: nothing to do | Waiting: Ethan 84 |
+| 15 |  | Waiter takes Ethan's order: Burger, bill $15.00<br>Chef: Ethan's Burger 1/1, READY | Carmen READY_TO_PAY<br>Waiting: Ethan 76 |
+| 16 | #6 Fiona (Regular) | Waiter serves Ethan's Burger<br>Chef: nothing to do | Carmen pays $18.00 (satisfaction 52)<br>Waiting: Fiona 92 |
+| 17 |  | Waiter seats Fiona (Table 2)<br>Chef: nothing to do | Ethan READY_TO_PAY<br>Waiting: Fiona 84 |
+| 18 |  | Waiter takes Fiona's order: Pasta, bill $18.00<br>Chef: Fiona's Pasta 1/2 | Ethan pays $15.00 (satisfaction 76)<br>Waiting: Fiona 76 |
+
+Result: VICTORY. 5 paid, revenue $73.50 (9 + 13.50 + 18 + 18 + 15), average satisfaction
+75.6 = (84 + 90 + 76 + 52 + 76) / 5. Victor, the VIP, still has 90 when he pays because he loses only
+5 per turn.
+
+### Defeat run: `runs/stage-2/defeat.txt`
+
+The mistakes: the Waiter always seats new customers and takes orders before serving READY dishes,
+and the Chef is kept waiting on the turn each order is taken, as if orders had to be batched. Every
+dish reaches its customer late.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Waiter seats Alice (Table 1)<br>Chef: nothing to do | Waiting: Alice 92 |
+| 2 |  | Waiter takes Alice's order: Salad, bill $9.00<br>Chef waits | Waiting: Alice 84 |
+| 3 |  | Waiter: nothing to do<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 76 |
+| 4 | #2 Victor (VIP) | Waiter seats Victor (Table 2)<br>Chef: nothing to do | Waiting: Alice 68, Victor 95 |
+| 5 |  | Waiter takes Victor's order: Burger, bill $13.50<br>Chef waits | Waiting: Alice 60, Victor 90 |
+| 6 |  | Waiter serves Alice's Salad<br>Chef: Victor's Burger 1/1, READY | Waiting: Victor 85 |
+| 7 | #3 Chloe (Regular) | Waiter serves Victor's Burger<br>Chef: nothing to do | Alice READY_TO_PAY<br>Waiting: Chloe 92 |
+| 8 |  | Waiter: nothing to do<br>Chef: nothing to do | Victor READY_TO_PAY<br>Alice pays $9.00 (satisfaction 60)<br>Waiting: Chloe 84 |
+| 9 |  | Waiter seats Chloe (Table 1)<br>Chef: nothing to do | Victor pays $13.50 (satisfaction 85)<br>Waiting: Chloe 76 |
+| 10 | #4 Carmen (Critic) | Waiter seats Carmen (Table 2)<br>Chef: nothing to do | Waiting: Chloe 68, Carmen 88 |
+| 11 |  | Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef waits | Waiting: Chloe 60, Carmen 76 |
+| 12 |  | Waiter takes Carmen's order: Pasta, bill $18.00<br>Chef: Chloe's Pasta 1/2 | Waiting: Chloe 52, Carmen 64 |
+| 13 | #5 Ethan (Regular) | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 44, Carmen 52, Ethan 92 |
+| 14 |  | Waiter serves Chloe's Pasta<br>Chef: Carmen's Pasta 1/2 | Waiting: Carmen 40, Ethan 84 |
+| 15 |  | Waiter: nothing to do<br>Chef: Carmen's Pasta 2/2, READY | Chloe READY_TO_PAY<br>Waiting: Carmen 28, Ethan 76 |
+| 16 | #6 Fiona (Regular) | Waiter serves Carmen's Pasta<br>Chef: nothing to do | Chloe pays $18.00 (satisfaction 44)<br>Waiting: Ethan 68, Fiona 92 |
+| 17 |  | Waiter seats Ethan (Table 1)<br>Chef: nothing to do | Carmen READY_TO_PAY<br>Waiting: Ethan 60, Fiona 84 |
+| 18 |  | Waiter takes Ethan's order: Burger, bill $15.00<br>Chef waits | Carmen pays $18.00 (satisfaction 28)<br>Waiting: Ethan 52, Fiona 76 |
+
+Result: DEFEAT. 4 paid and revenue $58.50 meet their targets, but the average satisfaction is
+54.3 ((60 + 85 + 44 + 28) / 4 = 54.25), below 60. The Critic loses 12 per turn and ordered the slow
+Pasta, so she pays with only 28 and pulls the average down. The victory run served the same
+customers with different priorities.
+
+### Extra run, the ignored Critic leaves: `runs/stage-2/critic-leaves.txt`
+
+Turns 1-11 match the victory run. From turn 12 the manager never lets the Chef cook Carmen's Pasta.
+
+| Turn | Arrival | Manager's choices and results | End of turn |
+| --- | --- | --- | --- |
+| 1 | #1 Alice (Regular) | Waiter seats Alice (Table 1)<br>Chef: nothing to do | Waiting: Alice 92 |
+| 2 |  | Waiter takes Alice's order: Salad, bill $9.00<br>Chef: Alice's Salad 1/1, READY | Waiting: Alice 84 |
+| 3 |  | Waiter serves Alice's Salad<br>Chef: nothing to do |  |
+| 4 | #2 Victor (VIP) | Waiter seats Victor (Table 2)<br>Chef: nothing to do | Alice READY_TO_PAY<br>Waiting: Victor 95 |
+| 5 |  | Waiter takes Victor's order: Burger, bill $13.50<br>Chef: Victor's Burger 1/1, READY | Alice pays $9.00 (satisfaction 84)<br>Waiting: Victor 90 |
+| 6 |  | Waiter serves Victor's Burger<br>Chef: nothing to do |  |
+| 7 | #3 Chloe (Regular) | Waiter seats Chloe (Table 1)<br>Chef: nothing to do | Victor READY_TO_PAY<br>Waiting: Chloe 92 |
+| 8 |  | Waiter takes Chloe's order: Pasta, bill $18.00<br>Chef: Chloe's Pasta 1/2 | Victor pays $13.50 (satisfaction 90)<br>Waiting: Chloe 84 |
+| 9 |  | Waiter: nothing to do<br>Chef: Chloe's Pasta 2/2, READY | Waiting: Chloe 76 |
+| 10 | #4 Carmen (Critic) | Waiter serves Chloe's Pasta<br>Chef: nothing to do | Waiting: Carmen 88 |
+| 11 |  | Waiter seats Carmen (Table 2)<br>Chef: nothing to do | Chloe READY_TO_PAY<br>Waiting: Carmen 76 |
+| 12 |  | Waiter takes Carmen's order: Pasta, bill $18.00<br>Chef waits | Chloe pays $18.00 (satisfaction 76)<br>Waiting: Carmen 64 |
+| 13 | #5 Ethan (Regular) | Waiter seats Ethan (Table 1)<br>Chef waits | Waiting: Carmen 52, Ethan 92 |
+| 14 |  | Waiter takes Ethan's order: Burger, bill $15.00<br>Chef: Ethan's Burger 1/1, READY | Waiting: Carmen 40, Ethan 84 |
+| 15 |  | Waiter serves Ethan's Burger<br>Chef waits | Waiting: Carmen 28 |
+| 16 | #6 Fiona (Regular) | Waiter: nothing to do<br>Chef waits | Ethan READY_TO_PAY<br>Waiting: Carmen 16, Fiona 92 |
+| 17 |  | Waiter: nothing to do<br>Chef waits | Ethan pays $15.00 (satisfaction 84)<br>Waiting: Carmen 4, Fiona 84 |
+| 18 |  | Waiter seats Fiona (Table 1)<br>Chef waits | Waiting: Carmen 0, Fiona 76<br>Carmen leaves (0), Pasta CANCELLED |
+
+Result: VICTORY (4 paid, $55.50, average 83.5) with 1 unhappy departure. Carmen reaches 0 at the
+end of turn 18 and leaves without paying. Her Pasta order is CANCELLED, Table 2 is freed and nothing
+is added to revenue.
+
+### Rule checks added in Stage 2
+
+`./test.sh` now runs 97 checks. The Stage 1 rule checks still pass, including the Section 3.3
+example, abandonment, one task per turn and the payment order. Because the arrivals changed, the
+Stage 1 replays and the "all customers are Regular" check became their Stage 2 versions. The new
+checks are:
+
+| Group | What is checked |
+| --- | --- |
+| Customer types | Satisfaction loss per waiting turn: Regular 8, VIP 5, Critic 12; VIP bill 10% off ($15.00 -> $13.50, $9.00 -> $8.10, $18.00 -> $16.20); Regular and Critic pay full price; rounding to the nearest cent |
+| Critic preference | A Critic orders Pasta whatever their arrival number; with two equally demanding dishes, the more expensive one |
+| Same flow for every type | A VIP and a Critic are seated, order, are cooked for, served, eat and pay through the same controller steps |
+| No type checks | `GameController.java` contains no `instanceof`, no `getType()` and no reference to `VIPCustomer` or `CriticCustomer` |
+| Arrivals | Still six arrivals, with the VIP on turn 4 and the Critic on turn 10 |
+| Replays | The three Stage 2 runs above give the expected results and match their transcripts |

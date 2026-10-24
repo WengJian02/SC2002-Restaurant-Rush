@@ -1,0 +1,61 @@
+// Stage 2 defeat run. One answer per line, anything after // is a note the game ignores.
+// Mistakes: (1) the Waiter seats new customers and takes orders before serving READY dishes,
+// and (2) the Chef waits on the turn an order is taken ("batching" orders).
+// Everyone gets served late. The Critic loses 12 a turn, so she suffers most and pulls the
+// average below 60.
+// Turn 1: Alice (#1) arrives
+1    // Waiter: seat
+1    // Alice
+// Turn 2
+2    // Waiter: take order
+1    // Alice orders Salad
+0    // Chef: wait (mistake 2)
+// Turn 3: the Waiter has nothing to do and waits automatically
+1    // Chef: Alice's Salad -> READY
+// Turn 4: Victor (#2, VIP) arrives
+1    // Waiter: seat (mistake 1: Alice's Salad is READY but is not served)
+2    // Victor
+// Turn 5
+2    // Waiter: take order (mistake 1 again)
+2    // Victor orders Burger: VIP bill $13.50
+0    // Chef: wait (mistake 2)
+// Turn 6
+3    // Waiter: serve
+1    // Alice, three turns after her Salad was READY
+2    // Chef: Victor's Burger -> READY
+// Turn 7: Chloe (#3) arrives; both tables are occupied
+3    // Waiter: serve
+2    // Victor
+// Turn 8: nothing for the Waiter or Chef; Alice pays at the end of the turn
+// Turn 9: Victor pays at the end of the turn
+1    // Waiter: seat
+3    // Chloe
+// Turn 10: Carmen (#4, Critic) arrives
+1    // Waiter: seat (mistake 1)
+4    // Carmen
+// Turn 11
+2    // Waiter: take order
+3    // Chloe orders Pasta
+0    // Chef: wait (mistake 2)
+// Turn 12
+2    // Waiter: take order
+4    // Carmen (Critic) orders Pasta
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 13: Ethan (#5) arrives; the Waiter has nothing to do
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 14
+3    // Waiter: serve
+3    // Chloe
+4    // Chef: Carmen's Pasta unit 1 of 2
+// Turn 15: the Waiter has nothing to do
+4    // Chef: Carmen's Pasta unit 2 of 2 -> READY
+// Turn 16: Fiona (#6) arrives; Chloe pays at the end of the turn
+3    // Waiter: serve
+4    // Carmen, now at 28 satisfaction
+// Turn 17
+1    // Waiter: seat
+5    // Ethan
+// Turn 18: Carmen pays at the end of the turn
+2    // Waiter: take order
+5    // Ethan orders Burger
+0    // Chef: wait (mistake 2)

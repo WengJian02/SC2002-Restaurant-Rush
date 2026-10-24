@@ -1,0 +1,542 @@
+==========================================================================
+RESTAURANT RUSH - you are the manager
+==========================================================================
+Staff:
+  Waiter: one task per turn - seat a queued customer, take an order, or serve a READY dish
+  Chef: one preparation unit of one order per turn
+  Cashier: automatic - charges at most one READY_TO_PAY customer per turn, oldest first
+Menu:
+  Salad - $9.00, 1 preparation unit
+  Burger - $15.00, 1 preparation unit
+  Pasta - $18.00, 2 preparation units
+A customer arrives at the start of turns 1, 4, 7, 10, 13, 16 and chooses their own food.
+Customers waiting for a table or for food lose satisfaction every turn and leave at 0.
+Goal after 18 turns: at least 4 paid customers, revenue of at least $45.00 and average satisfaction of paid customers of at least 60.
+Answer each question with a number. Customers are numbered in order of arrival (#1, #2, ...).
+
+==========================================================================
+TURN 1 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+==========================================================================
+* #1 Alice (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #1 Alice (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [#1 Alice]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#1 Alice]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 1
+>> Waiter seats Alice at Table 1.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 1 ---
+* Still waiting, so satisfaction drops: Alice 92.
+Served 0 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 1/18
+
+==========================================================================
+TURN 2 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 92 - SEATED
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [none]  take order [#1 Alice]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#1 Alice]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 1
+>> Alice orders Salad (1 preparation unit). Bill: $9.00.
+
+CHEF - prepare one unit of an order   [#1 Alice: Salad 0/1]
+Customer number whose order to prepare (0 = wait): 1
+>> Chef prepares Alice's Salad: unit 1 of 1 done. It is READY and can be served from next turn.
+
+--- End of turn 2 ---
+* Still waiting, so satisfaction drops: Alice 84.
+Served 0 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 2/18
+
+==========================================================================
+TURN 3 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Salad $9.00 READY
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [#1 Alice]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#1 Alice]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 1
+>> Waiter serves Alice's Salad: SERVED. Alice starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 3 ---
+Served 1 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 3/18
+
+==========================================================================
+TURN 4 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+==========================================================================
+* #2 Victor (VIP) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #2 Victor (VIP) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 84 - EATING - Salad $9.00 SERVED
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [#2 Victor]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#2 Victor]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 2
+>> Waiter seats Victor at Table 2.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 4 ---
+* Alice has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Victor 95.
+Served 1 | Paid 0 | Unhappy departures 0 | Revenue $0.00 | Average satisfaction N/A | Turns used 4/18
+
+==========================================================================
+TURN 5 of 18  |  Revenue $0.00  |  Average satisfaction of paid customers N/A
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #1 Alice (Regular) - satisfaction 84 - READY_TO_PAY - Salad $9.00 SERVED
+  Table 2: #2 Victor (VIP) - satisfaction 95 - SEATED
+Staff tasks available:
+  Waiter : seat [none]  take order [#2 Victor]  serve [none]
+  Chef   : prepare [none]
+  Cashier: charges Alice automatically at the end of this turn
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#2 Victor]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 2
+>> Victor orders Burger (1 preparation unit). Bill: $13.50.
+
+CHEF - prepare one unit of an order   [#2 Victor: Burger 0/1]
+Customer number whose order to prepare (0 = wait): 2
+>> Chef prepares Victor's Burger: unit 1 of 1 done. It is READY and can be served from next turn.
+
+--- End of turn 5 ---
+* Cashier collects $9.00 from Alice: PAID with satisfaction 84 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Victor 90.
+Served 1 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 84.0 | Turns used 5/18
+
+==========================================================================
+TURN 6 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 84.0
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: free
+  Table 2: #2 Victor (VIP) - satisfaction 90 - WAITING_FOR_FOOD - Burger $13.50 READY
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [#2 Victor]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#2 Victor]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 2
+>> Waiter serves Victor's Burger: SERVED. Victor starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 6 ---
+Served 2 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 84.0 | Turns used 6/18
+
+==========================================================================
+TURN 7 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 84.0
+==========================================================================
+* #3 Chloe (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #3 Chloe (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: #2 Victor (VIP) - satisfaction 90 - EATING - Burger $13.50 SERVED
+Staff tasks available:
+  Waiter : seat [#3 Chloe]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#3 Chloe]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 3
+>> Waiter seats Chloe at Table 1.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 7 ---
+* Victor has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Chloe 92.
+Served 2 | Paid 1 | Unhappy departures 0 | Revenue $9.00 | Average satisfaction 84.0 | Turns used 7/18
+
+==========================================================================
+TURN 8 of 18  |  Revenue $9.00  |  Average satisfaction of paid customers 84.0
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 92 - SEATED
+  Table 2: #2 Victor (VIP) - satisfaction 90 - READY_TO_PAY - Burger $13.50 SERVED
+Staff tasks available:
+  Waiter : seat [none]  take order [#3 Chloe]  serve [none]
+  Chef   : prepare [none]
+  Cashier: charges Victor automatically at the end of this turn
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#3 Chloe]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 3
+>> Chloe orders Pasta (2 preparation units). Bill: $18.00.
+
+CHEF - prepare one unit of an order   [#3 Chloe: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 3
+>> Chef prepares Chloe's Pasta: unit 1 of 2 done.
+
+--- End of turn 8 ---
+* Cashier collects $13.50 from Victor: PAID with satisfaction 90 recorded. Table 2 is free again.
+* Still waiting, so satisfaction drops: Chloe 84.
+Served 2 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 87.0 | Turns used 8/18
+
+==========================================================================
+TURN 9 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 87.0
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 1/2
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#3 Chloe: Pasta 1/2]
+  Cashier: nobody is ready to pay
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#3 Chloe: Pasta 1/2]
+Customer number whose order to prepare (0 = wait): 3
+>> Chef prepares Chloe's Pasta: unit 2 of 2 done. It is READY and can be served from next turn.
+
+--- End of turn 9 ---
+* Still waiting, so satisfaction drops: Chloe 76.
+Served 2 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 87.0 | Turns used 9/18
+
+==========================================================================
+TURN 10 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 87.0
+==========================================================================
+* #4 Carmen (Critic) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #4 Carmen (Critic) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 76 - WAITING_FOR_FOOD - Pasta $18.00 READY
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [#4 Carmen]  take order [none]  serve [#3 Chloe]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#4 Carmen]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#3 Chloe]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 3
+>> Waiter serves Chloe's Pasta: SERVED. Chloe starts eating.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 10 ---
+* Still waiting, so satisfaction drops: Carmen 88.
+Served 3 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 87.0 | Turns used 10/18
+
+==========================================================================
+TURN 11 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 87.0
+==========================================================================
+Waiting queue:
+  #4 Carmen (Critic) - satisfaction 88 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 76 - EATING - Pasta $18.00 SERVED
+  Table 2: free
+Staff tasks available:
+  Waiter : seat [#4 Carmen]  take order [none]  serve [none]
+  Chef   : prepare [none]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#4 Carmen]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 4
+>> Waiter seats Carmen at Table 2.
+
+CHEF: nothing to prepare this turn, so the Chef waits.
+
+--- End of turn 11 ---
+* Chloe has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Carmen 76.
+Served 3 | Paid 2 | Unhappy departures 0 | Revenue $22.50 | Average satisfaction 87.0 | Turns used 11/18
+
+==========================================================================
+TURN 12 of 18  |  Revenue $22.50  |  Average satisfaction of paid customers 87.0
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #3 Chloe (Regular) - satisfaction 76 - READY_TO_PAY - Pasta $18.00 SERVED
+  Table 2: #4 Carmen (Critic) - satisfaction 76 - SEATED
+Staff tasks available:
+  Waiter : seat [none]  take order [#4 Carmen]  serve [none]
+  Chef   : prepare [none]
+  Cashier: charges Chloe automatically at the end of this turn
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#4 Carmen]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 4
+>> Carmen orders Pasta (2 preparation units). Bill: $18.00.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 12 ---
+* Cashier collects $18.00 from Chloe: PAID with satisfaction 76 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Carmen 64.
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 83.3 | Turns used 12/18
+
+==========================================================================
+TURN 13 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 83.3
+==========================================================================
+* #5 Ethan (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #5 Ethan (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: #4 Carmen (Critic) - satisfaction 64 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [#5 Ethan]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#5 Ethan]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 5
+>> Waiter seats Ethan at Table 1.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 13 ---
+* Still waiting, so satisfaction drops: Carmen 52, Ethan 92.
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 83.3 | Turns used 13/18
+
+==========================================================================
+TURN 14 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 83.3
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 92 - SEATED
+  Table 2: #4 Carmen (Critic) - satisfaction 52 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [none]  take order [#5 Ethan]  serve [none]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [#5 Ethan]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 2
+Customer number (0 = back): 5
+>> Ethan orders Burger (1 preparation unit). Bill: $15.00.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2, #5 Ethan: Burger 0/1]
+Customer number whose order to prepare (0 = wait): 5
+>> Chef prepares Ethan's Burger: unit 1 of 1 done. It is READY and can be served from next turn.
+
+--- End of turn 14 ---
+* Still waiting, so satisfaction drops: Carmen 40, Ethan 84.
+Served 3 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 83.3 | Turns used 14/18
+
+==========================================================================
+TURN 15 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 83.3
+==========================================================================
+Waiting queue:
+  (empty)
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - WAITING_FOR_FOOD - Burger $15.00 READY
+  Table 2: #4 Carmen (Critic) - satisfaction 40 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [#5 Ethan]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [none]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [#5 Ethan]
+  0. Wait
+Waiter task (0-3): 3
+Customer number (0 = back): 5
+>> Waiter serves Ethan's Burger: SERVED. Ethan starts eating.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 15 ---
+* Still waiting, so satisfaction drops: Carmen 28.
+Served 4 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 83.3 | Turns used 15/18
+
+==========================================================================
+TURN 16 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 83.3
+==========================================================================
+* #6 Fiona (Regular) arrives and joins the waiting queue with satisfaction 100.
+Waiting queue:
+  #6 Fiona (Regular) - satisfaction 100 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - EATING - Burger $15.00 SERVED
+  Table 2: #4 Carmen (Critic) - satisfaction 28 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: nobody is ready to pay
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 16 ---
+* Ethan has finished eating and is READY_TO_PAY (pays next turn at the earliest).
+* Still waiting, so satisfaction drops: Carmen 16, Fiona 92.
+Served 4 | Paid 3 | Unhappy departures 0 | Revenue $40.50 | Average satisfaction 83.3 | Turns used 16/18
+
+==========================================================================
+TURN 17 of 18  |  Revenue $40.50  |  Average satisfaction of paid customers 83.3
+==========================================================================
+Waiting queue:
+  #6 Fiona (Regular) - satisfaction 92 - WAITING_FOR_TABLE
+Tables:
+  Table 1: #5 Ethan (Regular) - satisfaction 84 - READY_TO_PAY - Burger $15.00 SERVED
+  Table 2: #4 Carmen (Critic) - satisfaction 16 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [none]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: charges Ethan automatically at the end of this turn
+
+WAITER: nothing to do this turn, so the Waiter waits.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 17 ---
+* Cashier collects $15.00 from Ethan: PAID with satisfaction 84 recorded. Table 1 is free again.
+* Still waiting, so satisfaction drops: Carmen 4, Fiona 84.
+Served 4 | Paid 4 | Unhappy departures 0 | Revenue $55.50 | Average satisfaction 83.5 | Turns used 17/18
+
+==========================================================================
+TURN 18 of 18  |  Revenue $55.50  |  Average satisfaction of paid customers 83.5
+==========================================================================
+Waiting queue:
+  #6 Fiona (Regular) - satisfaction 84 - WAITING_FOR_TABLE
+Tables:
+  Table 1: free
+  Table 2: #4 Carmen (Critic) - satisfaction 4 - WAITING_FOR_FOOD - Pasta $18.00 PREPARING 0/2
+Staff tasks available:
+  Waiter : seat [#6 Fiona]  take order [none]  serve [none]
+  Chef   : prepare [#4 Carmen: Pasta 0/2]
+  Cashier: nobody is ready to pay
+
+WAITER - choose one task:
+  1. Seat a customer from the waiting queue   [#6 Fiona]
+  2. Take a seated customer's order           [none]
+  3. Serve a READY dish                       [none]
+  0. Wait
+Waiter task (0-3): 1
+Customer number (0 = back): 6
+>> Waiter seats Fiona at Table 1.
+
+CHEF - prepare one unit of an order   [#4 Carmen: Pasta 0/2]
+Customer number whose order to prepare (0 = wait): 0
+>> The Chef waits this turn.
+
+--- End of turn 18 ---
+* Still waiting, so satisfaction drops: Carmen 0, Fiona 76.
+* Carmen reached 0 satisfaction and leaves without paying. Their Pasta order is CANCELLED. Table 2 is free again.
+Served 4 | Paid 4 | Unhappy departures 1 | Revenue $55.50 | Average satisfaction 83.5 | Turns used 18/18
+
+==========================================================================
+GAME OVER - all 18 turns played
+==========================================================================
+Paid customers       : 4  (target at least 4)  MET
+Revenue              : $55.50  (target at least $45.00)  MET
+Average satisfaction : 83.5  (target at least 60)  MET
+Served 4 | Unhappy departures 1
+RESULT: VICTORY - all three targets were met!

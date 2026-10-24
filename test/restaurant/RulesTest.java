@@ -19,6 +19,7 @@ import restaurant.control.ActionResult;
 import restaurant.control.GameController;
 import restaurant.control.GameSetup;
 import restaurant.entity.Cashier;
+import restaurant.entity.CriticCustomer;
 import restaurant.entity.Customer;
 import restaurant.entity.CustomerStatus;
 import restaurant.entity.Menu;
@@ -30,10 +31,11 @@ import restaurant.entity.RegularCustomer;
 import restaurant.entity.Scoreboard;
 import restaurant.entity.Staff;
 import restaurant.entity.Table;
+import restaurant.entity.VIPCustomer;
 import restaurant.entity.Waiter;
 import restaurant.util.Money;
 
-// Checks the rules from the brief one by one, then replays the saved runs in runs/stage-1
+// Checks the rules from the brief one by one, then replays the saved runs in runs/stage-2
 // through the real CLI. Run it from the project folder with test.sh or test.bat.
 public class RulesTest {
 
@@ -55,8 +57,14 @@ public class RulesTest {
         objectiveNeedsAllThreeTargets();
         moneyIsShownWithTwoDecimals();
         badInputIsHandled();
-        replay("runs/stage-1/victory.txt", true, 5, 6600, "79.2");
-        replay("runs/stage-1/defeat.txt", false, 3, 4200, "65.3");
+        vipAndCriticBehaviour();
+        everyCustomerTypeFollowsTheSameFlow();
+        controllerHasNoTypeChecks();
+        replay("runs/stage-2/victory.txt", true, 5, 7350, "75.6");
+        replay("runs/stage-2/defeat.txt", false, 4, 5850, "54.3");
+        GameController criticLeaves = replay("runs/stage-2/critic-leaves.txt", true, 4, 5550, "83.5");
+        check(criticLeaves.getScoreboard().getUnhappyDepartures() == 1,
+                "the ignored Critic leaves at 0 and is counted as an unhappy departure");
 
         System.out.println();
         System.out.println(passed + " checks passed, " + failed + " failed.");
@@ -82,11 +90,12 @@ public class RulesTest {
         Objective goal = game.getObjective();
         check(goal.getMinPaidCustomers() == 4 && goal.getMinRevenue() == 4500 && goal.getMinAverageSatisfaction() == 60,
                 "objective: at least 4 paid customers, $45.00 revenue and average satisfaction 60");
-        boolean allRegular = true;
+        List<String> types = new ArrayList<>();
         for (Customer customer : GameSetup.createArrivals().values()) {
-            allRegular = allRegular && customer.getType().equals("Regular");
+            types.add(customer.getType());
         }
-        check(allRegular, "Stage 1 customers are all Regular");
+        check(types.equals(Arrays.asList("Regular", "VIP", "Regular", "Critic", "Regular", "Regular")),
+                "still six arrivals: a VIP (turn 4) and a Critic (turn 10) replace two Regular customers");
         game.startTurn();
         check(game.getWaitingCustomers().size() == 1 && game.getWaitingCustomers().get(0).getSatisfaction() == 100,
                 "turn 1: the arriving customer joins the waiting queue with satisfaction 100");
@@ -368,8 +377,97 @@ public class RulesTest {
                 "when the input runs out every remaining choice is Wait and the game still plays all 18 turns");
     }
 
+    private static void vipAndCriticBehaviour() {
+        section("Stage 2: VIP and Critic customers");
+        Customer regular = new RegularCustomer(1, "Rita");
+        Customer vip = new VIPCustomer(2, "Victor");
+        Customer critic = new CriticCustomer(3, "Carmen");
+        regular.loseSatisfaction();
+        vip.loseSatisfaction();
+        critic.loseSatisfaction();
+        check(regular.getSatisfaction() == 92 && vip.getSatisfaction() == 95 && critic.getSatisfaction() == 88,
+                "satisfaction lost per waiting turn: Regular 8, VIP 5, Critic 12");
+        check(vip.calculateBill(1500) == 1350 && vip.calculateBill(900) == 810 && vip.calculateBill(1800) == 1620,
+                "VIP bill is 10% off: $15.00 -> $13.50, $9.00 -> $8.10, $18.00 -> $16.20");
+        check(regular.calculateBill(1500) == 1500 && critic.calculateBill(1500) == 1500, "Regular and Critic pay the full price");
+        check(Money.percentOf(999, 90) == 899 && Money.percentOf(1005, 90) == 905,
+                "percentages are rounded to the nearest cent ($8.991 -> $8.99, $9.045 -> $9.05)");
+
+        Menu menu = GameSetup.createMenu();
+        boolean alwaysPasta = true;
+        for (int number = 1; number <= 6; number++) {
+            alwaysPasta = alwaysPasta && new CriticCustomer(number, "Critic" + number).chooseMenuItem(menu).getName().equals("Pasta");
+        }
+        check(alwaysPasta, "a Critic always orders the most demanding dish (Pasta, 2 units), whatever their arrival number");
+        Menu tied = new Menu();
+        tied.addItem(new MenuItem("Stew", 1200, 2));
+        tied.addItem(new MenuItem("Roast", 2500, 2));
+        tied.addItem(new MenuItem("Soup", 700, 1));
+        check(critic.chooseMenuItem(tied).getName().equals("Roast"), "if two dishes need the same work, the Critic picks the more expensive one");
+    }
+
+    private static void everyCustomerTypeFollowsTheSameFlow() {
+        section("Stage 2: every customer type follows the same order and service flow");
+        Map<Integer, Customer> arrivals = new TreeMap<>();
+        Customer vip = new VIPCustomer(2, "Victor");   // orders Burger under the food rule
+        Customer critic = new CriticCustomer(1, "Carmen"); // would order Salad, but as a Critic orders Pasta
+        arrivals.put(1, vip);
+        arrivals.put(2, critic);
+        GameController game = gameWith(arrivals);
+        game.startTurn();   // turn 1: seat Victor
+        game.waiterSeat(2);
+        game.endTurn();
+        game.startTurn();   // turn 2: Carmen arrives; take Victor's order and cook it
+        ActionResult order = game.waiterTakeOrder(2);
+        game.chefPrepare(2);
+        game.endTurn();
+        check(order.getMessage().contains("Burger") && order.getMessage().contains("$13.50"),
+                "the VIP's Burger is billed $13.50 when the order is taken");
+        check(vip.getSatisfaction() == 90 && critic.getSatisfaction() == 88,
+                "after waiting, the VIP lost 5 per turn (90) and the Critic 12 (88)");
+        game.startTurn();   // turn 3: serve Victor
+        game.waiterServe(2);
+        game.endTurn();
+        game.startTurn();   // turn 4: seat Carmen; Victor finishes eating
+        game.waiterSeat(1);
+        game.endTurn();
+        game.startTurn();   // turn 5: Carmen orders; Victor pays
+        ActionResult criticOrder = game.waiterTakeOrder(1);
+        game.chefPrepare(1);
+        game.endTurn();
+        check(criticOrder.getMessage().contains("Pasta"), "the Critic's order goes through the same Waiter and Chef steps");
+        check(vip.getStatus() == CustomerStatus.PAID && game.getScoreboard().getRevenue() == 1350,
+                "the VIP becomes READY_TO_PAY and pays $13.50 like everyone else");
+        for (int turn = 6; turn <= 9; turn++) {
+            game.startTurn();
+            if (turn == 6) {
+                game.waiterWait();
+                game.chefPrepare(1);
+            } else if (turn == 7) {
+                game.waiterServe(1);
+            }
+            game.endTurn();
+        }
+        check(critic.getStatus() == CustomerStatus.PAID && game.getScoreboard().getRevenue() == 1350 + 1800,
+                "the Critic is served, eats and pays $18.00 through the same steps");
+    }
+
+    private static void controllerHasNoTypeChecks() {
+        section("Stage 2: behaviour is dispatched through the customer objects");
+        String controller;
+        try {
+            controller = readFile("src/restaurant/control/GameController.java");
+        } catch (IOException e) {
+            check(false, "GameController.java can be read (run the tests from the project folder)");
+            return;
+        }
+        check(!controller.contains("instanceof") && !controller.contains("VIPCustomer") && !controller.contains("CriticCustomer")
+                        && !controller.contains("getType()"),
+                "GameController has no instanceof or type checks: it only calls Customer methods");
+    }
+
     // replays a saved run through the CLI and compares the output with its transcript
-    private static void replay(String runFile, boolean victory, int paid, int revenue, String average) throws IOException {
+    private static GameController replay(String runFile, boolean victory, int paid, int revenue, String average) throws IOException {
         String transcriptFile = runFile.replace(".txt", "-transcript.txt");
         section("Replay of " + runFile);
         GameController game = GameSetup.createBaseGame();
@@ -385,6 +483,7 @@ public class RulesTest {
         check(output.contains("| Unhappy departures ") && output.contains("| Turns used "),
                 "end of turn shows served, unhappy departures, revenue, average satisfaction and turns used");
         check(normalise(output).equals(normalise(readFile(transcriptFile))), "matches the saved transcript " + transcriptFile);
+        return game;
     }
 
     // base turns, tables, menu and objective but our own arrivals

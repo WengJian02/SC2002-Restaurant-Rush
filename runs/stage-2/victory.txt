@@ -1,0 +1,64 @@
+// Stage 2 victory run. One answer per line, anything after // is a note the game ignores.
+// Same plan as stage 1: keep everyone moving and serve READY dishes first.
+// New this stage: Victor (#2) is a VIP (loses 5 a turn, 10% off) and Carmen (#4) is a Critic
+// (loses 12 a turn and always orders the most demanding dish, which here is the Pasta).
+// Turn 1: Alice (#1) arrives
+1    // Waiter: seat
+1    // Alice
+// Turn 2
+2    // Waiter: take order
+1    // Alice orders Salad
+1    // Chef: Alice's Salad -> READY
+// Turn 3
+3    // Waiter: serve
+1    // Alice
+// Turn 4: Victor (#2, VIP) arrives
+1    // Waiter: seat
+2    // Victor
+// Turn 5: Alice pays $9.00 at the end of the turn
+2    // Waiter: take order
+2    // Victor orders Burger: VIP bill $13.50 instead of $15.00
+2    // Chef: Victor's Burger -> READY
+// Turn 6
+3    // Waiter: serve
+2    // Victor
+// Turn 7: Chloe (#3) arrives
+1    // Waiter: seat
+3    // Chloe
+// Turn 8: Victor pays $13.50 at the end of the turn
+2    // Waiter: take order
+3    // Chloe orders Pasta (2 units)
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 9: the Waiter has nothing to do and waits automatically
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 10: Carmen (#4, Critic) arrives. Staff constraint: serve Chloe or seat Carmen? Serve first.
+3    // Waiter: serve
+3    // Chloe
+// Turn 11
+1    // Waiter: seat
+4    // Carmen
+// Turn 12: Chloe pays $18.00 at the end of the turn
+2    // Waiter: take order
+4    // Carmen (Critic) orders Pasta, the most demanding dish, not the Salad our food rule would give #4
+4    // Chef: Carmen's Pasta unit 1 of 2
+// Turn 13: Ethan (#5) arrives
+1    // Waiter: seat
+5    // Ethan
+4    // Chef: Carmen's Pasta unit 2 of 2 -> READY
+// Turn 14: constraint: serve the Critic (-12 per turn) before taking Ethan's order
+3    // Waiter: serve
+4    // Carmen
+// Turn 15
+2    // Waiter: take order
+5    // Ethan orders Burger
+5    // Chef: Ethan's Burger -> READY
+// Turn 16: Fiona (#6) arrives but both tables are occupied; Carmen pays at the end of the turn
+3    // Waiter: serve
+5    // Ethan
+// Turn 17
+1    // Waiter: seat
+6    // Fiona
+// Turn 18: Ethan pays $15.00 at the end of the turn. Fiona cannot finish in time (intended by the brief).
+2    // Waiter: take order
+6    // Fiona orders Pasta
+6    // Chef: Fiona's Pasta unit 1 of 2

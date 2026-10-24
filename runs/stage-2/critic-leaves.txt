@@ -1,0 +1,63 @@
+// Stage 2 extra run where the Critic is ignored and walks out. Anything after // is a note.
+// Turns 1-11 are played well, like the victory run. After that the Chef never cooks Carmen's Pasta.
+// She loses 12 a turn, hits 0 at the end of turn 18 and leaves without paying. Her order is
+// CANCELLED, her table is freed and nothing is added to revenue.
+// Turn 1: Alice (#1) arrives
+1    // Waiter: seat
+1    // Alice
+// Turn 2
+2    // Waiter: take order
+1    // Alice orders Salad
+1    // Chef: Alice's Salad -> READY
+// Turn 3
+3    // Waiter: serve
+1    // Alice
+// Turn 4: Victor (#2, VIP) arrives
+1    // Waiter: seat
+2    // Victor
+// Turn 5
+2    // Waiter: take order
+2    // Victor orders Burger ($13.50)
+2    // Chef: Victor's Burger -> READY
+// Turn 6
+3    // Waiter: serve
+2    // Victor
+// Turn 7: Chloe (#3) arrives
+1    // Waiter: seat
+3    // Chloe
+// Turn 8
+2    // Waiter: take order
+3    // Chloe orders Pasta
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 9: the Waiter has nothing to do
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 10: Carmen (#4, Critic) arrives
+3    // Waiter: serve
+3    // Chloe
+// Turn 11
+1    // Waiter: seat
+4    // Carmen
+// Turn 12
+2    // Waiter: take order
+4    // Carmen orders Pasta
+0    // Chef: wait, Carmen's order is ignored from now on
+// Turn 13: Ethan (#5) arrives
+1    // Waiter: seat
+5    // Ethan
+0    // Chef: wait
+// Turn 14
+2    // Waiter: take order
+5    // Ethan orders Burger
+5    // Chef: Ethan's Burger -> READY
+// Turn 15
+3    // Waiter: serve
+5    // Ethan
+0    // Chef: wait
+// Turn 16: Fiona (#6) arrives; both tables are occupied, so the Waiter has nothing to do
+0    // Chef: wait
+// Turn 17: Ethan pays at the end of the turn
+0    // Chef: wait
+// Turn 18: Carmen reaches 0 at the end of this turn and leaves
+1    // Waiter: seat
+6    // Fiona
+0    // Chef: wait

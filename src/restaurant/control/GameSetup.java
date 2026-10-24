@@ -3,11 +3,13 @@ package restaurant.control;
 import java.util.Map;
 import java.util.TreeMap;
 
+import restaurant.entity.CriticCustomer;
 import restaurant.entity.Customer;
 import restaurant.entity.Menu;
 import restaurant.entity.MenuItem;
 import restaurant.entity.Objective;
 import restaurant.entity.RegularCustomer;
+import restaurant.entity.VIPCustomer;
 
 // The base setting from the brief. It never changes, so every run can be repeated.
 public final class GameSetup {
@@ -32,12 +34,13 @@ public final class GameSetup {
     }
 
     // key = the turn the customer arrives on
+    // a VIP and a Critic take the place of two Regulars, so there are still six arrivals
     public static Map<Integer, Customer> createArrivals() {
         Map<Integer, Customer> arrivals = new TreeMap<>();
         arrivals.put(1, new RegularCustomer(1, "Alice"));
-        arrivals.put(4, new RegularCustomer(2, "Ben"));
+        arrivals.put(4, new VIPCustomer(2, "Victor"));
         arrivals.put(7, new RegularCustomer(3, "Chloe"));
-        arrivals.put(10, new RegularCustomer(4, "Daniel"));
+        arrivals.put(10, new CriticCustomer(4, "Carmen"));
         arrivals.put(13, new RegularCustomer(5, "Ethan"));
         arrivals.put(16, new RegularCustomer(6, "Fiona"));
         return arrivals;
