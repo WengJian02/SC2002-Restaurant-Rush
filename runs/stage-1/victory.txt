@@ -1,0 +1,63 @@
+// Stage 1 victory run. One answer per line, anything after // is a note the game ignores.
+// Plan: seat, take orders and serve as quickly as possible. When the Waiter has to pick between
+// serving a READY dish and seating someone new, serve first. The served customer stops losing
+// satisfaction and their table frees up sooner.
+// Turn 1: Alice (#1) arrives
+1    // Waiter: seat
+1    // Alice
+// Turn 2
+2    // Waiter: take order
+1    // Alice orders Salad (1 unit)
+1    // Chef: Alice's Salad -> READY
+// Turn 3
+3    // Waiter: serve
+1    // Alice
+// Turn 4: Ben (#2) arrives; Alice finishes eating at the end of this turn
+1    // Waiter: seat
+2    // Ben
+// Turn 5: Alice pays $9.00 at the end of the turn
+2    // Waiter: take order
+2    // Ben orders Burger (1 unit)
+2    // Chef: Ben's Burger -> READY
+// Turn 6
+3    // Waiter: serve
+2    // Ben
+// Turn 7: Chloe (#3) arrives
+1    // Waiter: seat
+3    // Chloe
+// Turn 8: Ben pays $15.00 at the end of the turn
+2    // Waiter: take order
+3    // Chloe orders Pasta (2 units)
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 9: the Waiter has nothing to do and waits automatically
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 10: Daniel (#4) arrives. Staff constraint: serve Chloe or seat Daniel? Serve first.
+3    // Waiter: serve
+3    // Chloe
+// Turn 11
+1    // Waiter: seat
+4    // Daniel
+// Turn 12: Chloe pays $18.00 at the end of the turn
+2    // Waiter: take order
+4    // Daniel orders Salad (1 unit)
+4    // Chef: Daniel's Salad -> READY
+// Turn 13: Ethan (#5) arrives. Same constraint again: serve Daniel first.
+3    // Waiter: serve
+4    // Daniel
+// Turn 14
+1    // Waiter: seat
+5    // Ethan
+// Turn 15: Daniel pays $9.00 at the end of the turn
+2    // Waiter: take order
+5    // Ethan orders Burger (1 unit)
+5    // Chef: Ethan's Burger -> READY
+// Turn 16: Fiona (#6) arrives. Serve Ethan first so he can still pay by turn 18.
+3    // Waiter: serve
+5    // Ethan
+// Turn 17
+1    // Waiter: seat
+6    // Fiona
+// Turn 18: Ethan pays $15.00 at the end of the turn. Fiona cannot finish in time (intended by the brief).
+2    // Waiter: take order
+6    // Fiona orders Pasta (2 units)
+6    // Chef: Fiona's Pasta unit 1 of 2

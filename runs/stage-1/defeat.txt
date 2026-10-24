@@ -1,0 +1,61 @@
+// Stage 1 defeat run. One answer per line, anything after // is a note the game ignores.
+// The mistake: only one table is ever used. The next customer is seated only after the one
+// before has paid, so the queue builds up and too few customers pay in time.
+// It also has three refused inputs that don't use up the Waiter's task.
+// Turn 1: Alice (#1) arrives
+seat // not a number: the game asks again
+1    // Waiter: seat
+1    // Alice
+// Turn 2
+2    // Waiter: take order
+1    // Alice orders Salad
+1    // Chef: Alice's Salad -> READY
+// Turn 3
+3    // Waiter: serve
+1    // Alice
+// Turn 4: Ben (#2) arrives. Table 2 is free, but the manager waits for Alice to pay first.
+0    // Waiter: wait
+// Turn 5: Alice pays at the end of this turn
+0    // Waiter: wait
+// Turn 6
+1    // Waiter: seat
+2    // Ben
+// Turn 7: Chloe (#3) arrives
+2    // Waiter: take order
+2    // Ben orders Burger
+2    // Chef: Ben's Burger -> READY
+// Turn 8
+3    // Waiter: serve
+3    // Chloe -> refused: Chloe has not ordered yet (task not used)
+3    // Waiter: serve
+2    // Ben
+// Turn 9: one table at a time, so Chloe keeps waiting
+0    // Waiter: wait
+// Turn 10: Daniel (#4) arrives; Ben pays at the end of this turn
+0    // Waiter: wait
+// Turn 11
+1    // Waiter: seat
+3    // Chloe
+// Turn 12
+2    // Waiter: take order
+3    // Chloe orders Pasta (2 units)
+3    // Chef: Chloe's Pasta unit 1 of 2
+// Turn 13: Ethan (#5) arrives
+3    // Waiter: serve
+3    // Chloe -> refused: her Pasta is only 1 of 2 units done (task not used)
+0    // Waiter: wait
+3    // Chef: Chloe's Pasta unit 2 of 2 -> READY
+// Turn 14
+3    // Waiter: serve
+3    // Chloe
+// Turn 15
+0    // Waiter: wait
+// Turn 16: Fiona (#6) arrives; Chloe pays at the end of this turn
+0    // Waiter: wait
+// Turn 17: Daniel has been queueing since turn 10
+1    // Waiter: seat
+4    // Daniel
+// Turn 18: too late for Daniel to pay
+2    // Waiter: take order
+4    // Daniel orders Salad
+4    // Chef: Daniel's Salad -> READY
