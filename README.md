@@ -19,6 +19,7 @@ Lab group BACF1, group 5.
 | [Customers](#customers) | [Tests and reproducible runs](#tests-and-reproducible-runs) |
 | [How a turn works](#how-a-turn-works) | [Design documents](#design-documents) |
 | [Stages and changes](#stages-and-changes) | [Video timestamps](#video-timestamps) |
+| [AI chat history](#ai-chat-history) | |
 
 ## Build and run
 
@@ -219,8 +220,14 @@ sequence diagram lectures. The SVG files stay sharp when zoomed.
 | Sequence diagram EndTurn: the end-of-turn steps, which the diagram above refers to in a `ref` fragment | [PNG](docs/uml/sequence-diagram-endturn.png), [SVG](docs/uml/sequence-diagram-endturn.svg), [PlantUML source](docs/uml/sequence-diagram-endturn.puml) |
 | Report (PDF) | Submitted in the zip together with this project |
 
-Each stage tag has its own `docs/uml/class-diagram` for that stage's code, so checking out
-`stage-1` and `stage-2` shows the class diagram as it was at each stage.
+Each stage tag has its own `docs/uml/class-diagram` for that stage's code, so there is one class
+diagram per stage, and each matches the code at its tag:
+
+| Stage | Class diagram |
+| --- | --- |
+| Stage 1 | [PNG](https://github.com/WengJian02/SC2002-Restaurant-Rush/blob/stage-1/docs/uml/class-diagram.png), [SVG](https://github.com/WengJian02/SC2002-Restaurant-Rush/blob/stage-1/docs/uml/class-diagram.svg) (at the `stage-1` tag) |
+| Stage 2 | [PNG](https://github.com/WengJian02/SC2002-Restaurant-Rush/blob/stage-2/docs/uml/class-diagram.png), [SVG](https://github.com/WengJian02/SC2002-Restaurant-Rush/blob/stage-2/docs/uml/class-diagram.svg) (at the `stage-2` tag) |
+| Stage 3 | [PNG](docs/uml/class-diagram.png), [SVG](docs/uml/class-diagram.svg) (this version) |
 
 The sequence diagrams were rendered with PlantUML 1.2025.4:
 `java -jar plantuml.jar -tsvg docs/uml/sequence-diagram.puml docs/uml/sequence-diagram-endturn.puml`,
@@ -288,12 +295,32 @@ checks listed above, which describe the setting itself, were updated.
 
 Video: _add the link or file name here_
 
-| # | Segment | Timestamp | Presented by |
+The video follows the briefing's suggested 15-minute outline, and each member presents a part.
+
+| Part | Content | Starts at | Presented by |
 | --- | --- | --- | --- |
-| 1 | The game launching from the submitted project | mm:ss | |
-| 2 | Meaningful manager choices, including a decision where staff are constrained | mm:ss | |
-| 3 | A dish going READY -> SERVED -> payment | mm:ss | |
-| 4 | A VIP or Critic behaviour | mm:ss | |
-| 5 | A Stage 3 feature | mm:ss | |
-| 6 | One victory and one defeat | mm:ss | |
-| 7 | The stage tag comparisons and the diagrams | mm:ss | |
+| 1 | Game overview and the three stages | mm:ss | |
+| 2 | Gameplay demonstration and key outcomes | mm:ss | |
+| 3 | Class diagrams and evidence of stage changes | mm:ss | |
+| 4 | Use case and sequence diagram | mm:ss | |
+| 5 | Individual contributions and key learning | mm:ss | |
+
+Where the brief's seven segments appear in the video:
+
+| # | Segment | Part | Timestamp |
+| --- | --- | --- | --- |
+| 1 | The game launching from the submitted project | 1 | mm:ss |
+| 2 | Meaningful manager choices, including a decision where staff are constrained | 2 | mm:ss |
+| 3 | A dish going READY -> SERVED -> payment | 2 | mm:ss |
+| 4 | A VIP or Critic behaviour | 2 | mm:ss |
+| 5 | A Stage 3 feature | 2 | mm:ss |
+| 6 | One victory and one defeat | 2 | mm:ss |
+| 7 | The stage tag comparisons and the diagrams | 3 | mm:ss |
+
+## AI chat history
+
+We used AI (Claude) in this project. Only Kwok Weng Jian has an AI chat history. It is in the
+[`ai-history`](https://github.com/WengJian02/SC2002-Restaurant-Rush/tree/ai-kwok-weng-jian/ai-history)
+folder on the `ai-kwok-weng-jian` branch of this repository. As our course instructed, it holds the
+exchanges in which the AI was asked to write or change the code, with the messages and replies
+copied word for word and in order.
