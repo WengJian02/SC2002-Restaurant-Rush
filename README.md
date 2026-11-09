@@ -10,8 +10,6 @@ the game from the earlier tags `stage-1` and `stage-2`. What changed between the
 
 Repository: https://github.com/WengJian02/SC2002-Restaurant-Rush
 
-Lab group BACF1, group 5.
-
 | Section | |
 | --- | --- |
 | [Build and run](#build-and-run) | [Rules of the game](#rules-of-the-game) |
@@ -19,7 +17,6 @@ Lab group BACF1, group 5.
 | [Customers](#customers) | [Tests and reproducible runs](#tests-and-reproducible-runs) |
 | [How a turn works](#how-a-turn-works) | [Design documents](#design-documents) |
 | [Stages and changes](#stages-and-changes) | [Video timestamps](#video-timestamps) |
-| [AI chat history](#ai-chat-history) | |
 
 ## Build and run
 
@@ -292,33 +289,21 @@ Section 3.3 example, abandonment, the VIP and the Critic) still pass on the Stag
 checks listed above, which describe the setting itself, were updated.
 
 ## Video timestamps
-
-Video: _add the link or file name here_
-
-The video follows the briefing's suggested 15-minute outline, and each member presents a part.
-
-| Part | Content | Starts at | Presented by |
-| --- | --- | --- | --- |
-| 1 | Game overview and the three stages | mm:ss | |
-| 2 | Gameplay demonstration and key outcomes | mm:ss | |
-| 3 | Class diagrams and evidence of stage changes | mm:ss | |
-| 4 | Use case and sequence diagram | mm:ss | |
-| 5 | Individual contributions and key learning | mm:ss | |
-
-Where the brief's seven segments appear in the video:
-
-| # | Segment | Part | Timestamp |
-| --- | --- | --- | --- |
-| 1 | The game launching from the submitted project | 1 | mm:ss |
-| 2 | Meaningful manager choices, including a decision where staff are constrained | 2 | mm:ss |
-| 3 | A dish going READY -> SERVED -> payment | 2 | mm:ss |
-| 4 | A VIP or Critic behaviour | 2 | mm:ss |
-| 5 | A Stage 3 feature | 2 | mm:ss |
-| 6 | One victory and one defeat | 2 | mm:ss |
-| 7 | The stage tag comparisons and the diagrams | 3 | mm:ss |
+| Time | Section |
+| --- | --- |
+| 0:00 | Introduction |
+| 0:17 | The game and its three stages |
+| 1:03 | Running the project and the tests |
+| 1:53 | Gameplay walkthrough |
+| 4:47 | Results: victory and defeat |
+| 5:28 | Class diagrams (Stages 1-3) |
+| 7:03 | How the code changed between stages |
+| 8:04 | Use case and sequence diagram |
+| 10:26 | Reflection: Chew En Yu |
+| 11:14 | Reflection: Kwok Weng Jian |
+| 14:48 | Closing |
 
 ## AI chat history
-
 We used AI (Claude) in this project. Only Kwok Weng Jian has an AI chat history. It is in the
 [`ai-history`](https://github.com/WengJian02/SC2002-Restaurant-Rush/tree/ai-kwok-weng-jian/ai-history)
 folder on the `ai-kwok-weng-jian` branch of this repository. As our course instructed, it holds the
